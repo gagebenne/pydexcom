@@ -2,16 +2,16 @@
 Python API to interact with Dexcom Share API
 
 ```python
->>> from pydexcom import Dexcom, DexcomData
+>>> dexcom = pydexcom.Dexcom('username', 'password')
 
->>> dexcom = Dexcom('username', 'password')
+>>> bg = dexcom.get_glucose_value()
 
->>> dexcom.get_recent_glucose_value().value
+>>> bg.value
 105
 
->>> dexcom.get_recent_glucose_value.trend_arrow
+>>> bg.trend_arrow
 '→'
 
->>> dexcom.get_recent_glucose_value().trend_description
+>>> bg.trend_description
 'steady'
 ```

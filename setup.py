@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='pydexcom',
-    version='0.0.1',
+    version='0.0.2',
     description='Python API to interact with Dexcom Share API',
     url='https://github.com/gagebenne/pydexcom',
     author='Gage Benne',
