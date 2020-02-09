@@ -4,18 +4,14 @@ class DexcomError(Exception):
     '''Base class for all Dexcom errors'''
     pass
 
-class InvalidAccountError(DexcomError):
-    '''Raised when Dexcom API Share returns a code indicating invalid account'''
+class AccountError(DexcomError):
+    '''Raised when Dexcom Share API indicates invalid account credentials error'''
     pass
 
-class InvalidPasswordError(DexcomError):
-    '''Raised when Dexcom Share API returns a code indicating invalid password'''
+class SessionError(DexcomError):
+    '''Raised when Dexcom Share API / pydexcom indicates invalid session error'''
     pass
 
-class SessionExpiredError(DexcomError):
-    '''Raised when Dexcom Share API returns a code indicating session expiration'''
-    pass
-
-class SessionNotFoundError(DexcomError):
-    '''Raised when Dexcom Share API returns a code indicating session not found'''
+class ArguementError(DexcomError):
+    '''Raised when Dexcom Share API / pydexcom indicates invalid arguement error'''
     pass

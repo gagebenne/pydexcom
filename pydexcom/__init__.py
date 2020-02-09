@@ -9,35 +9,31 @@ from .const import (
     DEXCOM_BASE_URL,
     DEXCOM_LOGIN_ENDPOINT,
     DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT,
-    DEXCOM_BLOOD_GLUCOSE_ENDPOINT
+    DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT,
+    DEXCOM_TREND_DESCRIPTIONS,
+    DEXCOM_TREND_ARROWS
 )
 
-from .errors import InvalidAccountError, InvalidPasswordError, SessionExpiredError, SessionNotFoundError
+from .errors import AccountError, SessionError, ArguementError
 
-class DexcomData:
-    '''Class for dexcom glucose value data'''
+class GlucoseValue:
+    '''Class for glucose value data'''
     def __init__(self, json_glucose_value):
         self.value = json_glucose_value['Value']
         self.trend = json_glucose_value['Trend']
-        self.trend_description = ['', 'rising quickly', 'rising', 'rising slightly', 'steady', 'falling slightly', 'falling', 'falling quickly', 'unable to determine trend', 'trend unavailable'][self.trend]
-        self.trend_arrow = ['', '↑↑', '↑', '↗', '→', '↘', '↓', '↓↓', '?', '-'][self.trend]
+        self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
+        self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
         self.time = datetime.datetime.fromtimestamp(int(json_glucose_value['WT'][6:][:-2])/1000.0)
 
 class Dexcom:
     '''Class for communicating with Dexcom Share API'''
     def __init__(self, username, password):
-        if password is None:
-            _LOGGER.error('Password is blank, unable to continue')
-
+        if not password:
+            _LOGGER.error('Password empty')
+            raise AccountError('Password empty')
         self.username = username
         self.password = password
-        self.session = None
-
-        try:
-            self._create_session()
-        except:
-            raise
-
+        self.session_id = None
 
     def _request(self, method: str, endpoint: str, headers: dict=None, params: dict=None, json: dict={}) -> dict:
         try:
@@ -51,85 +47,69 @@ class Dexcom:
         except requests.HTTPError:
             _LOGGER.error(f'json: {r.json()}')
             if r.status_code == 500:
-                if False:
-                    raise SessionExpiredError(r.json()['Message'])
+                if r.json()['Code'] == 'SessionNotValid':
+                    _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
+                    raise SessionError('Session ID expired')
                 elif r.json()['Code'] == 'SessionIdNotFound':
-                    raise SessionNotFoundError(r.json()['Message'])
+                    _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
+                    raise SessionError('Session ID not found')
                 elif r.json()['Code'] == 'SSO_AuthenticateAccountNotFound':
-                    raise InvalidAccountError(r.json()['Message'])
+                    _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
+                    raise AccountError('Account not found')
                 elif r.json()['Code'] == 'SSO_AuthenticatePasswordInvalid':
-                    raise InvalidPasswordError(r.json()['Message'])
+                    _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
+                    raise AccountError('Password is invalid')
                 else:
                     _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
             else:
                 _LOGGER.error(f'{r.status_code}: {r.json()}')
         except:
-            _LOGGER.error(f'Unknown error')
+            _LOGGER.error(f'{r.status_code}')
+            _LOGGER.error(f'Unknown request error')
 
-    def _create_session(self):
+    def get_session_id(self):
         '''Creates Dexcom Share API session'''
-        _LOGGER.debug(f'Create session')
+        _LOGGER.debug(f'Get session ID')
         try:
-            headers = {
-                'User-Agent': DEXCOM_USER_AGENT,
-            }
-            json = {
-                'accountName': self.username,
-                'applicationId': DEXCOM_APPLICATION_ID,
-                'password': self.password
-            }
-
-            self.session = self._request('post', DEXCOM_LOGIN_ENDPOINT, headers=headers, json=json)
+            headers = { 'User-Agent': DEXCOM_USER_AGENT }
+            json = { 'accountName': self.username, 'password': self.password, 'applicationId': DEXCOM_APPLICATION_ID }
+            self.session_id = self._request('post', DEXCOM_LOGIN_ENDPOINT, headers=headers, json=json)
         except:
             raise
 
-    def _verify_serial_number(self, serial) -> bool:
+    def verify_serial_number(self, serial_number: str) -> bool:
         '''Verifies if transmitter serial number is assigned to you'''
+        if self.session_id is None:
+            _LOGGER.error('Session ID empty')
+            raise SessionError('Session ID empty')
+        if not serial_number:
+            _LOGGER.error('Serial number empty')
+            raise ArguementError('Serial number empty')
         try:
-            params = {
-                'sessionId': self.session,
-                'serialNumber': serial
-            }
+            params = { 'sessionId': self.session_id, 'serialNumber': serial_number }
             r = self._request('post', DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
             if r.json() == 'AssignedToYou':
                 return True
-            else: #NotAssigned
+            else: # NotAssigned
                 return False
-        except (SessionExpiredError, SessionNotFoundError):
-            try:
-                self._create_session()
-            except:
-                raise
         except:
             raise
 
-    def _get_glucose_values(self, minutes: int=1440, max_count=1) -> [DexcomData]:
-        '''Gets glucose values'''
+    def get_glucose_values(self, minutes: int=1440, max_count: int=288) -> [GlucoseValue]:
+        '''Gets all glucose values within the last 24 hours'''
+        if self.session_id is None:
+            _LOGGER.error('Session ID empty')
+            raise SessionError('Session ID empty')
         try:
-            params = {
-                'sessionId': self.session,
-                'minutes': minutes,
-                'maxCount': max_count
-            }
-
-            json_glucose_values = self._request('post', DEXCOM_BLOOD_GLUCOSE_ENDPOINT, params=params)
+            params = { 'sessionId': self.session_id, 'minutes': minutes, 'maxCount': max_count }
+            json_glucose_values = self._request('post', DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params)
             glucose_values = []
             for json_glucose_value in json_glucose_values:
-                glucose_values.append(DexcomData(json_glucose_value))
-
+                glucose_values.append(GlucoseValue(json_glucose_value))
             return glucose_values
-        except (SessionExpiredError, SessionNotFoundError):
-            try:
-                self._create_session()
-            except:
-                raise
         except:
             raise
 
-    def get_recent_glucose_value(self) -> DexcomData:
+    def get_glucose_value(self) -> GlucoseValue:
         '''Gets most recent glucose value data'''
-        return self._get_glucose_values()[0]
-
-    def get_all_glucose_values(self) -> [DexcomData]:
-        '''Get all glucose values data (within the past 24 hours)'''
-        return self._get_glucose_values(max_count=288)
+        return self.get_glucose_values(max_count=1)[0]
