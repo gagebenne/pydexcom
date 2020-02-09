@@ -19,7 +19,7 @@ class DexcomData:
     def __init__(self, json_glucose_value):
         self.value = json_glucose_value['Value']
         self.trend = json_glucose_value['Trend']
-        self.trend_description = ['', 'rising quickly', 'rising slightly', 'steady', 'falling slightly', 'falling', 'falling quickly', 'unable to determine trend', 'trend unavailable'][self.trend]
+        self.trend_description = ['', 'rising quickly', 'rising', 'rising slightly', 'steady', 'falling slightly', 'falling', 'falling quickly', 'unable to determine trend', 'trend unavailable'][self.trend]
         self.trend_arrow = ['', '↑↑', '↑', '↗', '→', '↘', '↓', '↓↓', '?', '-'][self.trend]
         self.time = datetime.datetime.fromtimestamp(int(json_glucose_value['WT'][6:][:-2])/1000.0)
 
