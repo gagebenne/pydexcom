@@ -1,2 +1,3 @@
 dist/
 pydexcom.egg-info
+__pycache__
