@@ -1,5 +1,5 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](paypal.me/gagebenne)
-![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](https://www.paypal.me/gagebenne)
+[![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://www.pypi.org/project/pydexcom)
 # pydexcom
 A simple Python API to interact with Dexcom Share service. Used to get **real time** Dexcom GCM sensor data.
 
