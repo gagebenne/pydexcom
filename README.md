@@ -1,9 +1,12 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](https://www.paypal.me/gagebenne)
 [![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://www.pypi.org/project/pydexcom)
+
 # pydexcom
+
 A simple Python API to interact with Dexcom Share service. Used to get **real time** Dexcom GCM sensor data.
 
 ### Setup
+
 1. Download the [Dexcom G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
 
     *Note: the service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's.*
@@ -14,6 +17,7 @@ A simple Python API to interact with Dexcom Share service. Used to get **real ti
     ```
 
 ### Usage
+
 ```python
 >>> from pydexcom import Dexcom
 >>> dexcom = Dexcom("username", "password")
@@ -35,6 +39,7 @@ datetime.datetime(2020, 5, 6, 18, 18, 42)
 ```
 
 ### FAQ
+
 <details>
 <summary>What do I need to get started?</a></summary>
 <br/>
