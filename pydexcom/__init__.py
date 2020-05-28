@@ -33,7 +33,8 @@ class GlucoseReading:
 class Dexcom:
     """Class for communicating with Dexcom Share API"""
 
-    def __init__(self, username: str, password: str):
+    def __init__(self, username: str, password: str, ous: bool = False):
+        self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self.username = username
         self.password = password
         self.session_id = None
@@ -50,11 +51,11 @@ class Dexcom:
         try:
             _LOGGER.debug(f"{method} request to {endpoint}:")
             _LOGGER.debug(
-                f"url: {DEXCOM_BASE_URL}/{endpoint} headers: {headers}, params:{params}, json: {json}"
+                f"url: {self.base_url}/{endpoint} headers: {headers}, params:{params}, json: {json}"
             )
             r = requests.request(
                 method,
-                f"{DEXCOM_BASE_URL}/{endpoint}",
+                f"{self.base_url}/{endpoint}",
                 headers=headers,
                 params=params,
                 json=json,
