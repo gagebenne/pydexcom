@@ -45,8 +45,6 @@ datetime.datetime(2020, 5, 6, 18, 18, 42)
 <br/>
 If you are currently on the Dexcom GCM system, all you need is the appropriate mobile app with the Dexcom Share service enabled.
 </details>
-
-
 <details>
 <summary>Where is this package being used?</a></summary>
 <br/>
@@ -63,8 +61,6 @@ The official Dexcom API is a great tool to view trends, statistics, and day-by-d
 <br/>
 By all means submit a pull request if you have a feature you'd like to see in the next release, alternatively you may leave a issue if you have a suggestion or bug you'd like to alert me of. 
 </details>
-
-
 <details>
 <summary>Are there any features in development?</summary>
 <br/>
@@ -75,14 +71,14 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 
 ##### Dexcom class
 
-| Function                    | Input                                       | Output                          | Description                                                  |
-| --------------------------- | ------------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| \_\_init\_\_                | `username:str`,<br/>`password:str`          |                                 | Dexcom constructor, stores authentication information        |
-| create_session              |                                             |                                 | Creates Dexcom Share API session by getting session id       |
-| verify_serial_number        | `serial_number:str`                         | `bool`                          | Verifies if a transmitter serial number is assigned to you   |
-| get_glucose_readings        | `minutes:int=1440`,<br/>`max_count:int=288` | `[GlucoseReading]`/<br />`None` | Gets max_count glucose readings within the past minutes, None if no glucose reading in the past 24 hours |
-| get_latest_glucose_reading  |                                             | `GlucoseReading`/<br />`None`   | Gets latest available glucose reading, None if no glucose reading in the past 24 hours |
-| get_current_glucose_reading |                                             | `GlucoseReading`/`None`         | Gets current available glucose reading, None if no glucose reading in the past 6 minutes |
+| Function                    | Input                                                   | Output                          | Description                                                  |
+| --------------------------- | ------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
+| \_\_init\_\_                | `username:str`,<br/>`password:str`,<br/>`ous:bool=True` | `Dexcom`                        | Dexcom constructor, stores authentication information        |
+| create_session              |                                                         |                                 | Creates Dexcom Share API session by getting session id       |
+| verify_serial_number        | `serial_number:str`                                     | `bool`                          | Verifies if a transmitter serial number is assigned to you   |
+| get_glucose_readings        | `minutes:int=1440`,<br/>`max_count:int=288`             | `[GlucoseReading]`/<br />`None` | Gets max_count glucose readings within the past minutes, None if no glucose reading in the past 24 hours |
+| get_latest_glucose_reading  |                                                         | `GlucoseReading`/<br />`None`   | Gets latest available glucose reading, None if no glucose reading in the past 24 hours |
+| get_current_glucose_reading |                                                         | `GlucoseReading`/`None`         | Gets current available glucose reading, None if no glucose reading in the past 6 minutes |
 
 ##### Glucose Reading
 
