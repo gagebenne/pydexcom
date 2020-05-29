@@ -25,6 +25,9 @@ A simple Python API to interact with Dexcom Share service. Used to get **real ti
 >>> bg.value
 85
 
+>>> bg.mmol_l
+4.7
+
 >>> bg.trend
 4
 
@@ -85,10 +88,12 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 
 | Attribute         | Definition                                                   | Example                                     |
 | ----------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| value             | Blood glucose value in mm/dL or mmol/L.                      | `85`                                        |
-| trend             | Blood glucose trend information as number 0 - 9 (see constants). | `4`                                         |
+| value             | Blood glucose value in mg/dL.                                | `85`                                        |
+| mg_dl             | Blood glucose value in mg/dL.                                | `85`                                        |
+| mmol_l            | Blood glucose value in mmol/L.                               | `4.7`                                       |
+| trend             | Blood glucose trend information as number 0 - 9 (see constants). | `4`                                     |
 | trend_description | Blood glucose trend information description (see constants). | `'steady'`                                  |
-| trend_arrow       | Blood glucose trend information as unicode arrow (see constants). | `'→'`                                       |
+| trend_arrow       | Blood glucose trend information as unicode arrow (see constants). | `'→'`                                  |
 | time              | Blood glucose recorded time as `datetime`.                   | `datetime.datetime(2020, 5, 6, 18, 18, 42)` |
 
 ##### Constants
