@@ -48,7 +48,8 @@ If you are currently on the Dexcom GCM system, all you need is the appropriate m
 <details>
 <summary>Where is this package being used?</a></summary>
 <br/>
-For now this package is just being used in the <a href="https://github.com/home-assistant/core/pull/33852">Dexcom home assistant integration</a>, but is generic enough to be used in lots of applications.
+For now this package is mainly being used in the <a href="https://github.com/home-assistant/core/pull/33852">Dexcom home assistant integration</a>, but is generic enough to be used in lots of applications.
+In fact, reddit user paulcole710 used it to track glucose levels <a href="https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker">using a Raspberry Pi and e-ink display</a>.
 </details>
 
 <details>
@@ -80,7 +81,7 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 | get_latest_glucose_reading  |                                                         | `GlucoseReading`/<br />`None`   | Gets latest available glucose reading, None if no glucose reading in the past 24 hours |
 | get_current_glucose_reading |                                                         | `GlucoseReading`/`None`         | Gets current available glucose reading, None if no glucose reading in the past 6 minutes |
 
-##### Glucose Reading
+##### GlucoseReading class
 
 | Attribute         | Definition                                                   | Example                                     |
 | ----------------- | ------------------------------------------------------------ | ------------------------------------------- |
