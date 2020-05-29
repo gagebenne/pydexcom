@@ -24,6 +24,7 @@ from .const import (
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_USER_AGENT,
     DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT,
+    MMOL_L_CONVERTION_FACTOR,
     SESSION_ERROR_SESSION_ID_DEFAULT,
     SESSION_ERROR_SESSION_ID_NULL,
     SESSION_ERROR_SESSION_NOT_FOUND,
@@ -37,6 +38,8 @@ class GlucoseReading:
 
     def __init__(self, json_glucose_reading: dict):
         self.value = json_glucose_reading["Value"]
+        self.mg_dl = self.value
+        self.mmol_l = round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
         self.trend = json_glucose_reading["Trend"]
         self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
         self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
