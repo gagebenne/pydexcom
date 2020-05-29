@@ -6,6 +6,7 @@ import requests
 from .const import (
     _LOGGER,
     DEXCOM_APPLICATION_ID,
+    DEXCOM_AUTHENTICATE_ENDPOINT,
     DEXCOM_BASE_URL,
     DEXCOM_BASE_URL_OUS,
     DEXCOM_LOGIN_ENDPOINT,
@@ -94,18 +95,22 @@ class Dexcom:
         if not self.password:
             _LOGGER.error("Password empty")
             raise AccountError("Password empty")
+        
+        headers = {"User-Agent": DEXCOM_USER_AGENT}
+        json = {
+            "accountName": self.username,
+            "password": self.password,
+            "applicationId": DEXCOM_APPLICATION_ID,
+        }
+        self.session_id = self._request(
+            "post", DEXCOM_AUTHENTICATE_ENDPOINT, headers=headers, json=json
+        )
         try:
-            headers = {"User-Agent": DEXCOM_USER_AGENT}
-            json = {
-                "accountName": self.username,
-                "password": self.password,
-                "applicationId": DEXCOM_APPLICATION_ID,
-            }
             self.session_id = self._request(
                 "post", DEXCOM_LOGIN_ENDPOINT, headers=headers, json=json
             )
-        except:
-            raise
+        except SessionError:
+            raise AccountError(ACCOUNT_ERROR_UNKNOWN)
 
     def verify_serial_number(self, serial_number: str) -> bool:
         """Verifies if a transmitter serial number is assigned to you"""

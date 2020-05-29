@@ -10,6 +10,7 @@ DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
 DEXCOM_LOGIN_ENDPOINT = "General/LoginPublisherAccountByName"
+DEXCOM_AUTHENTICATE_ENDPOINT = "General/AuthenticatePublisherAccount"
 DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT = (
     "Publisher/CheckMonitoredReceiverAssignmentStatus"
 )
