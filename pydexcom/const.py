@@ -29,3 +29,20 @@ DEXCOM_TREND_DESCRIPTIONS = [
     "trend unavailable",
 ]
 DEXCOM_TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+
+DEFAULT_SESSION_ID = "00000000-0000-0000-0000-000000000000"
+
+ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
+ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
+ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
+ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
+ACCOUNT_ERROR_UNKNOWN = "Account error"
+
+SESSION_ERROR_SESSION_ID_NULL = "Session ID null"
+SESSION_ERROR_SESSION_ID_DEFAULT = "Session ID default"
+SESSION_ERROR_SESSION_NOT_VALID = "Session ID not valid"
+SESSION_ERROR_SESSION_NOT_FOUND = "Session ID not found"
+
+ARGUEMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
+ARGUEMENT_ERROR_MAX_COUNT_INVALID = "Minutes must be between 1 and 288"
+ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
