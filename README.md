@@ -20,7 +20,7 @@ A simple Python API to interact with Dexcom Share service. Used to get **real ti
 
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom("username", "password")
+>>> dexcom = Dexcom("username", "password") # add ous=True if outside of US
 >>> bg = dexcom.get_current_glucose_reading()
 >>> bg.value
 85
