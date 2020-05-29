@@ -166,6 +166,8 @@ class Dexcom:
             return glucose_readings
         except:
             raise
+        if not json_glucose_readings:
+            return None
 
     def get_latest_glucose_reading(self) -> GlucoseReading:
         """Gets latest available glucose reading, None if no glucose reading in the past 24 hours"""
