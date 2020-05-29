@@ -46,3 +46,5 @@ SESSION_ERROR_SESSION_NOT_FOUND = "Session ID not found"
 ARGUEMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
 ARGUEMENT_ERROR_MAX_COUNT_INVALID = "Minutes must be between 1 and 288"
 ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
+
+MMOL_L_CONVERTION_FACTOR = .0555
