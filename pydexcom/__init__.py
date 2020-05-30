@@ -165,7 +165,7 @@ class Dexcom:
         if minutes < 1 or minutes > 1440:
             _LOGGER.error(ARGUEMENT_ERROR_MINUTES_INVALID)
             raise ArguementError(ARGUEMENT_ERROR_MINUTES_INVALID)
-        if minutes < 1 or minutes > 288:
+        if max_count < 1 or max_count > 288:
             _LOGGER.error(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
             raise ArguementError(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
 
