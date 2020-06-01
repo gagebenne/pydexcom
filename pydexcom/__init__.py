@@ -112,7 +112,7 @@ class Dexcom:
         if not self.session_id:
             _LOGGER.error(SESSION_ERROR_SESSION_ID_NULL)
             raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
-        if self.session_id is DEFAULT_SESSION_ID:
+        if self.session_id == DEFAULT_SESSION_ID:
             _LOGGER.error(SESSION_ERROR_SESSION_ID_DEFAULT)
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
@@ -143,6 +143,7 @@ class Dexcom:
             self.session_id = self._request(
                 "post", DEXCOM_LOGIN_ENDPOINT, headers=headers, json=json
             )
+            self._validate_session_id()
         except SessionError:
             raise AccountError(ACCOUNT_ERROR_UNKNOWN)
 
