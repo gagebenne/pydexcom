@@ -155,8 +155,14 @@ class Dexcom:
             raise ArguementError(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
 
         params = {"sessionId": self.session_id, "serialNumber": serial_number}
-        r = self._request("post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
+        try:
+            r = self._request("post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
+        except SessionError:
+            _LOGGER.debug(f"Fetching new session id")
+            self.create_session()
+            r = self._request("post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
         return r.json() == "AssignedToYou"
+
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
@@ -175,9 +181,17 @@ class Dexcom:
             "minutes": minutes,
             "maxCount": max_count,
         }
-        json_glucose_readings = self._request(
-            "post", DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params
-        )
+        try:
+            json_glucose_readings = self._request(
+                "post", DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params
+            )
+        except SessionError:
+            _LOGGER.debug(f"Fetching new session id")
+            self.create_session()
+            json_glucose_readings = self._request(
+                "post", DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params
+            )
+
         glucose_readings = []
         if not json_glucose_readings:
             return None
