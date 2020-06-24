@@ -1,3 +1,5 @@
+"""Packaging logic for pydexcom."""
+
 from setuptools import setup
 
 with open("README.md", "r") as file:

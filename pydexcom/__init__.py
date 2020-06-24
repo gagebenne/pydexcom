@@ -1,4 +1,4 @@
-"""Python API to interact with Dexcom Share API"""
+"""The pydexcom module for interacting with Dexcom Share API."""
 import datetime
 
 import requests
@@ -18,8 +18,8 @@ from .const import (
     DEXCOM_AUTHENTICATE_ENDPOINT,
     DEXCOM_BASE_URL,
     DEXCOM_BASE_URL_OUS,
+    DEXCOM_GLUCOSE_READINGS_ENDPOINT,
     DEXCOM_LOGIN_ENDPOINT,
-    DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT,
     DEXCOM_TREND_ARROWS,
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_USER_AGENT,
@@ -34,9 +34,14 @@ from .errors import AccountError, ArguementError, SessionError
 
 
 class GlucoseReading:
-    """Class for a glucose reading"""
+    """Class for parsing glucose reading from Dexcom Share API.
+
+    :param json_glucose_reading: JSON glucose reading from Dexcom Share API
+        (default is False)
+    """
 
     def __init__(self, json_glucose_reading: dict):
+        """Initialize with JSON glucose reading from Dexcom Share API."""
         self.value = json_glucose_reading["Value"]
         self.mg_dl = self.value
         self.mmol_l = round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
@@ -49,9 +54,10 @@ class GlucoseReading:
 
 
 class Dexcom:
-    """Class for communicating with Dexcom Share API"""
+    """Class for communicating with Dexcom Share API."""
 
     def __init__(self, username: str, password: str, ous: bool = False):
+        """Initialize with JSON glucose reading from Dexcom Share API."""
         self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self.username = username
         self.password = password
@@ -66,17 +72,15 @@ class Dexcom:
         params: dict = None,
         json: dict = {},
     ) -> dict:
+        """Send request to Dexcom Share API."""
         try:
+            url = f"{self.base_url}/{endpoint}"
             _LOGGER.debug(f"{method} request to {endpoint}:")
             _LOGGER.debug(
-                f"url: {self.base_url}/{endpoint} headers: {headers}, params:{params}, json: {json}"
+                f"url: {url} headers: {headers}, params:{params}, json: {json}"
             )
             r = requests.request(
-                method,
-                f"{self.base_url}/{endpoint}",
-                headers=headers,
-                params=params,
-                json=json,
+                method, url, headers=headers, params=params, json=json,
             )
             _LOGGER.debug(f"{method} request response {r.status_code}:")
             _LOGGER.debug(f"json: {r.json()}")
@@ -103,12 +107,13 @@ class Dexcom:
                     _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
             else:
                 _LOGGER.error(f"{r.status_code}: {r.json()}")
-        except:
+        except Exception:
             _LOGGER.error(r.status_code)
             _LOGGER.error("Unknown request error")
         return None
 
     def _validate_session_id(self):
+        """Validate session id."""
         if not self.session_id:
             _LOGGER.error(SESSION_ERROR_SESSION_ID_NULL)
             raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
@@ -117,6 +122,7 @@ class Dexcom:
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
     def _validate_account(self):
+        """Validate credentials."""
         if not self.username:
             _LOGGER.error(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
             raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
@@ -125,8 +131,8 @@ class Dexcom:
             raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
 
     def create_session(self):
-        """Creates Dexcom Share API session by getting session id"""
-        _LOGGER.debug(f"Get session ID")
+        """Create Dexcom Share API session by getting session id."""
+        _LOGGER.debug("Get session ID")
         self._validate_account()
 
         headers = {"User-Agent": DEXCOM_USER_AGENT}
@@ -135,6 +141,7 @@ class Dexcom:
             "password": self.password,
             "applicationId": DEXCOM_APPLICATION_ID,
         }
+        # NOTE:
         self.session_id = self._request(
             "post", DEXCOM_AUTHENTICATE_ENDPOINT, headers=headers, json=json
         )
@@ -148,7 +155,7 @@ class Dexcom:
             raise AccountError(ACCOUNT_ERROR_UNKNOWN)
 
     def verify_serial_number(self, serial_number: str) -> bool:
-        """Verifies if a transmitter serial number is assigned to you"""
+        """Verify if transmitter serial number is assigned to user."""
         self._validate_session_id()
         if not serial_number:
             _LOGGER.error(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
@@ -156,18 +163,21 @@ class Dexcom:
 
         params = {"sessionId": self.session_id, "serialNumber": serial_number}
         try:
-            r = self._request("post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
+            r = self._request(
+                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
+            )
         except SessionError:
-            _LOGGER.debug(f"Fetching new session id")
+            _LOGGER.debug("Get new session ID")
             self.create_session()
-            r = self._request("post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params)
+            r = self._request(
+                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
+            )
         return r.json() == "AssignedToYou"
-
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
     ) -> [GlucoseReading]:
-        """Gets max_count glucose readings within the past minutes, None if no glucose reading in the past 24 hours"""
+        """Get max_count glucose readings within specified minutes."""
         self._validate_session_id()
         if minutes < 1 or minutes > 1440:
             _LOGGER.error(ARGUEMENT_ERROR_MINUTES_INVALID)
@@ -183,13 +193,13 @@ class Dexcom:
         }
         try:
             json_glucose_readings = self._request(
-                "post", DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params
+                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
             )
         except SessionError:
-            _LOGGER.debug(f"Fetching new session id")
+            _LOGGER.debug("Get session ID")
             self.create_session()
             json_glucose_readings = self._request(
-                "post", DEXCOM_READ_BLOOD_GLUCOSE_ENDPOINT, params=params
+                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
             )
 
         glucose_readings = []
@@ -202,15 +212,15 @@ class Dexcom:
         return glucose_readings
 
     def get_latest_glucose_reading(self) -> GlucoseReading:
-        """Gets latest available glucose reading, None if no glucose reading in the past 24 hours"""
+        """Get latest available glucose reading."""
         glucose_readings = self.get_glucose_readings(max_count=1)
         if not glucose_readings:
             return None
         return glucose_readings[0]
 
     def get_current_glucose_reading(self) -> GlucoseReading:
-        """Gets current available glucose reading, None if no glucose reading in the past 6 minutes"""
-        glucose_readings = self.get_glucose_readings(minutes=6, max_count=1)
+        """Get current available glucose reading."""
+        glucose_readings = self.get_glucose_readings(minutes=5, max_count=1)
         if not glucose_readings:
             return None
         return glucose_readings[0]
