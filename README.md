@@ -1,5 +1,6 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](https://www.paypal.me/gagebenne)
 [![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://www.pypi.org/project/pydexcom)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gagebenne/pydexcom/Python%20package?style=flat-square)
 
 # pydexcom
 
@@ -63,7 +64,7 @@ The official Dexcom API is a great tool to view trends, statistics, and day-by-d
 <details>
 <summary>How can I let you know of suggestions or issues?</summary>
 <br/>
-By all means submit a pull request if you have a feature you'd like to see in the next release, alternatively you may leave a issue if you have a suggestion or bug you'd like to alert me of. 
+By all means submit a pull request if you have a feature you'd like to see in the next release, alternatively you may leave a issue if you have a suggestion or bug you'd like to alert me of.
 </details>
 <details>
 <summary>Are there any features in development?</summary>
@@ -75,7 +76,7 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 
 ##### Dexcom class
 
-| Function                    | Input                                                   | Output                          | Description                                                  |
+| Method                    | Input                                                   | Output                          | Description                                                  |
 | --------------------------- | ------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
 | \_\_init\_\_                | `username:str`,<br/>`password:str`,<br/>`ous:bool=True` | `Dexcom`                        | Dexcom constructor, stores authentication information        |
 | create_session              |                                                         |                                 | Creates Dexcom Share API session by getting session id       |

@@ -5,10 +5,6 @@ import logging
 _LOGGER = logging.getLogger("pydexcom")
 
 
-# Dexcom POST headers
-DEXCOM_USER_AGENT = "Dexcom Share/3.0.2.11 CFNetwork/711.2.23 Darwin/14.0.0"
-DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
-
 # Dexcom Share API base urls
 DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
@@ -20,6 +16,8 @@ DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT = (
     "Publisher/CheckMonitoredReceiverAssignmentStatus"
 )
 DEXCOM_GLUCOSE_READINGS_ENDPOINT = "Publisher/ReadPublisherLatestGlucoseValues"
+
+DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 
 # Dexcom error strings
 ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"

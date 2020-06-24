@@ -3,11 +3,16 @@
 import os
 
 import pytest
+import requests
 
 from pydexcom import (
     ACCOUNT_ERROR_PASSWORD_INVALID,
     ACCOUNT_ERROR_PASSWORD_NULL_EMPTY,
     ACCOUNT_ERROR_USERNAME_NULL_EMPTY,
+    DEFAULT_SESSION_ID,
+    DEXCOM_APPLICATION_ID,
+    DEXCOM_BASE_URL,
+    DEXCOM_LOGIN_ENDPOINT,
     AccountError,
     Dexcom,
 )
@@ -50,3 +55,15 @@ def test_authentication_success():
     d = Dexcom(USERNAME, PASSWORD)
     d._validate_account()
     d._validate_session_id()
+
+
+def test_login_endpoint_not_verbose():
+    """Test particular enpoint continues to be non-verbose."""
+    url = f"{DEXCOM_BASE_URL}/{DEXCOM_LOGIN_ENDPOINT}"
+    json = {
+        "accountName": USERNAME,
+        "password": "a",
+        "applicationId": DEXCOM_APPLICATION_ID,
+    }
+    r = requests.request("post", url, json=json,)
+    assert r.json() == DEFAULT_SESSION_ID

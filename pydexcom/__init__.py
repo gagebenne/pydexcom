@@ -22,7 +22,6 @@ from .const import (
     DEXCOM_LOGIN_ENDPOINT,
     DEXCOM_TREND_ARROWS,
     DEXCOM_TREND_DESCRIPTIONS,
-    DEXCOM_USER_AGENT,
     DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT,
     MMOL_L_CONVERTION_FACTOR,
     SESSION_ERROR_SESSION_ID_DEFAULT,
@@ -34,11 +33,7 @@ from .errors import AccountError, ArguementError, SessionError
 
 
 class GlucoseReading:
-    """Class for parsing glucose reading from Dexcom Share API.
-
-    :param json_glucose_reading: JSON glucose reading from Dexcom Share API
-        (default is False)
-    """
+    """Class for parsing glucose reading from Dexcom Share API."""
 
     def __init__(self, json_glucose_reading: dict):
         """Initialize with JSON glucose reading from Dexcom Share API."""
@@ -65,23 +60,14 @@ class Dexcom:
         self.create_session()
 
     def _request(
-        self,
-        method: str,
-        endpoint: str,
-        headers: dict = None,
-        params: dict = None,
-        json: dict = {},
+        self, method: str, endpoint: str, params: dict = None, json: dict = {},
     ) -> dict:
         """Send request to Dexcom Share API."""
         try:
             url = f"{self.base_url}/{endpoint}"
             _LOGGER.debug(f"{method} request to {endpoint}:")
-            _LOGGER.debug(
-                f"url: {url} headers: {headers}, params:{params}, json: {json}"
-            )
-            r = requests.request(
-                method, url, headers=headers, params=params, json=json,
-            )
+            _LOGGER.debug(f"url: {url} params:{params}, json: {json}")
+            r = requests.request(method, url, params=params, json=json,)
             _LOGGER.debug(f"{method} request response {r.status_code}:")
             _LOGGER.debug(f"json: {r.json()}")
             r.raise_for_status()
@@ -135,21 +121,28 @@ class Dexcom:
         _LOGGER.debug("Get session ID")
         self._validate_account()
 
-        headers = {"User-Agent": DEXCOM_USER_AGENT}
         json = {
             "accountName": self.username,
             "password": self.password,
             "applicationId": DEXCOM_APPLICATION_ID,
         }
-        # NOTE:
-        self.session_id = self._request(
-            "post", DEXCOM_AUTHENTICATE_ENDPOINT, headers=headers, json=json
-        )
+        """
+        The Dexcom Share API at DEXCOM_LOGIN_ENDPOINT only returns
+        DEFAULT_SESSION_ID if credentials are invalid. To allow for more
+        verbose errors when validating credentials,
+        DEXCOM_AUTHENTICATE_ENDPOINT is used. Once the
+        DEXCOM_AUTHENTICATE_ENDPOINT returns a session ID (confirming
+        the credentials are valid), the original endpoint
+        DEXCOM_LOGIN_ENDPOINT must be used. This is because the
+        DEXCOM_AUTHENTICATE_ENDPOINT returns a bogus session ID.
+        """
+        endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
+        endpoint2 = DEXCOM_LOGIN_ENDPOINT
+        
+        self.session_id = self._request("post", endpoint1, json=json)
         try:
             self._validate_session_id()
-            self.session_id = self._request(
-                "post", DEXCOM_LOGIN_ENDPOINT, headers=headers, json=json
-            )
+            self.session_id = self._request("post", endpoint2, json=json)
             self._validate_session_id()
         except SessionError:
             raise AccountError(ACCOUNT_ERROR_UNKNOWN)
