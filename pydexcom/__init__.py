@@ -213,7 +213,7 @@ class Dexcom:
 
     def get_current_glucose_reading(self) -> GlucoseReading:
         """Get current available glucose reading."""
-        glucose_readings = self.get_glucose_readings(minutes=5, max_count=1)
+        glucose_readings = self.get_glucose_readings(minutes=10, max_count=1)
         if not glucose_readings:
             return None
         return glucose_readings[0]
