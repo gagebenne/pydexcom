@@ -1,6 +1,6 @@
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](https://www.paypal.me/gagebenne)
 [![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://www.pypi.org/project/pydexcom)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gagebenne/pydexcom/Python%20package?style=flat-square)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gagebenne/pydexcom/Python%20package?style=flat-square)](https://github.com/gagebenne/pydexcom/actions)
 
 # pydexcom
 
