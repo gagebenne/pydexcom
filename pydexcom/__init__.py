@@ -3,6 +3,8 @@ import datetime
 
 import requests
 
+import re
+
 from .const import (
     _LOGGER,
     ACCOUNT_ERROR_ACCOUNT_NOT_FOUND,
@@ -41,10 +43,14 @@ class GlucoseReading:
         self.mg_dl = self.value
         self.mmol_l = round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
         self.trend = json_glucose_reading["Trend"]
-        self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
-        self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
+        if isinstance(self.trend, int):
+            self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
+            self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
+        else:
+            self.trend_description = self.trend
+            self.trend_arrow = None
         self.time = datetime.datetime.fromtimestamp(
-            int(json_glucose_reading["WT"][6:][:-2]) / 1000.0
+            re.sub("[^0-9]", "", json_glucose_reading["WT"]) / 1000.0
         )
 
 
@@ -60,14 +66,23 @@ class Dexcom:
         self.create_session()
 
     def _request(
-        self, method: str, endpoint: str, params: dict = None, json: dict = {},
+        self,
+        method: str,
+        endpoint: str,
+        params: dict = None,
+        json: dict = {},
     ) -> dict:
         """Send request to Dexcom Share API."""
         try:
             url = f"{self.base_url}/{endpoint}"
             _LOGGER.debug(f"{method} request to {endpoint}:")
             _LOGGER.debug(f"url: {url} params:{params}, json: {json}")
-            r = requests.request(method, url, params=params, json=json,)
+            r = requests.request(
+                method,
+                url,
+                params=params,
+                json=json,
+            )
             _LOGGER.debug(f"{method} request response {r.status_code}:")
             _LOGGER.debug(f"json: {r.json()}")
             r.raise_for_status()
@@ -138,7 +153,7 @@ class Dexcom:
         """
         endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
         endpoint2 = DEXCOM_LOGIN_ENDPOINT
-        
+
         self.session_id = self._request("post", endpoint1, json=json)
         try:
             self._validate_session_id()
