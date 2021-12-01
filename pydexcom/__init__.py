@@ -50,7 +50,7 @@ class GlucoseReading:
             self.trend_description = self.trend
             self.trend_arrow = None
         self.time = datetime.datetime.fromtimestamp(
-            re.sub("[^0-9]", "", json_glucose_reading["WT"]) / 1000.0
+            int(re.sub("[^0-9]", "", json_glucose_reading["WT"])) / 1000.0
         )
 
 
