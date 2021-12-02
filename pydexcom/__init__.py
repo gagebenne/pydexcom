@@ -98,6 +98,8 @@ class Dexcom:
                     raise AccountError(ACCOUNT_ERROR_ACCOUNT_NOT_FOUND)
                 elif r.json()["Code"] == "SSO_AuthenticatePasswordInvalid":
                     raise AccountError(ACCOUNT_ERROR_PASSWORD_INVALID)
+                elif r.json()["Code"] == "SSO_AuthenticateMaxAttemptsExceeed":
+                    raise AccountError(ACCOUNT_ERROR_MAX_ATTEMPTS)
                 elif r.json()["Code"] == "InvalidArgument":
                     if "accountName" in r.json()["Message"]:
                         raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)

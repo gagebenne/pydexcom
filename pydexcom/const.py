@@ -24,6 +24,7 @@ ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
 ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
 ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
 ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
+ACCOUNT_ERROR_MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
 ACCOUNT_ERROR_UNKNOWN = "Account error"
 
 SESSION_ERROR_SESSION_ID_NULL = "Session ID null"
