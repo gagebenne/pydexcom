@@ -65,5 +65,9 @@ def test_login_endpoint_not_verbose():
         "password": "a",
         "applicationId": DEXCOM_APPLICATION_ID,
     }
-    r = requests.request("post", url, json=json,)
+    r = requests.request(
+        "post",
+        url,
+        json=json,
+    )
     assert r.json() == DEFAULT_SESSION_ID

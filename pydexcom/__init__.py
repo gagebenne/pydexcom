@@ -43,12 +43,10 @@ class GlucoseReading:
         self.mg_dl = self.value
         self.mmol_l = round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
         self.trend = json_glucose_reading["Trend"]
-        if isinstance(self.trend, int):
-            self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
-            self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
-        else:
-            self.trend_description = self.trend
-            self.trend_arrow = None
+        if not isinstance(self.trend, int):
+            self.trend = DEXCOM_TREND_DIRECTIONS.get(self.trend, 0)
+        self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
+        self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
         self.time = datetime.datetime.fromtimestamp(
             int(re.sub("[^0-9]", "", json_glucose_reading["WT"])) / 1000.0
         )
