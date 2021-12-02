@@ -24,6 +24,7 @@ ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
 ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
 ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
 ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
+ACCOUNT_ERROR_MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
 ACCOUNT_ERROR_UNKNOWN = "Account error"
 
 SESSION_ERROR_SESSION_ID_NULL = "Session ID null"
@@ -49,6 +50,20 @@ DEXCOM_TREND_DESCRIPTIONS = [
     "unable to determine trend",
     "trend unavailable",
 ]
+
+DEXCOM_TREND_DIRECTIONS = {
+    "None": 0,  # unconfirmed
+    "DoubleUp": 1,
+    "SingleUp": 2,
+    "FortyFiveUp": 3,
+    "Flat": 4,
+    "FortyFiveDown": 5,
+    "SingleDown": 6,
+    "DoubleDown": 7,
+    "NotComputable": 8,  # unconfirmed
+    "RateOutOfRange": 9,  # unconfirmed
+}
+
 DEXCOM_TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
 
 DEFAULT_SESSION_ID = "00000000-0000-0000-0000-000000000000"
