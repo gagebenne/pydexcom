@@ -7,13 +7,12 @@ import pytest
 from pydexcom import (
     DEFAULT_SESSION_ID,
     SESSION_ERROR_SESSION_ID_DEFAULT,
-    SESSION_ERROR_SESSION_NOT_FOUND,
     Dexcom,
     SessionError,
 )
 
-USERNAME = os.environ.get("PYDEXCOM_USERNAME")
-PASSWORD = os.environ.get("PYDEXCOM_PASSWORD")
+USERNAME = os.environ.get("DEXCOM_USERNAME")
+PASSWORD = os.environ.get("DEXCOM_PASSWORD")
 
 
 def test_env():
@@ -42,6 +41,4 @@ def test_glucose_readings_expired_session():
     """Test retrieving glucose readings with expired session ID."""
     d = Dexcom(USERNAME, PASSWORD)
     d.session_id = "12345678-1234-1234-1234-123456789012"
-    with pytest.raises(SessionError) as e:
-        d.get_current_glucose_reading()
-    assert SESSION_ERROR_SESSION_NOT_FOUND == str(e.value)
+    d.get_current_glucose_reading()

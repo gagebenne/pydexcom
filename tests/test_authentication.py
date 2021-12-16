@@ -12,13 +12,13 @@ from pydexcom import (
     DEFAULT_SESSION_ID,
     DEXCOM_APPLICATION_ID,
     DEXCOM_BASE_URL,
-    DEXCOM_LOGIN_ENDPOINT,
+    DEXCOM_LOGIN_ID_ENDPOINT,
     AccountError,
     Dexcom,
 )
 
-USERNAME = os.environ.get("PYDEXCOM_USERNAME")
-PASSWORD = os.environ.get("PYDEXCOM_PASSWORD")
+USERNAME = os.environ.get("DEXCOM_USERNAME")
+PASSWORD = os.environ.get("DEXCOM_PASSWORD")
 
 
 def test_env():
@@ -59,7 +59,7 @@ def test_authentication_success():
 
 def test_login_endpoint_not_verbose():
     """Test particular enpoint continues to be non-verbose."""
-    url = f"{DEXCOM_BASE_URL}/{DEXCOM_LOGIN_ENDPOINT}"
+    url = f"{DEXCOM_BASE_URL}/{DEXCOM_LOGIN_ID_ENDPOINT}"
     json = {
         "accountName": USERNAME,
         "password": "a",
