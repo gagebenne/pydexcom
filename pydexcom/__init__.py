@@ -22,7 +22,7 @@ from .const import (
     DEXCOM_BASE_URL,
     DEXCOM_BASE_URL_OUS,
     DEXCOM_GLUCOSE_READINGS_ENDPOINT,
-    DEXCOM_LOGIN_ENDPOINT,
+    DEXCOM_LOGIN_ID_ENDPOINT,
     DEXCOM_TREND_ARROWS,
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_TREND_DIRECTIONS,
@@ -30,6 +30,8 @@ from .const import (
     MMOL_L_CONVERTION_FACTOR,
     SESSION_ERROR_SESSION_ID_DEFAULT,
     SESSION_ERROR_SESSION_ID_NULL,
+    SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY,
+    SESSION_ERROR_ACCOUNT_ID_DEFAULT,
     SESSION_ERROR_SESSION_NOT_FOUND,
     SESSION_ERROR_SESSION_NOT_VALID,
 )
@@ -63,6 +65,7 @@ class Dexcom:
         self.username = username
         self.password = password
         self.session_id = None
+        self.account_id = None
         self.create_session()
 
     def _request(
@@ -97,7 +100,7 @@ class Dexcom:
                     raise SessionError(SESSION_ERROR_SESSION_NOT_FOUND)
                 elif r.json()["Code"] == "SSO_AuthenticateAccountNotFound":
                     raise AccountError(ACCOUNT_ERROR_ACCOUNT_NOT_FOUND)
-                elif r.json()["Code"] == "SSO_AuthenticatePasswordInvalid":
+                elif r.json()["Code"] == "AccountPasswordInvalid":
                     raise AccountError(ACCOUNT_ERROR_PASSWORD_INVALID)
                 elif r.json()["Code"] == "SSO_AuthenticateMaxAttemptsExceeed":
                     raise AccountError(ACCOUNT_ERROR_MAX_ATTEMPTS)
@@ -133,6 +136,15 @@ class Dexcom:
             _LOGGER.error(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
             raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
 
+    def _validate_account_id(self):
+        """Validate account ID."""
+        if not self.account_id:
+            _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY)
+            raise AccountError(SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY)
+        if self.account_id == DEFAULT_SESSION_ID:
+            _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
+            raise AccountError(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
+
     def create_session(self):
         """Create Dexcom Share API session by getting session id."""
         _LOGGER.debug("Get session ID")
@@ -144,21 +156,25 @@ class Dexcom:
             "applicationId": DEXCOM_APPLICATION_ID,
         }
         """
-        The Dexcom Share API at DEXCOM_LOGIN_ENDPOINT only returns
-        DEFAULT_SESSION_ID if credentials are invalid. To allow for more
-        verbose errors when validating credentials,
-        DEXCOM_AUTHENTICATE_ENDPOINT is used. Once the
-        DEXCOM_AUTHENTICATE_ENDPOINT returns a session ID (confirming
-        the credentials are valid), the original endpoint
-        DEXCOM_LOGIN_ENDPOINT must be used. This is because the
-        DEXCOM_AUTHENTICATE_ENDPOINT returns a bogus session ID.
+        The Dexcom Share API at DEXCOM_AUTHENTICATE_ENDPOINT
+        returns the account ID if credentials are valid -- whether
+        the username is a classic username or email. Using the
+        account ID the DEXCOM_LOGIN_ID_ENDPOINT is used to fetch
+        a session ID.
         """
         endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
-        endpoint2 = DEXCOM_LOGIN_ENDPOINT
+        endpoint2 = DEXCOM_LOGIN_ID_ENDPOINT
 
-        self.session_id = self._request("post", endpoint1, json=json)
+        self.account_id = self._request("post", endpoint1, json=json)
         try:
-            self._validate_session_id()
+            self._validate_account_id()
+
+            json = {
+                "accountId": self.account_id,
+                "password": self.password,
+                "applicationId": DEXCOM_APPLICATION_ID,
+            }
+
             self.session_id = self._request("post", endpoint2, json=json)
             self._validate_session_id()
         except SessionError:
@@ -206,8 +222,14 @@ class Dexcom:
                 "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
             )
         except SessionError:
-            _LOGGER.debug("Get session ID")
             self.create_session()
+
+            params = {
+                "sessionId": self.session_id,
+                "minutes": minutes,
+                "maxCount": max_count,
+            }
+
             json_glucose_readings = self._request(
                 "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
             )
