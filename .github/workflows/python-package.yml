@@ -36,7 +36,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       env:
-          PYDEXCOM_USERNAME: ${{ secrets.PYDEXCOM_USERNAME }}
-          PYDEXCOM_PASSWORD: ${{ secrets.PYDEXCOM_PASSWORD }}
+          DEXCOM_USERNAME: ${{ secrets.DEXCOM_USERNAME }}
+          DEXCOM_PASSWORD: ${{ secrets.DEXCOM_PASSWORD }}
       run: |
         pytest
