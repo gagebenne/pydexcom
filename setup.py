@@ -7,7 +7,7 @@ with open("README.md", "r") as file:
 
 setup(
     name="pydexcom",
-    version="0.2.1",
+    version="0.2.2",
     description="Python API to interact with Dexcom Share API",
     long_description=long_description,
     long_description_content_type="text/markdown",
