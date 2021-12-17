@@ -10,7 +10,6 @@ DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
 
 # Dexcom Share API endpoints
-DEXCOM_LOGIN_NAME_ENDPOINT = "General/LoginPublisherAccountByName"
 DEXCOM_LOGIN_ID_ENDPOINT = "General/LoginPublisherAccountById"
 DEXCOM_AUTHENTICATE_ENDPOINT = "General/AuthenticatePublisherAccount"
 DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT = (
