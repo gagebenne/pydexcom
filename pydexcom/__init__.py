@@ -93,7 +93,7 @@ class Dexcom:
         except requests.HTTPError:
             _LOGGER.error(f"json: {r.json()}")
             if r.status_code == 500:
-                _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
+                _LOGGER.debug(f'{r.json()["Code"]}: {r.json()["Message"]}')
                 if r.json()["Code"] == "SessionNotValid":
                     raise SessionError(SESSION_ERROR_SESSION_NOT_VALID)
                 elif r.json()["Code"] == "SessionIdNotFound":
