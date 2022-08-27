@@ -54,6 +54,9 @@ class GlucoseReading:
         self.time = datetime.datetime.fromtimestamp(
             int(re.sub("[^0-9]", "", json_glucose_reading["WT"])) / 1000.0
         )
+        # Drop the redundant timestamp fields
+        json_glucose_reading.pop('DT', None)
+        json_glucose_reading.pop('ST', None)
         # Allow access to raw JSON for serializing to file:
         self.json = json_glucose_reading
 

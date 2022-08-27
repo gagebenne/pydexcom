@@ -111,7 +111,7 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 | trend_description | Blood glucose trend information description (see constants). | `'steady'`                                  |
 | trend_arrow       | Blood glucose trend information as unicode arrow (see constants). | `'→'`                                  |
 | time              | Blood glucose recorded time as `datetime`.                   | `datetime.datetime(2020, 5, 6, 18, 18, 42)` |
-| json              | Raw blood glucose record from Dexcom API as a dict, for JSON text file output. | `{"WT": "Date(1661638198000)", "ST": "Date(1661638198000)", "DT": "Date(1661638198000-0400)", "Value": 85, "Trend": "Flat"}`
+| json              | Raw blood glucose record from Dexcom API as a dict, for JSON text file output. | `{"WT": "Date(1588803522000)", "Value": 85, "Trend": "Flat"}`
 
 ##### Constants
 
