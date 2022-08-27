@@ -40,6 +40,21 @@ A simple Python API to interact with Dexcom Share service. Used to get **real ti
 
 >>> bg.time
 datetime.datetime(2020, 5, 6, 18, 18, 42)
+
+>>> # Write to file: 
+>>> bg_list = dexcom.get_glucose_readings(max_count=5)
+>>> import json
+>>> with open('bg_file.json', 'w') as f:
+>>>     for bg in bg_list:
+>>>         f.write(json.dumps(bg.json)+"\n")
+
+>>> # Read from file: 
+>>> bg_list = []
+>>> from pydexcom import GlucoseReading
+>>> with open('bg_file.json', 'r') as f:
+>>>     for line in f.readlines():
+>>>         bg_list.append(GlucoseReading(json.loads(line)))
+
 ```
 
 ### FAQ
@@ -96,7 +111,7 @@ Sure, I'm thinking of implementing a session status checker, or maybe an asynchr
 | trend_description | Blood glucose trend information description (see constants). | `'steady'`                                  |
 | trend_arrow       | Blood glucose trend information as unicode arrow (see constants). | `'→'`                                  |
 | time              | Blood glucose recorded time as `datetime`.                   | `datetime.datetime(2020, 5, 6, 18, 18, 42)` |
-| json              | Blood glucose record as raw JSON, for text file output. | `{"WT": "Date(1661638198000)", "ST": "Date(1661638198000)", "DT": "Date(1661638198000-0400)", "Value": 85, "Trend": "Flat"}`
+| json              | Raw blood glucose record from Dexcom API as a dict, for JSON text file output. | `{"WT": "Date(1661638198000)", "ST": "Date(1661638198000)", "DT": "Date(1661638198000-0400)", "Value": 85, "Trend": "Flat"}`
 
 ##### Constants
 
