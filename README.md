@@ -4,7 +4,7 @@
 
 # pydexcom
 
-A simple Python API to interact with Dexcom Share service. Used to get **real time** Dexcom GCM sensor data.
+A simple Python API to interact with Dexcom Share service. Used to get **real time** Dexcom CGM sensor data.
 
 ### Setup
 
@@ -62,7 +62,7 @@ datetime.datetime(2020, 5, 6, 18, 18, 42)
 <details>
 <summary>What do I need to get started?</a></summary>
 <br/>
-If you are currently on the Dexcom GCM system, all you need is the appropriate mobile app with the Dexcom Share service enabled.
+If you are currently on the Dexcom CGM system, all you need is the appropriate mobile app with the Dexcom Share service enabled.
 </details>
 <details>
 <summary>Where is this package being used?</a></summary>
