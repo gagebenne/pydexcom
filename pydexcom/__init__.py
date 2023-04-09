@@ -1,7 +1,7 @@
 """The pydexcom module for interacting with Dexcom Share API."""
-import datetime
+import adafruit_datetime as datetime
 
-import requests
+import adafruit_requests as requests
 
 import re
 
@@ -64,14 +64,16 @@ class GlucoseReading:
 class Dexcom:
     """Class for communicating with Dexcom Share API."""
 
-    def __init__(self, username: str, password: str, ous: bool = False):
+    def __init__(self, username: str, password: str, request_session: request.Session, ous: bool = False,):
         """Initialize with JSON glucose reading from Dexcom Share API."""
         self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self.username = username
         self.password = password
         self.session_id = None
         self.account_id = None
+        self.request_session = request_session
         self.create_session()
+
 
     def _request(
         self,
@@ -85,18 +87,17 @@ class Dexcom:
             url = f"{self.base_url}/{endpoint}"
             _LOGGER.debug(f"{method} request to {endpoint}:")
             _LOGGER.debug(f"url: {url} params:{params}, json: {json}")
-            r = requests.request(
+            r = self.request_session.request(
                 method,
                 url,
-                params=params,
                 json=json,
-            )
-            _LOGGER.debug(f"{method} request response {r.status_code}:")
-            _LOGGER.debug(f"json: {r.json()}")
-            r.raise_for_status()
+                data=params
+                )
+            _LOGGER.debug(f"{method} request response {r.status_code}:{r.reason}")
+            if r.status_code != 200:
+                raise RuntimeError(f"HTTP Error : {r.status_code}")
             return r.json()
-        except requests.HTTPError:
-            _LOGGER.error(f"json: {r.json()}")
+        except RuntimeError:
             if r.status_code == 500:
                 _LOGGER.debug(f'{r.json()["Code"]}: {r.json()["Message"]}')
                 if r.json()["Code"] == "SessionNotValid":
@@ -119,8 +120,9 @@ class Dexcom:
             else:
                 _LOGGER.error(f"{r.status_code}: {r.json()}")
         except Exception:
-            _LOGGER.error(r.status_code)
+            #_LOGGER.error(r.status_code)
             _LOGGER.error("Unknown request error")
+
         return None
 
     def _validate_session_id(self):
@@ -170,7 +172,7 @@ class Dexcom:
         endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
         endpoint2 = DEXCOM_LOGIN_ID_ENDPOINT
 
-        self.account_id = self._request("post", endpoint1, json=json)
+        self.account_id = self._request("POST", endpoint1, json=json)
         try:
             self._validate_account_id()
 
@@ -180,7 +182,7 @@ class Dexcom:
                 "applicationId": DEXCOM_APPLICATION_ID,
             }
 
-            self.session_id = self._request("post", endpoint2, json=json)
+            self.session_id = self._request("POST", endpoint2, json=json)
             self._validate_session_id()
         except SessionError:
             raise AccountError(ACCOUNT_ERROR_UNKNOWN)
@@ -195,13 +197,13 @@ class Dexcom:
         params = {"sessionId": self.session_id, "serialNumber": serial_number}
         try:
             r = self._request(
-                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
+                "POST", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
             )
         except SessionError:
             _LOGGER.debug("Get new session ID")
             self.create_session()
             r = self._request(
-                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
+                "POST", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
             )
         return r.json() == "AssignedToYou"
 
@@ -224,7 +226,7 @@ class Dexcom:
         }
         try:
             json_glucose_readings = self._request(
-                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
+                "POST", DEXCOM_GLUCOSE_READINGS_ENDPOINT, json=params
             )
         except SessionError:
             self.create_session()
@@ -236,7 +238,7 @@ class Dexcom:
             }
 
             json_glucose_readings = self._request(
-                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
+                "POST", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
             )
 
         glucose_readings = []

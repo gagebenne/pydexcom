@@ -1,9 +1,9 @@
 """Constants used in pydexcom."""
 
-import logging
+import adafruit_logging as logging
 
 _LOGGER = logging.getLogger("pydexcom")
-
+#_LOGGER.setLevel(logging.DEBUG)
 
 # Dexcom Share API base urls
 DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
