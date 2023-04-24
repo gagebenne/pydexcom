@@ -41,14 +41,14 @@ A simple Python API to interact with Dexcom Share service. Used to get **real ti
 >>> bg.time
 datetime.datetime(2020, 5, 6, 18, 18, 42)
 
->>> # Write to file: 
+>>> # Write to file:
 >>> bg_list = dexcom.get_glucose_readings(max_count=5)
 >>> import json
 >>> with open('bg_file.json', 'w') as f:
 >>>     for bg in bg_list:
 >>>         f.write(json.dumps(bg.json)+"\n")
 
->>> # Read from file: 
+>>> # Read from file:
 >>> bg_list = []
 >>> from pydexcom import GlucoseReading
 >>> with open('bg_file.json', 'r') as f:
@@ -67,8 +67,8 @@ If you are currently on the Dexcom CGM system, all you need is the appropriate m
 <details>
 <summary>Where is this package being used?</a></summary>
 <br/>
-For now this package is mainly being used in the <a href="https://github.com/home-assistant/core/pull/33852">Dexcom home assistant integration</a>, but is generic enough to be used in lots of applications.
-In fact, reddit user paulcole710 used it to track glucose levels <a href="https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker">using a Raspberry Pi and e-ink display</a>.
+For now this package is mainly being used in the <a href="https://github.com/home-assistant/core/pull/33852">Dexcom Home Assistant integration</a>, but is generic enough to be used in lots of applications.
+In fact, Reddit user paulcole710 used it to track glucose levels <a href="https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker">using a Raspberry Pi and E Ink display</a>.
 </details>
 
 <details>
@@ -84,7 +84,7 @@ By all means submit a pull request if you have a feature you'd like to see in th
 <details>
 <summary>Are there any features in development?</summary>
 <br/>
-Sure, I'm thinking of implementing a session status checker, or maybe an asynchronus version. That being said, simplicity - getting real time blood glucose information - is most important to this package.
+Sure, I'm thinking of implementing a session status checker, or maybe an asynchronous version. That being said, simplicity - getting real time blood glucose information - is most important to this package.
 </details>
 
 ### Development
