@@ -16,3 +16,6 @@ dependencies = [
     "requests>=2.0",
 ]
 dynamic = ["version"]
+
+[tool.isort]
+profile = "black"

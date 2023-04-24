@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"python.testing.pytestArgs": [
+			"tests"
+		],
+		"python.testing.pytestEnabled": true,
+		"editor.formatOnSave": true,
+		"python.formatting.provider": "none",
+		"isort.args": [
+			"--profile",
+			"black"
+		],
+		"[python]": {
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": true
+			},
+			"editor.defaultFormatter": "ms-python.black-formatter"
+		}
+	}
+}
