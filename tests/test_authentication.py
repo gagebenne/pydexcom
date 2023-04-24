@@ -1,6 +1,5 @@
 """Test authentication."""
-
-import os
+from typing import Type
 
 import pytest
 import requests
@@ -16,15 +15,9 @@ from pydexcom import (
     AccountError,
     Dexcom,
 )
+from pydexcom.errors import DexcomError
 
-USERNAME = os.environ.get("DEXCOM_USERNAME")
-PASSWORD = os.environ.get("DEXCOM_PASSWORD")
-
-
-def test_env():
-    """Ensure environment variables are set."""
-    assert USERNAME
-    assert PASSWORD
+from . import PASSWORD, USERNAME
 
 
 @pytest.mark.parametrize(
@@ -43,22 +36,24 @@ def test_env():
         ([USERNAME, "a"], AccountError, ACCOUNT_ERROR_PASSWORD_INVALID),
     ],
 )
-def test_authentication_errors(input, output, reason):
+def test_authentication_errors(
+    input: str, output: Type[DexcomError], reason: str
+) -> None:
     """Test initializing Dexcom with authentication errors."""
     with pytest.raises(output) as e:
         Dexcom(input[0], input[1])
     assert reason == str(e.value)
 
 
-def test_authentication_success():
+def test_authentication_success() -> None:
     """Test initializing Dexcom authentication success."""
     d = Dexcom(USERNAME, PASSWORD)
     d._validate_account()
     d._validate_session_id()
 
 
-def test_login_endpoint_not_verbose():
-    """Test particular enpoint continues to be non-verbose."""
+def test_login_endpoint_not_verbose() -> None:
+    """Test particular endpoint continues to be non-verbose."""
     url = f"{DEXCOM_BASE_URL}/{DEXCOM_LOGIN_ID_ENDPOINT}"
     json = {
         "accountName": USERNAME,
