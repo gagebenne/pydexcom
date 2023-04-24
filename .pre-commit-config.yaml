@@ -25,3 +25,15 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [types-requests]
+        exclude: ^tests/
+        args: [
+          "--warn-unused-configs",
+          "--ignore-missing-imports",
+          "--disallow-untyped-calls",
+          "--disallow-untyped-defs",
+          "--disallow-incomplete-defs",
+          "--check-untyped-defs",
+          "--disallow-untyped-decorators",
+          "--disallow-any-unimported",
+          "--warn-redundant-casts",
+        ]
