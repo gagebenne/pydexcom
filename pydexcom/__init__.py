@@ -43,22 +43,64 @@ class GlucoseReading:
 
     def __init__(self, json_glucose_reading: dict):
         """Initialize with JSON glucose reading from Dexcom Share API."""
-        self.value = json_glucose_reading["Value"]
-        self.mg_dl = self.value
-        self.mmol_l = round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
-        self.trend = json_glucose_reading["Trend"]
-        if not isinstance(self.trend, int):
-            self.trend = DEXCOM_TREND_DIRECTIONS.get(self.trend, 0)
-        self.trend_description = DEXCOM_TREND_DESCRIPTIONS[self.trend]
-        self.trend_arrow = DEXCOM_TREND_ARROWS[self.trend]
-        self.time = datetime.datetime.fromtimestamp(
+        self._json = json_glucose_reading
+
+        self._value = int(json_glucose_reading["Value"])
+        self._trend_direction: str = json_glucose_reading["Trend"]
+        # API returns `str` direction now, previously `int` trend
+        self._trend: int = DEXCOM_TREND_DIRECTIONS.get(
+            self._trend_direction,
+            0,
+        )
+        self._time = datetime.datetime.fromtimestamp(
             int(re.sub("[^0-9]", "", json_glucose_reading["WT"])) / 1000.0
         )
-        # Drop the redundant timestamp fields
-        json_glucose_reading.pop('DT', None)
-        json_glucose_reading.pop('ST', None)
-        # Allow access to raw JSON for serializing to file:
-        self.json = json_glucose_reading
+
+    @property
+    def value(self) -> int:
+        """Blood glucose value in mg/dL."""
+        return self._value
+
+    @property
+    def mg_dl(self) -> int:
+        """Blood glucose value in mg/dL."""
+        return self._value
+
+    @property
+    def mmol_l(self) -> float:
+        """Blood glucose value in mmol/L."""
+        return round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
+
+    @property
+    def trend(self) -> int:
+        """Blood glucose trend information as number 0 - 9 (see constants)."""
+        return self._trend
+
+    @property
+    def trend_description(self) -> Optional[str]:
+        """Blood glucose trend information description (see constants)."""
+        try:
+            return DEXCOM_TREND_DESCRIPTIONS[self._trend]
+        except IndexError:
+            return None
+
+    @property
+    def trend_arrow(self) -> Optional[str]:
+        """Blood glucose trend information as unicode arrow (see constants)."""
+        try:
+            return DEXCOM_TREND_ARROWS[self._trend]
+        except IndexError:
+            return None
+
+    @property
+    def time(self) -> datetime.datetime:
+        """Blood glucose recorded time as datetime."""
+        return self._time
+
+    @property
+    def json(self) -> Dict:
+        """Raw blood glucose record from Dexcom API as a dict."""
+        return self._json
 
 
 class Dexcom:
