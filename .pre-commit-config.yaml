@@ -25,7 +25,6 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [types-requests]
-        exclude: ^tests/
         args: [
           "--warn-unused-configs",
           "--ignore-missing-imports",
