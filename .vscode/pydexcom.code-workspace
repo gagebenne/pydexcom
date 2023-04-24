@@ -38,7 +38,6 @@
 			"--disallow-untyped-defs",
 			"--disallow-incomplete-defs",
 			"--check-untyped-defs",
-			"--disallow-untyped-decorators",
 			"--disallow-any-unimported",
 			"--warn-redundant-casts"
 		],
