@@ -14,8 +14,8 @@ from .const import (
     ACCOUNT_ERROR_PASSWORD_INVALID,
     ACCOUNT_ERROR_PASSWORD_NULL_EMPTY,
     ACCOUNT_ERROR_USERNAME_NULL_EMPTY,
-    ARGUEMENT_ERROR_MAX_COUNT_INVALID,
-    ARGUEMENT_ERROR_MINUTES_INVALID,
+    ARGUMENT_ERROR_MAX_COUNT_INVALID,
+    ARGUMENT_ERROR_MINUTES_INVALID,
     DEFAULT_SESSION_ID,
     DEXCOM_APPLICATION_ID,
     DEXCOM_AUTHENTICATE_ENDPOINT,
@@ -27,14 +27,14 @@ from .const import (
     DEXCOM_TREND_ARROWS,
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_TREND_DIRECTIONS,
-    MMOL_L_CONVERTION_FACTOR,
+    MMOL_L_CONVERSION_FACTOR,
     SESSION_ERROR_SESSION_ID_DEFAULT,
     SESSION_ERROR_SESSION_ID_NULL,
     SESSION_ERROR_SESSION_NOT_FOUND,
     SESSION_ERROR_SESSION_NOT_VALID,
     SESSION_ERROR_UNKNOWN,
 )
-from .errors import AccountError, ArguementError, SessionError
+from .errors import AccountError, ArgumentError, SessionError
 
 
 class GlucoseReading:
@@ -67,7 +67,7 @@ class GlucoseReading:
     @property
     def mmol_l(self) -> float:
         """Blood glucose value in mmol/L."""
-        return round(self.value * MMOL_L_CONVERTION_FACTOR, 1)
+        return round(self.value * MMOL_L_CONVERSION_FACTOR, 1)
 
     @property
     def trend(self) -> int:
@@ -121,6 +121,8 @@ class Dexcom:
         json: Optional[Dict[str, Any]] = None,
     ) -> Optional[Any]:
         """Send request to Dexcom Share API."""
+        if json is None:
+            json = {}
         try:
             url = f"{self.base_url}/{endpoint}"
             r = requests.request(
@@ -215,7 +217,7 @@ class Dexcom:
             self.session_id = self._request("post", endpoint2, json=json)
             self._validate_session_id()
         except SessionError as session_error:
-            raise AccountError("Uknown") from session_error
+            raise AccountError("Unknown") from session_error
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
@@ -223,9 +225,9 @@ class Dexcom:
         """Get max_count glucose readings within specified minutes."""
         self._validate_session_id()
         if minutes < 1 or minutes > 1440:
-            raise ArguementError(ARGUEMENT_ERROR_MINUTES_INVALID)
+            raise ArgumentError(ARGUMENT_ERROR_MINUTES_INVALID)
         if max_count < 1 or max_count > 288:
-            raise ArguementError(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
+            raise ArgumentError(ARGUMENT_ERROR_MAX_COUNT_INVALID)
 
         params = {
             "sessionId": self.session_id,
