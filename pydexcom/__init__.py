@@ -229,26 +229,6 @@ class Dexcom:
         except SessionError:
             raise AccountError(ACCOUNT_ERROR_UNKNOWN)
 
-    def verify_serial_number(self, serial_number: str) -> bool:
-        """Verify if transmitter serial number is assigned to user."""
-        self._validate_session_id()
-        if not serial_number:
-            _LOGGER.error(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
-            raise ArguementError(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
-
-        params = {"sessionId": self.session_id, "serialNumber": serial_number}
-        try:
-            r = self._request(
-                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
-            )
-        except SessionError:
-            _LOGGER.debug("Get new session ID")
-            self.create_session()
-            r = self._request(
-                "post", DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT, params=params
-            )
-        return r.json() == "AssignedToYou"
-
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
     ) -> Optional[List[GlucoseReading]]:
