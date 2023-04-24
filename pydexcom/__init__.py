@@ -32,7 +32,6 @@ from .const import (
     SESSION_ERROR_SESSION_ID_NULL,
     SESSION_ERROR_SESSION_NOT_FOUND,
     SESSION_ERROR_SESSION_NOT_VALID,
-    SESSION_ERROR_UNKNOWN,
 )
 from .errors import AccountError, ArgumentError, SessionError
 
@@ -107,37 +106,35 @@ class Dexcom:
     def __init__(self, username: str, password: str, ous: bool = False):
         """Initialize with JSON glucose reading from Dexcom Share API."""
         self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
-        self.username = username
-        self.password = password
-        self.session_id: Optional[str] = None
-        self.account_id: Optional[str] = None
-        self.create_session()
+        self._username = username
+        self._password = password
+        self._session_id: Optional[str] = None
+        self._account_id: Optional[str] = None
+        self._session()
 
-    def _request(
+    def _post(
         self,
-        method: str,
         endpoint: str,
         params: Optional[Dict[str, Any]] = None,
         json: Optional[Dict[str, Any]] = None,
-    ) -> Optional[Any]:
+    ) -> Any:
         """Send request to Dexcom Share API."""
         if json is None:
             json = {}
         try:
             url = f"{self.base_url}/{endpoint}"
-            r = requests.request(
-                method,
+            response = requests.post(
                 url,
                 params=params,
                 json=json,
                 timeout=DEXCOM_REQUEST_TIMEOUT,
             )
-            r.raise_for_status()
-            return r.json()
+            response.raise_for_status()
+            return response.json()
         except requests.HTTPError as http_error:
-            if r.json():
-                code = r.json().get("Code", None)
-                message = r.json().get("Message", None)
+            if response.json():
+                code = response.json().get("Code", None)
+                message = response.json().get("Message", None)
                 if code == "SessionNotValid":
                     raise SessionError(SESSION_ERROR_SESSION_NOT_VALID) from http_error
                 if code == "SessionIdNotFound":
@@ -159,117 +156,104 @@ class Dexcom:
                         ) from http_error
                 if code and message:
                     _LOGGER.error("%s: %s", code, message)
-                else:
-                    _LOGGER.error("%s", r.json())
-                raise SessionError(SESSION_ERROR_UNKNOWN) from http_error
+            _LOGGER.error("%s", response.text)
             raise http_error
 
     def _validate_session_id(self) -> None:
         """Validate session ID."""
-        if not self.session_id:
+        if not self._session_id:
             raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
-        if self.session_id == DEFAULT_SESSION_ID:
+        if self._session_id == DEFAULT_SESSION_ID:
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
     def _validate_account(self) -> None:
         """Validate credentials."""
-        if not self.username:
+        if not self._username:
             raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
-        if not self.password:
+        if not self._password:
             raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
 
     def _validate_account_id(self) -> None:
         """Validate account ID."""
-        if not self.account_id:
+        if not self._account_id:
             raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY)
-        if self.account_id == DEFAULT_SESSION_ID:
+        if self._account_id == DEFAULT_SESSION_ID:
             raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT)
 
-    def create_session(self) -> None:
-        """Create Dexcom Share API session by getting session id."""
+    def _session(self) -> None:
+        """Create Dexcom Share API session by getting session ID."""
         self._validate_account()
 
         json = {
-            "accountName": self.username,
-            "password": self.password,
+            "accountName": self._username,
+            "password": self._password,
             "applicationId": DEXCOM_APPLICATION_ID,
         }
-        # The Dexcom Share API at DEXCOM_AUTHENTICATE_ENDPOINT
-        # returns the account ID if credentials are valid -- whether
-        # the username is a classic username or email. Using the
-        # account ID the DEXCOM_LOGIN_ID_ENDPOINT is used to fetch
-        # a session ID.
-        endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
-        endpoint2 = DEXCOM_LOGIN_ID_ENDPOINT
+        account_id: str = self._post(
+            DEXCOM_AUTHENTICATE_ENDPOINT,
+            json=json,
+        )
+        self._account_id = account_id
 
-        self.account_id = self._request("post", endpoint1, json=json)
-        if not self.account_id:
-            raise SessionError(SESSION_ERROR_UNKNOWN)
-        try:
-            self._validate_account_id()
+        self._validate_account_id()
 
-            json = {
-                "accountId": self.account_id,
-                "password": self.password,
-                "applicationId": DEXCOM_APPLICATION_ID,
-            }
+        json = {
+            "accountId": self._account_id,
+            "password": self._password,
+            "applicationId": DEXCOM_APPLICATION_ID,
+        }
+        session_id: str = self._post(
+            DEXCOM_LOGIN_ID_ENDPOINT,
+            json=json,
+        )
+        self._session_id = session_id
 
-            self.session_id = self._request("post", endpoint2, json=json)
-            self._validate_session_id()
-        except SessionError as session_error:
-            raise AccountError("Unknown") from session_error
+        self._validate_session_id()
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
     ) -> Optional[List[GlucoseReading]]:
         """Get max_count glucose readings within specified minutes."""
-        self._validate_session_id()
         if minutes < 1 or minutes > 1440:
             raise ArgumentError(ARGUMENT_ERROR_MINUTES_INVALID)
         if max_count < 1 or max_count > 288:
             raise ArgumentError(ARGUMENT_ERROR_MAX_COUNT_INVALID)
 
+        # Requesting glucose reading with DEFAULT_SESION_ID
+        # returns non-JSON empty string
+        self._validate_session_id()
+
+        json_glucose_readings = []
+
         params = {
-            "sessionId": self.session_id,
+            "sessionId": self._session_id,
             "minutes": minutes,
             "maxCount": max_count,
         }
+
         try:
-            json_glucose_readings = self._request(
-                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
+            json_glucose_readings = self._post(
+                DEXCOM_GLUCOSE_READINGS_ENDPOINT,
+                params=params,
             )
         except SessionError:
-            self.create_session()
+            self._session()
 
-            params = {
-                "sessionId": self.session_id,
-                "minutes": minutes,
-                "maxCount": max_count,
-            }
+            params["sessionId"] = self._session_id
 
-            json_glucose_readings = self._request(
-                "post", DEXCOM_GLUCOSE_READINGS_ENDPOINT, params=params
+            json_glucose_readings = self._post(
+                DEXCOM_GLUCOSE_READINGS_ENDPOINT,
+                params=params,
             )
 
-        glucose_readings = []
-        if not json_glucose_readings:
-            return None
-        for json_glucose_reading in json_glucose_readings:
-            glucose_readings.append(GlucoseReading(json_glucose_reading))
-        if not glucose_readings:
-            return None
-        return glucose_readings
+        return [GlucoseReading(reading) for reading in json_glucose_readings]
 
     def get_latest_glucose_reading(self) -> Optional[GlucoseReading]:
         """Get latest available glucose reading."""
         glucose_readings = self.get_glucose_readings(max_count=1)
-        if not glucose_readings:
-            return None
-        return glucose_readings[0]
+        return glucose_readings[0] if glucose_readings else None
 
     def get_current_glucose_reading(self) -> Optional[GlucoseReading]:
         """Get current available glucose reading."""
         glucose_readings = self.get_glucose_readings(minutes=10, max_count=1)
-        if not glucose_readings:
-            return None
-        return glucose_readings[0]
+        return glucose_readings[0] if glucose_readings else None
