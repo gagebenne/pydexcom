@@ -22,8 +22,8 @@ DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 # Dexcom error strings
 ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
 ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
-SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY = "Accound ID null or empty"
-SESSION_ERROR_ACCOUNT_ID_DEFAULT = "Accound ID default"
+SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY = "Account ID null or empty"
+SESSION_ERROR_ACCOUNT_ID_DEFAULT = "Account ID default"
 ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
 ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
 ACCOUNT_ERROR_MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
@@ -34,9 +34,9 @@ SESSION_ERROR_SESSION_ID_DEFAULT = "Session ID default"
 SESSION_ERROR_SESSION_NOT_VALID = "Session ID not valid"
 SESSION_ERROR_SESSION_NOT_FOUND = "Session ID not found"
 
-ARGUEMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
-ARGUEMENT_ERROR_MAX_COUNT_INVALID = "Max count must be between 1 and 288"
-ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
+ARGUMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
+ARGUMENT_ERROR_MAX_COUNT_INVALID = "Max count must be between 1 and 288"
+ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
 
 
 # Other
@@ -70,4 +70,4 @@ DEXCOM_TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓"
 
 DEFAULT_SESSION_ID = "00000000-0000-0000-0000-000000000000"
 
-MMOL_L_CONVERTION_FACTOR = 0.0555
+MMOL_L_CONVERSION_FACTOR = 0.0555
