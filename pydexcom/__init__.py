@@ -167,10 +167,8 @@ class Dexcom:
     def _validate_session_id(self) -> None:
         """Validate session ID."""
         if not self.session_id:
-            _LOGGER.error(SESSION_ERROR_SESSION_ID_NULL)
             raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
         if self.session_id == DEFAULT_SESSION_ID:
-            _LOGGER.error(SESSION_ERROR_SESSION_ID_DEFAULT)
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
     def _validate_account(self) -> None:
