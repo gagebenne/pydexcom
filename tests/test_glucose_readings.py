@@ -31,7 +31,7 @@ def test_glucose_readings_success():
 def test_glucose_readings_invalid_session():
     """Test retrieving glucose readings with default session ID."""
     d = Dexcom(USERNAME, PASSWORD)
-    d.session_id = DEFAULT_SESSION_ID
+    d._session_id = DEFAULT_SESSION_ID
     with pytest.raises(SessionError) as e:
         d.get_current_glucose_reading()
     assert SESSION_ERROR_SESSION_ID_DEFAULT == str(e.value)
@@ -40,5 +40,5 @@ def test_glucose_readings_invalid_session():
 def test_glucose_readings_expired_session():
     """Test retrieving glucose readings with expired session ID."""
     d = Dexcom(USERNAME, PASSWORD)
-    d.session_id = "12345678-1234-1234-1234-123456789012"
+    d._session_id = "12345678-1234-1234-1234-123456789012"
     d.get_current_glucose_reading()
