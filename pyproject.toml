@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pydexcom"
+authors = [
+    {name = "Gage Benne"},
+]
+description = "Python API to interact with Dexcom Share API"
+readme = "README.md"
+requires-python = ">=3.6"
+keywords = ["dexcom"]
+license = {text = "MIT"}
+dependencies = [
+    "requests>=2.0",
+]
+dynamic = ["version"]

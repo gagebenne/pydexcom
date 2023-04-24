@@ -1,3 +1,4 @@
 dist/
 pydexcom.egg-info
 __pycache__
+.venv
