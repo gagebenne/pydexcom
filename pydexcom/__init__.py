@@ -7,15 +7,15 @@ import requests
 
 from .const import (
     _LOGGER,
+    ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT,
+    ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY,
     ACCOUNT_ERROR_ACCOUNT_NOT_FOUND,
     ACCOUNT_ERROR_MAX_ATTEMPTS,
     ACCOUNT_ERROR_PASSWORD_INVALID,
     ACCOUNT_ERROR_PASSWORD_NULL_EMPTY,
-    ACCOUNT_ERROR_UNKNOWN,
     ACCOUNT_ERROR_USERNAME_NULL_EMPTY,
     ARGUEMENT_ERROR_MAX_COUNT_INVALID,
     ARGUEMENT_ERROR_MINUTES_INVALID,
-    ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY,
     DEFAULT_SESSION_ID,
     DEXCOM_APPLICATION_ID,
     DEXCOM_AUTHENTICATE_ENDPOINT,
@@ -23,17 +23,16 @@ from .const import (
     DEXCOM_BASE_URL_OUS,
     DEXCOM_GLUCOSE_READINGS_ENDPOINT,
     DEXCOM_LOGIN_ID_ENDPOINT,
+    DEXCOM_REQUEST_TIMEOUT,
     DEXCOM_TREND_ARROWS,
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_TREND_DIRECTIONS,
-    DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT,
     MMOL_L_CONVERTION_FACTOR,
-    SESSION_ERROR_ACCOUNT_ID_DEFAULT,
-    SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY,
     SESSION_ERROR_SESSION_ID_DEFAULT,
     SESSION_ERROR_SESSION_ID_NULL,
     SESSION_ERROR_SESSION_NOT_FOUND,
     SESSION_ERROR_SESSION_NOT_VALID,
+    SESSION_ERROR_UNKNOWN,
 )
 from .errors import AccountError, ArguementError, SessionError
 
@@ -44,7 +43,6 @@ class GlucoseReading:
     def __init__(self, json_glucose_reading: Dict[str, Any]):
         """Initialize with JSON glucose reading from Dexcom Share API."""
         self._json = json_glucose_reading
-
         self._value = int(json_glucose_reading["Value"])
         self._trend_direction: str = json_glucose_reading["Trend"]
         # API returns `str` direction now, previously `int` trend
@@ -120,81 +118,73 @@ class Dexcom:
         method: str,
         endpoint: str,
         params: Optional[Dict[str, Any]] = None,
-        json: Dict[str, Any] = {},
+        json: Optional[Dict[str, Any]] = None,
     ) -> Optional[Any]:
         """Send request to Dexcom Share API."""
         try:
             url = f"{self.base_url}/{endpoint}"
-            _LOGGER.debug(f"{method} request to {endpoint}:")
-            _LOGGER.debug(f"url: {url} params:{params}, json: {json}")
             r = requests.request(
                 method,
                 url,
                 params=params,
                 json=json,
+                timeout=DEXCOM_REQUEST_TIMEOUT,
             )
-            _LOGGER.debug(f"{method} request response {r.status_code}:")
-            _LOGGER.debug(f"json: {r.json()}")
             r.raise_for_status()
             return r.json()
-        except requests.HTTPError:
-            _LOGGER.error(f"json: {r.json()}")
-            if r.status_code == 500:
-                _LOGGER.debug(f'{r.json()["Code"]}: {r.json()["Message"]}')
-                if r.json()["Code"] == "SessionNotValid":
-                    raise SessionError(SESSION_ERROR_SESSION_NOT_VALID)
-                elif r.json()["Code"] == "SessionIdNotFound":
-                    raise SessionError(SESSION_ERROR_SESSION_NOT_FOUND)
-                elif r.json()["Code"] == "SSO_AuthenticateAccountNotFound":
-                    raise AccountError(ACCOUNT_ERROR_ACCOUNT_NOT_FOUND)
-                elif r.json()["Code"] == "AccountPasswordInvalid":
-                    raise AccountError(ACCOUNT_ERROR_PASSWORD_INVALID)
-                elif r.json()["Code"] == "SSO_AuthenticateMaxAttemptsExceeed":
-                    raise AccountError(ACCOUNT_ERROR_MAX_ATTEMPTS)
-                elif r.json()["Code"] == "InvalidArgument":
-                    if "accountName" in r.json()["Message"]:
-                        raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
-                    if "password" in r.json()["Message"]:
-                        raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
+        except requests.HTTPError as http_error:
+            if r.json():
+                code = r.json().get("Code", None)
+                message = r.json().get("Message", None)
+                if code == "SessionNotValid":
+                    raise SessionError(SESSION_ERROR_SESSION_NOT_VALID) from http_error
+                if code == "SessionIdNotFound":
+                    raise SessionError(SESSION_ERROR_SESSION_NOT_FOUND) from http_error
+                if code == "SSO_AuthenticateAccountNotFound":
+                    raise AccountError(ACCOUNT_ERROR_ACCOUNT_NOT_FOUND) from http_error
+                if code == "AccountPasswordInvalid":
+                    raise AccountError(ACCOUNT_ERROR_PASSWORD_INVALID) from http_error
+                if code == "SSO_AuthenticateMaxAttemptsExceeed":
+                    raise AccountError(ACCOUNT_ERROR_MAX_ATTEMPTS) from http_error
+                if code == "InvalidArgument":
+                    if message and "accountName" in message:
+                        raise AccountError(
+                            ACCOUNT_ERROR_USERNAME_NULL_EMPTY
+                        ) from http_error
+                    if message and "password" in message:
+                        raise AccountError(
+                            ACCOUNT_ERROR_PASSWORD_NULL_EMPTY
+                        ) from http_error
+                if code and message:
+                    _LOGGER.error("%s: %s", code, message)
                 else:
-                    _LOGGER.error(f'{r.json()["Code"]}: {r.json()["Message"]}')
-            else:
-                _LOGGER.error(f"{r.status_code}: {r.json()}")
-        except Exception:
-            _LOGGER.error(r.status_code)
-            _LOGGER.error("Unknown request error")
-        return None
+                    _LOGGER.error("%s", r.json())
+                raise SessionError(SESSION_ERROR_UNKNOWN) from http_error
+            raise http_error
 
     def _validate_session_id(self) -> None:
-        """Validate session id."""
+        """Validate session ID."""
         if not self.session_id:
-            _LOGGER.error(SESSION_ERROR_SESSION_ID_NULL)
             raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
         if self.session_id == DEFAULT_SESSION_ID:
-            _LOGGER.error(SESSION_ERROR_SESSION_ID_DEFAULT)
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
     def _validate_account(self) -> None:
         """Validate credentials."""
         if not self.username:
-            _LOGGER.error(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
             raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
         if not self.password:
-            _LOGGER.error(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
             raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
 
     def _validate_account_id(self) -> None:
         """Validate account ID."""
         if not self.account_id:
-            _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY)
-            raise AccountError(SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY)
+            raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY)
         if self.account_id == DEFAULT_SESSION_ID:
-            _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
-            raise AccountError(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
+            raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT)
 
     def create_session(self) -> None:
         """Create Dexcom Share API session by getting session id."""
-        _LOGGER.debug("Get session ID")
         self._validate_account()
 
         json = {
@@ -202,19 +192,17 @@ class Dexcom:
             "password": self.password,
             "applicationId": DEXCOM_APPLICATION_ID,
         }
-        """
-        The Dexcom Share API at DEXCOM_AUTHENTICATE_ENDPOINT
-        returns the account ID if credentials are valid -- whether
-        the username is a classic username or email. Using the
-        account ID the DEXCOM_LOGIN_ID_ENDPOINT is used to fetch
-        a session ID.
-        """
+        # The Dexcom Share API at DEXCOM_AUTHENTICATE_ENDPOINT
+        # returns the account ID if credentials are valid -- whether
+        # the username is a classic username or email. Using the
+        # account ID the DEXCOM_LOGIN_ID_ENDPOINT is used to fetch
+        # a session ID.
         endpoint1 = DEXCOM_AUTHENTICATE_ENDPOINT
         endpoint2 = DEXCOM_LOGIN_ID_ENDPOINT
 
         self.account_id = self._request("post", endpoint1, json=json)
         if not self.account_id:
-            raise AccountError(ACCOUNT_ERROR_UNKNOWN)
+            raise SessionError(SESSION_ERROR_UNKNOWN)
         try:
             self._validate_account_id()
 
@@ -226,8 +214,8 @@ class Dexcom:
 
             self.session_id = self._request("post", endpoint2, json=json)
             self._validate_session_id()
-        except SessionError:
-            raise AccountError(ACCOUNT_ERROR_UNKNOWN)
+        except SessionError as session_error:
+            raise AccountError("Uknown") from session_error
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
@@ -235,10 +223,8 @@ class Dexcom:
         """Get max_count glucose readings within specified minutes."""
         self._validate_session_id()
         if minutes < 1 or minutes > 1440:
-            _LOGGER.error(ARGUEMENT_ERROR_MINUTES_INVALID)
             raise ArguementError(ARGUEMENT_ERROR_MINUTES_INVALID)
         if max_count < 1 or max_count > 288:
-            _LOGGER.error(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
             raise ArguementError(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
 
         params = {
