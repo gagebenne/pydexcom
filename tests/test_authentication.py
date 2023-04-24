@@ -58,7 +58,7 @@ def test_authentication_success():
 
 
 def test_login_endpoint_not_verbose():
-    """Test particular enpoint continues to be non-verbose."""
+    """Test particular endpoint continues to be non-verbose."""
     url = f"{DEXCOM_BASE_URL}/{DEXCOM_LOGIN_ID_ENDPOINT}"
     json = {
         "accountName": USERNAME,
