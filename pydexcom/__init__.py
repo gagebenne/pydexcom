@@ -120,9 +120,11 @@ class Dexcom:
         method: str,
         endpoint: str,
         params: Optional[Dict[str, Any]] = None,
-        json: Dict[str, Any] = {},
+        json: Optional[Dict[str, Any]] = None,
     ) -> Optional[Any]:
         """Send request to Dexcom Share API."""
+        if json is None:
+            json = {}
         try:
             url = f"{self.base_url}/{endpoint}"
             _LOGGER.debug(f"{method} request to {endpoint}:")
