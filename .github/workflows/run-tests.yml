@@ -1,7 +1,8 @@
 name: run-tests
 
 on:
-  pull_request:
+  # TODO: Uncomment when integration tests are mocked and secrets aren't required anymore.
+  # pull_request:
 
 jobs:
   run-tests:
