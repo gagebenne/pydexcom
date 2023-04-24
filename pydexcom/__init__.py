@@ -1,6 +1,7 @@
 """The pydexcom module for interacting with Dexcom Share API."""
 import datetime
 import re
+from typing import Any, Dict, List, Optional
 
 import requests
 
@@ -40,7 +41,7 @@ from .errors import AccountError, ArguementError, SessionError
 class GlucoseReading:
     """Class for parsing glucose reading from Dexcom Share API."""
 
-    def __init__(self, json_glucose_reading: dict):
+    def __init__(self, json_glucose_reading: Dict[str, Any]):
         """Initialize with JSON glucose reading from Dexcom Share API."""
         self._json = json_glucose_reading
 
@@ -97,7 +98,7 @@ class GlucoseReading:
         return self._time
 
     @property
-    def json(self) -> Dict:
+    def json(self) -> Dict[str, Any]:
         """Raw blood glucose record from Dexcom API as a dict."""
         return self._json
 
@@ -110,17 +111,17 @@ class Dexcom:
         self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self.username = username
         self.password = password
-        self.session_id = None
-        self.account_id = None
+        self.session_id: Optional[str] = None
+        self.account_id: Optional[str] = None
         self.create_session()
 
     def _request(
         self,
         method: str,
         endpoint: str,
-        params: dict = None,
-        json: dict = {},
-    ) -> dict:
+        params: Optional[Dict[str, Any]] = None,
+        json: Dict[str, Any] = {},
+    ) -> Optional[Any]:
         """Send request to Dexcom Share API."""
         try:
             url = f"{self.base_url}/{endpoint}"
@@ -164,7 +165,7 @@ class Dexcom:
             _LOGGER.error("Unknown request error")
         return None
 
-    def _validate_session_id(self):
+    def _validate_session_id(self) -> None:
         """Validate session id."""
         if not self.session_id:
             _LOGGER.error(SESSION_ERROR_SESSION_ID_NULL)
@@ -173,7 +174,7 @@ class Dexcom:
             _LOGGER.error(SESSION_ERROR_SESSION_ID_DEFAULT)
             raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
 
-    def _validate_account(self):
+    def _validate_account(self) -> None:
         """Validate credentials."""
         if not self.username:
             _LOGGER.error(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
@@ -182,7 +183,7 @@ class Dexcom:
             _LOGGER.error(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
             raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
 
-    def _validate_account_id(self):
+    def _validate_account_id(self) -> None:
         """Validate account ID."""
         if not self.account_id:
             _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY)
@@ -191,7 +192,7 @@ class Dexcom:
             _LOGGER.error(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
             raise AccountError(SESSION_ERROR_ACCOUNT_ID_DEFAULT)
 
-    def create_session(self):
+    def create_session(self) -> None:
         """Create Dexcom Share API session by getting session id."""
         _LOGGER.debug("Get session ID")
         self._validate_account()
@@ -212,6 +213,8 @@ class Dexcom:
         endpoint2 = DEXCOM_LOGIN_ID_ENDPOINT
 
         self.account_id = self._request("post", endpoint1, json=json)
+        if not self.account_id:
+            raise AccountError(ACCOUNT_ERROR_UNKNOWN)
         try:
             self._validate_account_id()
 
@@ -248,7 +251,7 @@ class Dexcom:
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
-    ) -> [GlucoseReading]:
+    ) -> Optional[List[GlucoseReading]]:
         """Get max_count glucose readings within specified minutes."""
         self._validate_session_id()
         if minutes < 1 or minutes > 1440:
@@ -289,14 +292,14 @@ class Dexcom:
             return None
         return glucose_readings
 
-    def get_latest_glucose_reading(self) -> GlucoseReading:
+    def get_latest_glucose_reading(self) -> Optional[GlucoseReading]:
         """Get latest available glucose reading."""
         glucose_readings = self.get_glucose_readings(max_count=1)
         if not glucose_readings:
             return None
         return glucose_readings[0]
 
-    def get_current_glucose_reading(self) -> GlucoseReading:
+    def get_current_glucose_reading(self) -> Optional[GlucoseReading]:
         """Get current available glucose reading."""
         glucose_readings = self.get_glucose_readings(minutes=10, max_count=1)
         if not glucose_readings:

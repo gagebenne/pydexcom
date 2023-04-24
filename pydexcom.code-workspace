@@ -15,6 +15,22 @@
 			"--profile",
 			"black"
 		],
+		"python.linting.enabled": true,
+		"python.linting.mypyEnabled": true,
+		"python.linting.mypyArgs": [
+			"--follow-imports=silent",
+			"--show-column-numbers",
+			"--no-pretty",
+			"--warn-unused-configs",
+			"--ignore-missing-imports",
+			"--disallow-untyped-calls",
+			"--disallow-untyped-defs",
+			"--disallow-incomplete-defs",
+			"--check-untyped-defs",
+			"--disallow-untyped-decorators",
+			"--disallow-any-unimported",
+			"--warn-redundant-casts"
+		],
 		"[python]": {
 			"editor.codeActionsOnSave": {
 				"source.organizeImports": true
