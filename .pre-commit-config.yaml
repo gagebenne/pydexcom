@@ -35,3 +35,8 @@ repos:
           "--disallow-any-unimported",
           "--warn-redundant-casts",
         ]
+
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: "v0.0.263"
+    hooks:
+      - id: ruff
