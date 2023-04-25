@@ -5,6 +5,8 @@ from typing import Any, Dict, List, Optional
 
 import requests
 
+__all__ = ["Dexcom", "GlucoseReading"]
+
 from .const import (
     _LOGGER,
     ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT,
