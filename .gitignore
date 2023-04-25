@@ -1,5 +1,7 @@
 dist/
-pydexcom.egg-info
-__pycache__
-.venv
+pydexcom.egg-info/
+__pycache__/
+.venv/
 build/
+.mypy_cache/
+.pytest_cache/
