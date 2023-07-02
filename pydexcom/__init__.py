@@ -1,7 +1,7 @@
 """The pydexcom module for interacting with Dexcom Share API."""
 import datetime
 import re
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
@@ -9,15 +9,6 @@ __all__ = ["Dexcom", "GlucoseReading"]
 
 from .const import (
     _LOGGER,
-    ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT,
-    ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY,
-    ACCOUNT_ERROR_ACCOUNT_NOT_FOUND,
-    ACCOUNT_ERROR_MAX_ATTEMPTS,
-    ACCOUNT_ERROR_PASSWORD_INVALID,
-    ACCOUNT_ERROR_PASSWORD_NULL_EMPTY,
-    ACCOUNT_ERROR_USERNAME_NULL_EMPTY,
-    ARGUMENT_ERROR_MAX_COUNT_INVALID,
-    ARGUMENT_ERROR_MINUTES_INVALID,
     DEFAULT_SESSION_ID,
     DEXCOM_APPLICATION_ID,
     DEXCOM_AUTHENTICATE_ENDPOINT,
@@ -30,12 +21,15 @@ from .const import (
     DEXCOM_TREND_DESCRIPTIONS,
     DEXCOM_TREND_DIRECTIONS,
     MMOL_L_CONVERSION_FACTOR,
-    SESSION_ERROR_SESSION_ID_DEFAULT,
-    SESSION_ERROR_SESSION_ID_NULL,
-    SESSION_ERROR_SESSION_NOT_FOUND,
-    SESSION_ERROR_SESSION_NOT_VALID,
 )
-from .errors import AccountError, ArgumentError, SessionError
+from .errors import (
+    AccountError,
+    AccountErrorEnum,
+    ArgumentError,
+    ArgumentErrorEnum,
+    SessionError,
+    SessionErrorEnum,
+)
 
 
 class GlucoseReading:
@@ -107,11 +101,12 @@ class Dexcom:
 
     def __init__(self, username: str, password: str, ous: bool = False):
         """Initialize with JSON glucose reading from Dexcom Share API."""
-        self.base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
+        self._base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self._username = username
         self._password = password
-        self._session_id: Optional[str] = None
         self._account_id: Optional[str] = None
+        self._session_id: Optional[str] = None
+        self.__session = requests.Session()
         self._session()
 
     def _post(
@@ -124,8 +119,8 @@ class Dexcom:
         if json is None:
             json = {}
         try:
-            url = f"{self.base_url}/{endpoint}"
-            response = requests.post(
+            url = f"{self._base_url}/{endpoint}"
+            response = self.__session.post(
                 url,
                 params=params,
                 json=json,
@@ -135,27 +130,27 @@ class Dexcom:
             return response.json()
         except requests.HTTPError as http_error:
             if response.json():
+                _LOGGER.debug("%s", response.json())
                 code = response.json().get("Code", None)
                 message = response.json().get("Message", None)
+                error: Optional[Union[SessionError, AccountError]] = None
                 if code == "SessionNotValid":
-                    raise SessionError(SESSION_ERROR_SESSION_NOT_VALID) from http_error
+                    error = SessionError(SessionErrorEnum.NOT_VALID)
                 if code == "SessionIdNotFound":
-                    raise SessionError(SESSION_ERROR_SESSION_NOT_FOUND) from http_error
+                    error = SessionError(SessionErrorEnum.NOT_FOUND)
                 if code == "SSO_AuthenticateAccountNotFound":
-                    raise AccountError(ACCOUNT_ERROR_ACCOUNT_NOT_FOUND) from http_error
+                    error = AccountError(AccountErrorEnum.ACCOUNT_NOT_FOUND)
                 if code == "AccountPasswordInvalid":
-                    raise AccountError(ACCOUNT_ERROR_PASSWORD_INVALID) from http_error
+                    error = AccountError(AccountErrorEnum.PASSWORD_INVALID)
                 if code == "SSO_AuthenticateMaxAttemptsExceeed":
-                    raise AccountError(ACCOUNT_ERROR_MAX_ATTEMPTS) from http_error
+                    error = AccountError(AccountErrorEnum.MAX_ATTEMPTS)
                 if code == "InvalidArgument":
                     if message and "accountName" in message:
-                        raise AccountError(
-                            ACCOUNT_ERROR_USERNAME_NULL_EMPTY
-                        ) from http_error
+                        error = AccountError(AccountErrorEnum.USERNAME_NULL_EMPTY)
                     if message and "password" in message:
-                        raise AccountError(
-                            ACCOUNT_ERROR_PASSWORD_NULL_EMPTY
-                        ) from http_error
+                        error = AccountError(AccountErrorEnum.PASSWORD_NULL_EMPTY)
+                if error:
+                    raise error from http_error
                 if code and message:
                     _LOGGER.error("%s: %s", code, message)
             _LOGGER.error("%s", response.text)
@@ -164,28 +159,25 @@ class Dexcom:
     def _validate_session_id(self) -> None:
         """Validate session ID."""
         if not self._session_id:
-            raise SessionError(SESSION_ERROR_SESSION_ID_NULL)
+            raise SessionError(SessionErrorEnum.NULL)
         if self._session_id == DEFAULT_SESSION_ID:
-            raise SessionError(SESSION_ERROR_SESSION_ID_DEFAULT)
+            raise SessionError(SessionErrorEnum.DEFAULT)
 
-    def _validate_account(self) -> None:
+    def _validate_credentials(self) -> None:
         """Validate credentials."""
         if not self._username:
-            raise AccountError(ACCOUNT_ERROR_USERNAME_NULL_EMPTY)
+            raise AccountError(AccountErrorEnum.USERNAME_NULL_EMPTY)
         if not self._password:
-            raise AccountError(ACCOUNT_ERROR_PASSWORD_NULL_EMPTY)
+            raise AccountError(AccountErrorEnum.PASSWORD_NULL_EMPTY)
 
     def _validate_account_id(self) -> None:
         """Validate account ID."""
         if not self._account_id:
-            raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY)
+            raise AccountError(AccountErrorEnum.ACCOUNT_ID_NULL_EMPTY)
         if self._account_id == DEFAULT_SESSION_ID:
-            raise AccountError(ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT)
+            raise AccountError(AccountErrorEnum.ACCOUNT_ID_DEFAULT)
 
-    def _session(self) -> None:
-        """Create Dexcom Share API session by getting session ID."""
-        self._validate_account()
-
+    def _get_account_id(self) -> str:
         json = {
             "accountName": self._username,
             "password": self._password,
@@ -195,10 +187,9 @@ class Dexcom:
             DEXCOM_AUTHENTICATE_ENDPOINT,
             json=json,
         )
-        self._account_id = account_id
+        return account_id
 
-        self._validate_account_id()
-
+    def _get_session_id(self) -> str:
         json = {
             "accountId": self._account_id,
             "password": self._password,
@@ -208,18 +199,27 @@ class Dexcom:
             DEXCOM_LOGIN_ID_ENDPOINT,
             json=json,
         )
-        self._session_id = session_id
+        return session_id
 
+    def _session(self) -> None:
+        """Create Dexcom Share API session."""
+        self._validate_credentials()
+
+        if self._account_id is None:
+            self._account_id = self._get_account_id()
+            self._validate_account_id()
+
+        self._session_id = self._get_session_id()
         self._validate_session_id()
 
     def get_glucose_readings(
         self, minutes: int = 1440, max_count: int = 288
     ) -> Optional[List[GlucoseReading]]:
         """Get max_count glucose readings within specified minutes."""
-        if minutes < 1 or minutes > 1440:
-            raise ArgumentError(ARGUMENT_ERROR_MINUTES_INVALID)
-        if max_count < 1 or max_count > 288:
-            raise ArgumentError(ARGUMENT_ERROR_MAX_COUNT_INVALID)
+        if type(minutes) != int or minutes < 1 or minutes > 1440:
+            raise ArgumentError(ArgumentErrorEnum.MINUTES_INVALID)
+        if type(max_count) != int or max_count < 1 or max_count > 288:
+            raise ArgumentError(ArgumentErrorEnum.MAX_COUNT_INVALID)
 
         # Requesting glucose reading with DEFAULT_SESION_ID
         # returns non-JSON empty string

@@ -4,7 +4,6 @@ import logging
 
 _LOGGER = logging.getLogger("pydexcom")
 
-
 # Dexcom Share API base urls
 DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
@@ -18,28 +17,6 @@ DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT = (
 DEXCOM_GLUCOSE_READINGS_ENDPOINT = "Publisher/ReadPublisherLatestGlucoseValues"
 
 DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
-
-# Dexcom AccountError strings
-ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
-ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
-ACCOUNT_ERROR_ACCOUNT_ID_NULL_EMPTY = "Account ID null or empty"
-ACCOUNT_ERROR_ACCOUNT_ID_DEFAULT = "Account ID default"
-ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
-ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
-ACCOUNT_ERROR_MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
-
-# Dexcom SessionError strings
-SESSION_ERROR_SESSION_ID_NULL = "Session ID null"
-SESSION_ERROR_SESSION_ID_DEFAULT = "Session ID default"
-SESSION_ERROR_SESSION_NOT_VALID = "Session ID not valid"
-SESSION_ERROR_SESSION_NOT_FOUND = "Session ID not found"
-SESSION_ERROR_UNKNOWN = "Unknown error"
-
-# Dexcom ArgumentError strings
-ARGUMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
-ARGUMENT_ERROR_MAX_COUNT_INVALID = "Max count must be between 1 and 288"
-ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
-
 
 # Other
 DEXCOM_TREND_DESCRIPTIONS = [
