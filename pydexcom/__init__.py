@@ -13,9 +13,9 @@ from .const import (
     ACCOUNT_ERROR_MAX_ATTEMPTS,
     ACCOUNT_ERROR_UNKNOWN,
     ACCOUNT_ERROR_USERNAME_NULL_EMPTY,
-    ARGUEMENT_ERROR_MAX_COUNT_INVALID,
-    ARGUEMENT_ERROR_MINUTES_INVALID,
-    ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY,
+    ARGUMENT_ERROR_MAX_COUNT_INVALID,
+    ARGUMENT_ERROR_MINUTES_INVALID,
+    ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY,
     DEFAULT_SESSION_ID,
     DEXCOM_APPLICATION_ID,
     DEXCOM_AUTHENTICATE_ENDPOINT,
@@ -35,7 +35,7 @@ from .const import (
     SESSION_ERROR_SESSION_NOT_FOUND,
     SESSION_ERROR_SESSION_NOT_VALID,
 )
-from .errors import AccountError, ArguementError, SessionError
+from .errors import AccountError, ArgumentError, SessionError
 
 
 class GlucoseReading:
@@ -189,8 +189,8 @@ class Dexcom:
         """Verify if transmitter serial number is assigned to user."""
         self._validate_session_id()
         if not serial_number:
-            _LOGGER.error(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
-            raise ArguementError(ARGUEMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
+            _LOGGER.error(ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
+            raise ArgumentError(ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY)
 
         params = {"sessionId": self.session_id, "serialNumber": serial_number}
         try:
@@ -211,11 +211,11 @@ class Dexcom:
         """Get max_count glucose readings within specified minutes."""
         self._validate_session_id()
         if minutes < 1 or minutes > 1440:
-            _LOGGER.error(ARGUEMENT_ERROR_MINUTES_INVALID)
-            raise ArguementError(ARGUEMENT_ERROR_MINUTES_INVALID)
+            _LOGGER.error(ARGUMENT_ERROR_MINUTES_INVALID)
+            raise ArgumentError(ARGUMENT_ERROR_MINUTES_INVALID)
         if max_count < 1 or max_count > 288:
-            _LOGGER.error(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
-            raise ArguementError(ARGUEMENT_ERROR_MAX_COUNT_INVALID)
+            _LOGGER.error(ARGUMENT_ERROR_MAX_COUNT_INVALID)
+            raise ArgumentError(ARGUMENT_ERROR_MAX_COUNT_INVALID)
 
         params = {
             "sessionId": self.session_id,

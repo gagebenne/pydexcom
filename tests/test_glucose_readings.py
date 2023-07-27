@@ -22,7 +22,7 @@ def test_env():
 
 
 def test_glucose_readings_success():
-    """Test retrieving glucose readings sucessfully."""
+    """Test retrieving glucose readings successfully."""
     d = Dexcom(USERNAME, PASSWORD)
     d.get_current_glucose_reading()
     d.get_latest_glucose_reading()

@@ -19,7 +19,7 @@ class SessionError(DexcomError):
     pass
 
 
-class ArguementError(DexcomError):
-    """Error involving arguements."""
+class ArgumentError(DexcomError):
+    """Error involving arguments."""
 
     pass
