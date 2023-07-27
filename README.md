@@ -84,7 +84,7 @@ By all means submit a pull request if you have a feature you'd like to see in th
 <details>
 <summary>Are there any features in development?</summary>
 <br/>
-Sure, I'm thinking of implementing a session status checker, or maybe an asynchronus version. That being said, simplicity - getting real time blood glucose information - is most important to this package.
+Sure, I'm thinking of implementing a session status checker, or maybe an asynchronous version. That being said, simplicity - getting real time blood glucose information - is most important to this package.
 </details>
 
 ### Development
