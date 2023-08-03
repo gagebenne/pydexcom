@@ -1,9 +1,5 @@
 """Constants used in pydexcom."""
 
-import logging
-
-_LOGGER = logging.getLogger("pydexcom")
-
 # Dexcom Share API base urls
 DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
@@ -18,20 +14,6 @@ DEXCOM_GLUCOSE_READINGS_ENDPOINT = "Publisher/ReadPublisherLatestGlucoseValues"
 
 DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 
-# Other
-DEXCOM_TREND_DESCRIPTIONS = [
-    "",
-    "rising quickly",
-    "rising",
-    "rising slightly",
-    "steady",
-    "falling slightly",
-    "falling",
-    "falling quickly",
-    "unable to determine trend",
-    "trend unavailable",
-]
-
 DEXCOM_TREND_DIRECTIONS = {
     "None": 0,  # unconfirmed
     "DoubleUp": 1,
@@ -45,10 +27,27 @@ DEXCOM_TREND_DIRECTIONS = {
     "RateOutOfRange": 9,  # unconfirmed
 }
 
-DEXCOM_TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+TREND_DESCRIPTIONS = [
+    "",
+    "rising quickly",
+    "rising",
+    "rising slightly",
+    "steady",
+    "falling slightly",
+    "falling",
+    "falling quickly",
+    "unable to determine trend",
+    "trend unavailable",
+]
 
-DEFAULT_SESSION_ID = "00000000-0000-0000-0000-000000000000"
+
+TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+
+DEFAULT_UUID = "00000000-0000-0000-0000-000000000000"
+
+MAX_MINUTES = 1440
+MAX_MAX_COUNT = 288
 
 MMOL_L_CONVERSION_FACTOR = 0.0555
 
-DEXCOM_REQUEST_TIMEOUT = 10  # seconds
+REQUEST_TIMEOUT = 10  # seconds
