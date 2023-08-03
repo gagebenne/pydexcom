@@ -21,26 +21,11 @@
 		],
 		"python.testing.pytestEnabled": true,
 		"editor.formatOnSave": true,
-		"python.formatting.provider": "none",
 		"isort.args": [
 			"--profile",
 			"black"
 		],
-		"python.linting.enabled": true,
-		"python.linting.mypyEnabled": true,
-		"python.linting.mypyArgs": [
-			"--follow-imports=silent",
-			"--show-column-numbers",
-			"--no-pretty",
-			"--warn-unused-configs",
-			"--ignore-missing-imports",
-			"--disallow-untyped-calls",
-			"--disallow-untyped-defs",
-			"--disallow-incomplete-defs",
-			"--check-untyped-defs",
-			"--disallow-any-unimported",
-			"--warn-redundant-casts"
-		],
+		"mypy.configFile": "pyproject.toml",
 		"[python]": {
 			"editor.codeActionsOnSave": {
 				"source.organizeImports": true

@@ -1,0 +1,153 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=33333333-3333-3333-3333-333333333333
+  response:
+    body:
+      string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
+        [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
+        DateThrownLocal=\"2023-08-02T20:33:37.629\" DateThrown=\"2023-08-02T20:33:37.629Z\"
+        ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
+        CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
+        Id=\"{55555555-5555-5555-5555-555555555555}\" Message=\"Failed to find session
+        object. [SessionId = 33333333-3333-3333-3333-333333333333]\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Failed to find session object. [SessionId = 33333333-3333-3333-3333-333333333333]\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 7f0918d1dc3932c8-PHL
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '738'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 02 Aug 2023 20:33:37 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      X-Trace-Id:
+      - 9c50444d-c66d-4957-96d3-0d903aaa8810
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 7f0918d2cf2232c8-PHL
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 02 Aug 2023 20:33:38 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      X-Trace-Id:
+      - 489dd08c-fb3f-414d-aeb9-9f7831d2799c
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - gzip, deflate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.28.2
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAA4quVgoPUbJSckksSdUwNLM0NDCwMDKxNDAw0FTSUQrGLeWCXUrXwAQiH5aYU5qq
+        ZGVoaKGjFFKUmpeiZKXklpNYolQbCwAAAP//AwDmIszvdAAAAA==
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 7f0918d56ffb32c8-PHL
+      Connection:
+      - keep-alive
+      Content-Encoding:
+      - gzip
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 02 Aug 2023 20:33:38 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Transfer-Encoding:
+      - chunked
+      Vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      X-Trace-Id:
+      - 18dc8e3d-fe7c-49e7-99f8-9699a7616732
+    status:
+      code: 200
+      message: OK
+version: 1
