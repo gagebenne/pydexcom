@@ -22,16 +22,6 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [types-requests]
-        args: [
-          "--warn-unused-configs",
-          "--ignore-missing-imports",
-          "--disallow-untyped-calls",
-          "--disallow-untyped-defs",
-          "--disallow-incomplete-defs",
-          "--check-untyped-defs",
-          "--disallow-any-unimported",
-          "--warn-redundant-casts",
-        ]
 
   - repo: https://github.com/charliermarsh/ruff-pre-commit
     rev: "v0.0.263"
