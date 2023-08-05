@@ -13,14 +13,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.2
+      - python-requests/2.31.0
     method: POST
     uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=33333333-3333-3333-3333-333333333333
   response:
     body:
       string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
         [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
-        DateThrownLocal=\"2023-08-02T20:33:37.629\" DateThrown=\"2023-08-02T20:33:37.629Z\"
+        DateThrownLocal=\"2023-08-05T12:49:17.441\" DateThrown=\"2023-08-05T12:49:17.441Z\"
         ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
         CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
         Id=\"{55555555-5555-5555-5555-555555555555}\" Message=\"Failed to find session
@@ -31,7 +31,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f0918d1dc3932c8-PHL
+      - 7f1f28c3dae7c484-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -39,7 +39,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Aug 2023 20:33:37 GMT
+      - Sat, 05 Aug 2023 12:49:17 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -49,7 +49,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 9c50444d-c66d-4957-96d3-0d903aaa8810
+      - d5ea0aa1-ee0a-40a4-8271-6bca8389821a
     status:
       code: 500
       message: Internal Server Error
@@ -68,7 +68,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.2
+      - python-requests/2.31.0
     method: POST
     uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
   response:
@@ -78,7 +78,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f0918d2cf2232c8-PHL
+      - 7f1f28c4b8a00f80-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -86,7 +86,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Aug 2023 20:33:38 GMT
+      - Sat, 05 Aug 2023 12:49:17 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -96,7 +96,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 489dd08c-fb3f-414d-aeb9-9f7831d2799c
+      - e3ddc473-a83e-41a1-a9fb-0c459e6a62c1
     status:
       code: 200
       message: OK
@@ -114,19 +114,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.2
+      - python-requests/2.31.0
     method: POST
     uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA4quVgoPUbJSckksSdUwNLM0NDCwMDKxNDAw0FTSUQrGLeWCXUrXwAQiH5aYU5qq
-        ZGVoaKGjFFKUmpeiZKXklpNYolQbCwAAAP//AwDmIszvdAAAAA==
+      string: '[{"WT":"Date(1691239553000)","ST":"Date(1691239553000)","DT":"Date(1691239553000-0400)","Value":132,"Trend":"FortyFiveUp"}]'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f0918d56ffb32c8-PHL
+      - 7f1f28c7ce1742ac-EWR
       Connection:
       - keep-alive
       Content-Encoding:
@@ -134,7 +132,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Aug 2023 20:33:38 GMT
+      - Sat, 05 Aug 2023 12:49:18 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -146,7 +144,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 18dc8e3d-fe7c-49e7-99f8-9699a7616732
+      - 54993399-42fc-45a2-a059-4f5baacf6d1c
     status:
       code: 200
       message: OK

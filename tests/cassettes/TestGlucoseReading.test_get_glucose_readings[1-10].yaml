@@ -13,19 +13,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.2
+      - python-requests/2.31.0
     method: POST
     uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
   response:
     body:
-      string: !!binary |
-        H4sIAAAAAAAAA4quVgoPUbJSckksSdUwNLM0NDCwMDKxNDAw0FTSUQrGLeWCXUrXwAQiH5aYU5qq
-        ZGVoaKGjFFKUmpeiZKXklpNYolQbCwAAAP//AwDmIszvdAAAAA==
+      string: '[{"WT":"Date(1691239553000)","ST":"Date(1691239553000)","DT":"Date(1691239553000-0400)","Value":132,"Trend":"FortyFiveUp"}]'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f0918cded864caf-PHL
+      - 7f1f28c0ea7cc339-EWR
       Connection:
       - keep-alive
       Content-Encoding:
@@ -33,7 +31,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Aug 2023 20:33:37 GMT
+      - Sat, 05 Aug 2023 12:49:17 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -45,7 +43,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 7a0f67c9-f6c7-4898-9164-09f428a32952
+      - 0ca1cac9-48e0-4870-a495-7f51d514289f
     status:
       code: 200
       message: OK
