@@ -30,7 +30,7 @@ def is_uuid(uuid: Any) -> bool:
         return False
 
 
-def scrub_sub(match: re.Match[str]) -> str:
+def scrub_sub(match: re.Match) -> str:
     if match.group() == USERNAME:
         print("Scrubbed username")
         return TEST_USERNAME
