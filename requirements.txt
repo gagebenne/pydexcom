@@ -1,3 +1,4 @@
-requests>=2.0
 pytest
+requests>=2.0
 types-requests
+vcrpy
