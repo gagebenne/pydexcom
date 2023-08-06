@@ -1,7 +1,7 @@
 import os
 import re
 from pathlib import Path
-from typing import Any, Generator
+from typing import Any, Dict, Generator
 from uuid import UUID
 
 import pytest
@@ -54,7 +54,7 @@ def scrub_sub(match: re.Match) -> str:
     return TEST_SESSION_ID
 
 
-def scrub_response(response: dict[str, Any]) -> dict[str, Any]:
+def scrub_response(response: Dict[str, Any]) -> Dict[str, Any]:
     if response["headers"].get("Content-Encoding") == ["gzip"]:
         return response
     body = response["body"]["string"].decode()
