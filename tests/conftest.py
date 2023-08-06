@@ -1,9 +1,12 @@
 import os
 import re
-from typing import Any
+from pathlib import Path
+from typing import Any, Generator
 from uuid import UUID
 
 import pytest
+from vcr import VCR
+from vcr.record_mode import RecordMode
 
 from pydexcom import DEFAULT_UUID, DEXCOM_APPLICATION_ID
 
@@ -67,9 +70,13 @@ def scrub_response(response: dict[str, Any]) -> dict[str, Any]:
     return response
 
 
-def scrub(key: str, value: Any, request: Any) -> Any:
+def scrub(key: str, value: Any, request: pytest.FixtureRequest) -> Any:  # type: ignore
     if isinstance(value, str):
-        return re.sub(rf"({USERNAME}|{PASSWORD}|{r_UUID})", scrub_sub, value)
+        return re.sub(
+            rf"({USERNAME}|{PASSWORD}|{r_UUID})",
+            scrub_sub,  # type: ignore
+            value,
+        )
     return value
 
 
@@ -77,18 +84,61 @@ def scrub_path(path: str) -> str:
     return re.sub(rf"({USERNAME}|{PASSWORD}|{r_UUID})", scrub_sub, path) + ".yaml"
 
 
-@pytest.fixture(scope="module")
-def vcr_config() -> dict[str, Any]:
-    return {
-        "filter_post_data_parameters": [
+def pytest_addoption(parser: pytest.Parser) -> None:  # type: ignore
+    group = parser.getgroup("vcr")
+    group.addoption(
+        "--record-mode",
+        action="store",
+        dest="vcr_record",
+        default=None,
+        choices=["once", "new_episodes", "none", "all"],
+        help="Set the recording mode for VCR.py",
+    )
+
+
+def pytest_configure(config: pytest.Config) -> None:  # type: ignore
+    config.addinivalue_line("markers", "vcr: mark the test as using VCR.py.")
+
+
+@pytest.fixture(scope="package")
+def vcr(request: pytest.FixtureRequest) -> VCR:  # type: ignore
+    return VCR(
+        filter_post_data_parameters=[
             ("accountName", scrub),
             ("accountId", scrub),
             ("password", scrub),
         ],
-        "filter_query_parameters": [
+        filter_query_parameters=[
             ("sessionId", scrub),
         ],
-        "before_record_response": scrub_response,
-        "match_on": ["uri", "method", "path", "query", "body"],
-        "path_transformer": scrub_path,
-    }
+        before_record_response=scrub_response,
+        match_on=["uri", "method", "path", "query", "body"],
+        path_transformer=scrub_path,
+        record_mode=RecordMode(request.config.getoption("--record-mode") or "none"),
+        cassette_library_dir=str(request.path.parent),
+    )
+
+
+def vcr_cassette_path(request: Any, fixture: bool = False) -> str:  # type: ignore
+    path = Path("cassettes")
+    name = Path(
+        (request.fixturename if fixture else request.node.name) or pytest.fail()
+    )
+    if request.scope == "session":
+        return str(path / name)
+
+    path = path / request.path.stem
+    if request.scope == "module":
+        return str(path / name)
+
+    if request.cls:
+        name = request.cls.__name__ / name
+
+    return str(path / name)
+
+
+@pytest.fixture(autouse=True)
+def _vcr_marker(request: pytest.FixtureRequest, vcr: VCR) -> Generator:  # type: ignore
+    if request.node.get_closest_marker("vcr"):
+        with vcr.use_cassette(vcr_cassette_path(request)) as cassette:
+            yield cassette

@@ -14,14 +14,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - python-requests/2.28.2
+      - python-requests/2.31.0
     method: POST
     uri: https://share2.dexcom.com/ShareWebServices/Services/General/AuthenticatePublisherAccount
   response:
     body:
       string: '{"Code":"AccountPasswordInvalid","Message":"Publisher account password
-        failed","SubCode":"<OnlineException DateThrownLocal=\"2023-08-02T20:32:31.117\"
-        DateThrown=\"2023-08-02T20:32:31.117Z\" ErrorCode=\"AccountPasswordInvalid\"
+        failed","SubCode":"<OnlineException DateThrownLocal=\"2023-08-06T12:24:57.786\"
+        DateThrown=\"2023-08-06T12:24:57.786Z\" ErrorCode=\"AccountPasswordInvalid\"
         Type=\"13\" Category=\"4\" Severity=\"1\" TypeString=\"InvalidPassword\" CategoryString=\"Validation\"
         SeverityString=\"Minor\" HostName=\"\" HostIP=\"\" Id=\"{55555555-5555-5555-5555-555555555555}\"
         Message=\"Publisher account password failed\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
@@ -30,7 +30,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f09172e4c00c32b-EWR
+      - 7f27427d7e0b4282-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -38,7 +38,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Aug 2023 20:32:31 GMT
+      - Sun, 06 Aug 2023 12:24:57 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -48,7 +48,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 9061c7c1-c4f6-41f7-85a4-b4492819f79b
+      - d01ab22a-9913-4550-bb57-9e7dc3c6a097
     status:
       code: 500
       message: Internal Server Error

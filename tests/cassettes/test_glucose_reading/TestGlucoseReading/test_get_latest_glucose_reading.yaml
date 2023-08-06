@@ -15,15 +15,15 @@ interactions:
       User-Agent:
       - python-requests/2.31.0
     method: POST
-    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=0&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=1440&sessionId=55555555-5555-5555-5555-555555555555
   response:
     body:
-      string: '[]'
+      string: '[{"WT":"Date(1691324755000)","ST":"Date(1691324755000)","DT":"Date(1691324755000-0400)","Value":123,"Trend":"Flat"}]'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f1f28be6c5d0fa1-EWR
+      - 7f2744da2b9543ef-EWR
       Connection:
       - keep-alive
       Content-Encoding:
@@ -31,7 +31,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 05 Aug 2023 12:49:16 GMT
+      - Sun, 06 Aug 2023 12:26:34 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -43,7 +43,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 0ba4dbc4-1c10-435c-8796-8acfcb7ed6aa
+      - 5b0cd242-7cc4-4ffa-8fe4-e92a4821ddd9
     status:
       code: 200
       message: OK

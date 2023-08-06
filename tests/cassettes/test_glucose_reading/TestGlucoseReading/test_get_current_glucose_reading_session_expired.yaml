@@ -20,7 +20,7 @@ interactions:
     body:
       string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
         [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
-        DateThrownLocal=\"2023-08-05T12:49:17.441\" DateThrown=\"2023-08-05T12:49:17.441Z\"
+        DateThrownLocal=\"2023-08-06T12:26:34.283\" DateThrown=\"2023-08-06T12:26:34.283Z\"
         ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
         CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
         Id=\"{55555555-5555-5555-5555-555555555555}\" Message=\"Failed to find session
@@ -31,7 +31,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f1f28c3dae7c484-EWR
+      - 7f2744dc1e5732dc-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -39,7 +39,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 05 Aug 2023 12:49:17 GMT
+      - Sun, 06 Aug 2023 12:26:34 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -49,7 +49,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - d5ea0aa1-ee0a-40a4-8271-6bca8389821a
+      - e51080aa-00bb-47c8-a16d-235684c69912
     status:
       code: 500
       message: Internal Server Error
@@ -78,7 +78,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f1f28c4b8a00f80-EWR
+      - 7f2744dd19b24288-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -86,7 +86,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 05 Aug 2023 12:49:17 GMT
+      - Sun, 06 Aug 2023 12:26:34 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -96,7 +96,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - e3ddc473-a83e-41a1-a9fb-0c459e6a62c1
+      - 7348f426-e519-493a-b389-18519b2817c6
     status:
       code: 200
       message: OK
@@ -119,12 +119,12 @@ interactions:
     uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
   response:
     body:
-      string: '[{"WT":"Date(1691239553000)","ST":"Date(1691239553000)","DT":"Date(1691239553000-0400)","Value":132,"Trend":"FortyFiveUp"}]'
+      string: '[{"WT":"Date(1691324755000)","ST":"Date(1691324755000)","DT":"Date(1691324755000-0400)","Value":123,"Trend":"Flat"}]'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f1f28c7ce1742ac-EWR
+      - 7f2744e00e1043e0-EWR
       Connection:
       - keep-alive
       Content-Encoding:
@@ -132,7 +132,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 05 Aug 2023 12:49:18 GMT
+      - Sun, 06 Aug 2023 12:26:34 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -144,7 +144,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 54993399-42fc-45a2-a059-4f5baacf6d1c
+      - a4656a2f-5a26-4b31-ae52-e8f6e277f50a
     status:
       code: 200
       message: OK

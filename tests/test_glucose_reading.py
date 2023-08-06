@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Any
 
 import pytest
+from vcr import VCR
 
 from pydexcom import (
     DEXCOM_TREND_DIRECTIONS,
@@ -13,12 +14,13 @@ from pydexcom import (
     Dexcom,
 )
 
-from .conftest import PASSWORD, TEST_SESSION_ID_EXPIRED, USERNAME
+from .conftest import PASSWORD, TEST_SESSION_ID_EXPIRED, USERNAME, vcr_cassette_path
 
 
 @pytest.fixture(scope="class")
-def dexcom() -> Dexcom:
-    return Dexcom(USERNAME, PASSWORD)
+def dexcom(request: pytest.FixtureRequest, vcr: VCR) -> Dexcom:  # type:ignore
+    with vcr.use_cassette(path=vcr_cassette_path(request, fixture=True)):
+        return Dexcom(USERNAME, PASSWORD)
 
 
 @pytest.mark.vcr()
