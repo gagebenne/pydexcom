@@ -17,6 +17,8 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[tool.setuptools_scm]
+
 [tool.isort]
 profile = "black"
 
