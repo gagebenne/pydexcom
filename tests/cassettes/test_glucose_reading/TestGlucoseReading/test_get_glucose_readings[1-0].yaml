@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate
+      - application/json
       Connection:
       - keep-alive
       Content-Length:
@@ -23,15 +23,13 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f2744d82c348c2f-EWR
+      - 7f295be12e724331-EWR
       Connection:
       - keep-alive
-      Content-Encoding:
-      - gzip
       Content-Type:
       - application/json
       Date:
-      - Sun, 06 Aug 2023 12:26:33 GMT
+      - Sun, 06 Aug 2023 18:31:48 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -43,7 +41,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 05cc2e4b-18ed-49e6-9f85-f3ae8be170a7
+      - 569ab306-54e8-4a7b-82d1-1fc8720786f5
     status:
       code: 200
       message: OK

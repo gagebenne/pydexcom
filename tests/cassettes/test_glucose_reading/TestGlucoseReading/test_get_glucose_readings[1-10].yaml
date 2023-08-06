@@ -5,7 +5,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate
+      - application/json
       Connection:
       - keep-alive
       Content-Length:
@@ -18,20 +18,18 @@ interactions:
     uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
   response:
     body:
-      string: '[{"WT":"Date(1691324755000)","ST":"Date(1691324755000)","DT":"Date(1691324755000-0400)","Value":123,"Trend":"Flat"}]'
+      string: '[{"WT":"Date(1691346655000)","ST":"Date(1691346655000)","DT":"Date(1691346655000-0400)","Value":127,"Trend":"Flat"}]'
     headers:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f2744d92d7819d7-EWR
+      - 7f295be25fe94376-EWR
       Connection:
       - keep-alive
-      Content-Encoding:
-      - gzip
       Content-Type:
       - application/json
       Date:
-      - Sun, 06 Aug 2023 12:26:33 GMT
+      - Sun, 06 Aug 2023 18:31:48 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -43,7 +41,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - d9e8fed8-b66e-481b-aae6-a87e9f14ba27
+      - 590060d9-284f-4651-958a-851120207558
     status:
       code: 200
       message: OK

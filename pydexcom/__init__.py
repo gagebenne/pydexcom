@@ -121,6 +121,7 @@ class Dexcom:
         """Send request to Dexcom Share API."""
         response = self.__session.post(
             f"{self._base_url}/{endpoint}",
+            headers={"Accept-Encoding": "application/json"},
             params=params,
             json={} if json is None else json,
             timeout=REQUEST_TIMEOUT,

@@ -6,7 +6,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate
+      - application/json
       Connection:
       - keep-alive
       Content-Length:
@@ -24,7 +24,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f2744cf2e0dc407-EWR
+      - 7f295bd8ca63c40e-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -32,7 +32,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 06 Aug 2023 12:26:32 GMT
+      - Sun, 06 Aug 2023 18:31:47 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -42,7 +42,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - b72aa761-7a7a-4f35-8966-76f202c62c9d
+      - 231b4297-8820-40ad-9e1d-c8642e95caec
     status:
       code: 200
       message: OK
@@ -53,7 +53,7 @@ interactions:
       Accept:
       - '*/*'
       Accept-Encoding:
-      - gzip, deflate
+      - application/json
       Connection:
       - keep-alive
       Content-Length:
@@ -71,7 +71,7 @@ interactions:
       CF-Cache-Status:
       - DYNAMIC
       CF-RAY:
-      - 7f2744d1dbe94408-EWR
+      - 7f295bdb9e7b1a2c-EWR
       Connection:
       - keep-alive
       Content-Length:
@@ -79,7 +79,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 06 Aug 2023 12:26:33 GMT
+      - Sun, 06 Aug 2023 18:31:48 GMT
       Server:
       - cloudflare
       Strict-Transport-Security:
@@ -89,7 +89,7 @@ interactions:
       - Access-Control-Request-Method
       - Access-Control-Request-Headers
       X-Trace-Id:
-      - 0f633a4e-a218-49ea-b02a-1ad3750a20fc
+      - 800dbcca-29e8-4485-9a98-f0d908028452
     status:
       code: 200
       message: OK
