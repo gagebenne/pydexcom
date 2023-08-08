@@ -43,33 +43,37 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 {'WT': 'Date(1691455258000)', 'ST': 'Date(1691455258000)', 'DT': 'Date(1691455258000-0400)', 'Value': 85, 'Trend': 'Flat'}
 ```
 
+# Documentation
+
+[https://gagebenne.github.io/pydexcom/pydexcom.html#quickstart](https://gagebenne.github.io/pydexcom/pydexcom.html#quickstart)
+
 # Frequently Asked Questions
 
 ## Why is my password not working?
 
 The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password (`pydexcom.errors.AccountErrorEnum`). However, there could be many reasons you are getting this error:
 
-1. **Use the correct Dexcom Share API instance.**
+1. Use the correct Dexcom Share API instance.
 
 If you are located outside of the United States, be sure to set `ous=True` when intializing `Dexcom`.
 
-2. **Use your Dexcom Share credentials, not the follower's credentials.**
+2. Use your Dexcom Share credentials, not the follower's credentials.
 
 Use the same credentials used to login to the Dexcom mobile application publishing the glucose readings.
 
-3. **Ensure you have at least one follower on Dexcom Share.**
+3. Ensure you have at least one follower on Dexcom Share.
 
 The Dexcom Share service requires setup of at least one follower to enable the service, as does this package.
 
-4. **Check whether your account credentials involve usernames or emails.**
+4. Check whether your account credentials involve usernames or emails.
 
 There are two account types the Dexcom Share API uses: legacy username-based accounts, and newer email-based accounts. Be sure to use the correct authentication method.
 
-5. **Use alpha-numeric passwords.**
+5. Use alpha-numeric passwords.
 
 Some individuals have had problems with connecting when their Dexcom Share passwords are entirely numeric. If you have connection issues, try changing your password to something with a mix of numbers and letters.
 
-7. **Report it!**
+7. Report it!
 
 The Dexcom Share API sometimes changes. If you believe there is an issue with `pydexcom` , feel free to [create an issue](https://github.com/gagebenne/pydexcom/issues/new) if one has not been created yet already.
 
