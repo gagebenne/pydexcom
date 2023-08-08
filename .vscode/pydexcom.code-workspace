@@ -17,7 +17,8 @@
 			"**/*egg-info": true,
 		},
 		"python.testing.pytestArgs": [
-			"tests"
+			"tests",
+			"--record-mode=none"
 		],
 		"python.testing.pytestEnabled": true,
 		"editor.formatOnSave": true,
