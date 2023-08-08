@@ -47,11 +47,11 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 ## Why is my password not working?
 
-The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password ( `pydexcom.errors.AccountErrorEnum` ). However, there could be many reasons you are getting this error:
+The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password (`pydexcom.errors.AccountErrorEnum`). However, there could be many reasons you are getting this error:
 
 1. **Use the correct Dexcom Share API instance.**
 
-If you are located outside of the United States, be sure to set `ous=True` when intializing `Dexcom` .
+If you are located outside of the United States, be sure to set `ous=True` when intializing `Dexcom`.
 
 2. **Use your Dexcom Share credentials, not the follower's credentials.**
 
@@ -83,7 +83,7 @@ By all means submit a pull request if you have a feature you would like to see i
 
 ## Where is this package being used?
 
-Primarily this package is used in the [Home Assistant Dexcom integration](https://www.home-assistant.io/integrations/dexcom/), but it's fantastic to see community projects involving `pydexcom` :
+Primarily this package is used in the [Home Assistant Dexcom integration](https://www.home-assistant.io/integrations/dexcom/), but it's fantastic to see community projects involving `pydexcom`:
 
 * [Tracking glucose levels using a Raspberry Pi and e-ink display](https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker)
 
