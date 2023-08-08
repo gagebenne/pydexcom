@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish:
-    name: Publish release package to PyPI
+    name: Publish package to PyPI
     runs-on: ubuntu-latest
     environment:
       name: pypi
@@ -24,5 +24,3 @@ jobs:
       run: python3 -m build
     - name: Publish package distributions to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
