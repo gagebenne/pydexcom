@@ -1,5 +1,1 @@
-pytest
 requests>=2.0
-types-requests
-vcrpy
-pdoc
