@@ -1,0 +1,37 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/.git": true,
+			"**/.svn": true,
+			"**/.hg": true,
+			"**/CVS": true,
+			"**/.DS_Store": true,
+			"**/Thumbs.db": true,
+			"**/*_cache": true,
+			"**/build": true,
+			"**/*egg-info": true,
+		},
+		"python.testing.pytestArgs": [
+			"tests",
+			"--record-mode=none"
+		],
+		"python.testing.pytestEnabled": true,
+		"editor.formatOnSave": true,
+		"isort.args": [
+			"--profile",
+			"black"
+		],
+		"mypy.configFile": "pyproject.toml",
+		"[python]": {
+			"editor.codeActionsOnSave": {
+				"source.organizeImports": true
+			},
+			"editor.defaultFormatter": "ms-python.black-formatter"
+		}
+	}
+}

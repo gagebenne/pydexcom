@@ -1,0 +1,55 @@
+interactions:
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountName":
+      "username", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/AuthenticatePublisherAccount
+  response:
+    body:
+      string: '{"Code":"AccountPasswordInvalid","Message":"Publisher account password
+        failed","SubCode":"<OnlineException DateThrownLocal=\"2023-08-06T18:31:46.108\"
+        DateThrown=\"2023-08-06T18:31:46.108Z\" ErrorCode=\"AccountPasswordInvalid\"
+        Type=\"13\" Category=\"4\" Severity=\"1\" TypeString=\"InvalidPassword\" CategoryString=\"Validation\"
+        SeverityString=\"Minor\" HostName=\"\" HostIP=\"\" Id=\"{55555555-5555-5555-5555-555555555555}\"
+        Message=\"Publisher account password failed\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Publisher account password failed\" />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 7f295bcd78231971-EWR
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '607'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 06 Aug 2023 18:31:46 GMT
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      X-Trace-Id:
+      - 961862ea-c7e4-4c3a-8adb-6e2c0c0533bf
+    status:
+      code: 500
+      message: Internal Server Error
+version: 1

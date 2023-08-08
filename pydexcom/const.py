@@ -1,59 +1,32 @@
-"""Constants used in pydexcom."""
+"""Constants used in `pydexcom`."""
 
-import logging
+from typing import Dict, List
 
-_LOGGER = logging.getLogger("pydexcom")
+DEXCOM_APPLICATION_ID: str = "d89443d2-327c-4a6f-89e5-496bbb0317db"
+"""Dexcom application ID."""
 
+DEXCOM_BASE_URL: str = "https://share2.dexcom.com/ShareWebServices/Services"
+"""Dexcom Share API base url for US."""
 
-# Dexcom Share API base urls
-DEXCOM_BASE_URL = "https://share2.dexcom.com/ShareWebServices/Services"
-DEXCOM_BASE_URL_OUS = "https://shareous1.dexcom.com/ShareWebServices/Services"
+DEXCOM_BASE_URL_OUS: str = "https://shareous1.dexcom.com/ShareWebServices/Services"
+"""Dexcom Share API base url for outside of the US."""
 
-# Dexcom Share API endpoints
-DEXCOM_LOGIN_ID_ENDPOINT = "General/LoginPublisherAccountById"
-DEXCOM_AUTHENTICATE_ENDPOINT = "General/AuthenticatePublisherAccount"
-DEXCOM_VERIFY_SERIAL_NUMBER_ENDPOINT = (
-    "Publisher/CheckMonitoredReceiverAssignmentStatus"
-)
-DEXCOM_GLUCOSE_READINGS_ENDPOINT = "Publisher/ReadPublisherLatestGlucoseValues"
+DEXCOM_LOGIN_ID_ENDPOINT: str = "General/LoginPublisherAccountById"
+"""Dexcom Share API endpoint used to retrieve account ID."""
 
-DEXCOM_APPLICATION_ID = "d89443d2-327c-4a6f-89e5-496bbb0317db"
+DEXCOM_AUTHENTICATE_ENDPOINT: str = "General/AuthenticatePublisherAccount"
+"""Dexcom Share API endpoint used to retrieve session ID."""
 
-# Dexcom error strings
-ACCOUNT_ERROR_USERNAME_NULL_EMPTY = "Username null or empty"
-ACCOUNT_ERROR_PASSWORD_NULL_EMPTY = "Password null or empty"
-SESSION_ERROR_ACCOUNT_ID_NULL_EMPTY = "Account ID null or empty"
-SESSION_ERROR_ACCOUNT_ID_DEFAULT = "Account ID default"
-ACCOUNT_ERROR_ACCOUNT_NOT_FOUND = "Account not found"
-ACCOUNT_ERROR_PASSWORD_INVALID = "Password not valid"
-ACCOUNT_ERROR_MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
-ACCOUNT_ERROR_UNKNOWN = "Account error"
+DEXCOM_GLUCOSE_READINGS_ENDPOINT: str = "Publisher/ReadPublisherLatestGlucoseValues"
+"""Dexcom Share API endpoint used to retrieve glucose values."""
 
-SESSION_ERROR_SESSION_ID_NULL = "Session ID null"
-SESSION_ERROR_SESSION_ID_DEFAULT = "Session ID default"
-SESSION_ERROR_SESSION_NOT_VALID = "Session ID not valid"
-SESSION_ERROR_SESSION_NOT_FOUND = "Session ID not found"
+REQUEST_TIMEOUT: int = 10  # seconds
+"""Standard request timeout to use when communicating with Dexcom Share API."""
 
-ARGUMENT_ERROR_MINUTES_INVALID = "Minutes must be between 1 and 1440"
-ARGUMENT_ERROR_MAX_COUNT_INVALID = "Max count must be between 1 and 288"
-ARGUMENT_ERROR_SERIAL_NUMBER_NULL_EMPTY = "Serial number null or empty"
+DEFAULT_UUID: str = "00000000-0000-0000-0000-000000000000"
+"""UUID consisting of all zeros, likely error if returned by Dexcom Share API."""
 
-
-# Other
-DEXCOM_TREND_DESCRIPTIONS = [
-    "",
-    "rising quickly",
-    "rising",
-    "rising slightly",
-    "steady",
-    "falling slightly",
-    "falling",
-    "falling quickly",
-    "unable to determine trend",
-    "trend unavailable",
-]
-
-DEXCOM_TREND_DIRECTIONS = {
+DEXCOM_TREND_DIRECTIONS: Dict[str, int] = {
     "None": 0,  # unconfirmed
     "DoubleUp": 1,
     "SingleUp": 2,
@@ -65,9 +38,30 @@ DEXCOM_TREND_DIRECTIONS = {
     "NotComputable": 8,  # unconfirmed
     "RateOutOfRange": 9,  # unconfirmed
 }
+"""Trend directions returned by the Dexcom Share API mapped to `int`."""
 
-DEXCOM_TREND_ARROWS = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+TREND_DESCRIPTIONS: List[str] = [
+    "",
+    "rising quickly",
+    "rising",
+    "rising slightly",
+    "steady",
+    "falling slightly",
+    "falling",
+    "falling quickly",
+    "unable to determine trend",
+    "trend unavailable",
+]
+"""Trend descriptions ordered identically to `DEXCOM_TREND_DIRECTIONS`."""
 
-DEFAULT_SESSION_ID = "00000000-0000-0000-0000-000000000000"
+TREND_ARROWS: List[str] = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+"""Trend arrows ordered identically to `DEXCOM_TREND_DIRECTIONS`."""
 
-MMOL_L_CONVERTION_FACTOR = 0.0555
+MAX_MINUTES: int = 1440
+"""Maximum minutes to use when retrieving glucose values (1 day)."""
+
+MAX_MAX_COUNT: int = 288
+"""Maximum count to use when retrieving glucose values (1 reading per 5 minutes)."""
+
+MMOL_L_CONVERSION_FACTOR: float = 0.0555
+"""Conversion factor between mg/dL and mmol/L."""
