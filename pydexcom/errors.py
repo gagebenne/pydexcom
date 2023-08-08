@@ -1,29 +1,31 @@
-"""Errors used in pydexcom."""
+"""Errors used in `pydexcom`."""
 
 
 from enum import Enum
-from typing import Union
 
 
-class AccountErrorEnum(Enum):
-    """Dexcom AccountError strings."""
+class DexcomErrorEnum(Enum):
+    """Base class for all `pydexcom` error strings."""
+
+    pass
+
+
+class AccountErrorEnum(DexcomErrorEnum):
+    """`AccountError` strings."""
 
     ACCOUNT_NOT_FOUND = "Account not found"
     PASSWORD_INVALID = "Password not valid"
     MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
 
 
-class SessionErrorEnum(Enum):
-    """Dexcom SessionError strings."""
+class SessionErrorEnum(DexcomErrorEnum):
+    """`SessionError` strings."""
 
-    NULL = "Session ID null"
-    DEFAULT = "Session ID default"
-    NOT_VALID = "Session ID not valid"
     NOT_FOUND = "Session ID not found"
 
 
-class ArgumentErrorEnum(Enum):
-    """Dexcom ArgumentError strings."""
+class ArgumentErrorEnum(DexcomErrorEnum):
+    """`ArgumentError` strings."""
 
     MINUTES_INVALID = "Minutes must be and integer between 1 and 1440"
     MAX_COUNT_INVALID = "Max count must be and integer between 1 and 288"
@@ -33,17 +35,26 @@ class ArgumentErrorEnum(Enum):
     ACCOUNT_ID_DEFAULT = "Account ID default"
     SESSION_ID_INVALID = "Session ID must be UUID"
     SESSION_ID_DEFAULT = "Session ID default"
-    GLUCOSE_READING_INVALID = "JSON glucose reading ill-formatted"
+    GLUCOSE_READING_INVALID = "JSON glucose reading incorrectly formatted"
 
 
 class DexcomError(Exception):
-    """Base class for all Dexcom errors."""
+    """Base class for all `pydexcom` errors."""
 
-    def __init__(
-        self, enum: Union[AccountErrorEnum, SessionErrorEnum, ArgumentErrorEnum]
-    ):
+    def __init__(self, enum: DexcomErrorEnum):
+        """Create `DexcomError` from `DexcomErrorEnum`.
+
+        :param enum: associated `DexcomErrorEnum`
+        """
         super().__init__(enum.value)
-        self.enum = enum
+        self._enum = enum
+
+    @property
+    def enum(self) -> DexcomErrorEnum:
+        """Get `DexcomErrorEnum` associated with error.
+
+        :return: `DexcomErrorEnum`"""
+        return self._enum
 
 
 class AccountError(DexcomError):
@@ -59,6 +70,7 @@ class SessionError(DexcomError):
 
 
 class ArgumentError(DexcomError):
-    """Error involving arguments."""
+    """Errors involving `pydexcom` arguments."""
 
+    pass
     pass

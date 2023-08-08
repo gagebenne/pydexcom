@@ -1,129 +1,90 @@
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green?style=flat-square)](https://www.paypal.me/gagebenne)
-[![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://www.pypi.org/project/pydexcom)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/gagebenne/pydexcom/Python%20package?style=flat-square)](https://github.com/gagebenne/pydexcom/actions)
+A simple Python API to interact with Dexcom Share service. Used to get *real-time* Dexcom CGM sensor data.
 
-# pydexcom
-
-A simple Python API to interact with Dexcom Share service. Used to get **real time** Dexcom CGM sensor data.
-
-### Setup
-
+# Quickstart
 1. Download the [Dexcom G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
 
-    *Note: the service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's.*
+The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's
 
 2. Install the `pydexcom` package.
-    ```python
-    pip3 install pydexcom
-    ```
 
-### Usage
+ `pip3 install pydexcom`
+
+3. Profit.
 
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom("username", "password") # add ous=True if outside of US
->>> bg = dexcom.get_current_glucose_reading()
->>> bg.value
+>>> dexcom = Dexcom("username", "password") # `ous=True` if outside of US
+>>> glucose_reading = dexcom.get_current_glucose_reading()
+>>> print(glucose_reading)
 85
 
->>> bg.mmol_l
+>>> glucose_reading.value
+85
+
+>>> glucose_reading.mmol_l
 4.7
 
->>> bg.trend
+>>> glucose_reading.trend
 4
 
->>> bg.trend_description
+>>> glucose_reading.trend_direction
+'Flat'
+
+>>> glucose_reading.trend_description
 'steady'
 
->>> bg.trend_arrow
+>>> glucose_reading.trend_arrow
 '→'
 
->>> bg.time
-datetime.datetime(2020, 5, 6, 18, 18, 42)
+>>> print(bg.datetime)
+2023-08-07 20:40:58
 
->>> # Write to file:
->>> bg_list = dexcom.get_glucose_readings(max_count=5)
->>> import json
->>> with open('bg_file.json', 'w') as f:
->>>     for bg in bg_list:
->>>         f.write(json.dumps(bg.json)+"\n")
-
->>> # Read from file:
->>> bg_list = []
->>> from pydexcom import GlucoseReading
->>> with open('bg_file.json', 'r') as f:
->>>     for line in f.readlines():
->>>         bg_list.append(GlucoseReading(json.loads(line)))
-
+>>> glucose_reading.json
+{'WT': 'Date(1691455258000)', 'ST': 'Date(1691455258000)', 'DT': 'Date(1691455258000-0400)', 'Value': 85, 'Trend': 'Flat'}
 ```
 
-### FAQ
+# Frequently Asked Questions
 
-<details>
-<summary>What do I need to get started?</a></summary>
-<br/>
-If you are currently on the Dexcom CGM system, all you need is the appropriate mobile app with the Dexcom Share service enabled.
-</details>
-<details>
-<summary>Where is this package being used?</a></summary>
-<br/>
-For now this package is mainly being used in the <a href="https://github.com/home-assistant/core/pull/33852">Dexcom Home Assistant integration</a>, but is generic enough to be used in lots of applications.
-In fact, Reddit user paulcole710 used it to track glucose levels <a href="https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker">using a Raspberry Pi and E Ink display</a>.
-</details>
+## Why is my password not working?
 
-<details>
-<summary>Why not use the <a href="https://developer.dexcom.com/">official Dexcom Developer API?</a></summary>
-<br/>
-The official Dexcom API is a great tool to view trends, statistics, and day-by-day data, but is not suitable for real time fetching of glucose readings.
-</details>
-<details>
-<summary>How can I let you know of suggestions or issues?</summary>
-<br/>
-By all means submit a pull request if you have a feature you'd like to see in the next release, alternatively you may leave a issue if you have a suggestion or bug you'd like to alert me of.
-</details>
-<details>
-<summary>Are there any features in development?</summary>
-<br/>
-Sure, I'm thinking of implementing a session status checker, or maybe an asynchronous version. That being said, simplicity - getting real time blood glucose information - is most important to this package.
-</details>
+The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password ( `pydexcom.errors.AccountErrorEnum` ). However, there could be many reasons you are getting this error:
 
-### Development
+1. **Use the correct Dexcom Share API instance.**
 
-##### Dexcom class
+If you are located outside of the United States, be sure to set `ous=True` when intializing `Dexcom` .
 
-| Method                    | Input                                                   | Output                          | Description                                                  |
-| --------------------------- | ------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------ |
-| \_\_init\_\_                | `username:str`,<br/>`password:str`,<br/>`ous:bool=True` | `Dexcom`                        | Dexcom constructor, stores authentication information        |
-| create_session              |                                                         |                                 | Creates Dexcom Share API session by getting session id       |
-| verify_serial_number        | `serial_number:str`                                     | `bool`                          | Verifies if a transmitter serial number is assigned to you   |
-| get_glucose_readings        | `minutes:int=1440`,<br/>`max_count:int=288`             | `[GlucoseReading]`/<br />`None` | Gets max_count glucose readings within the past minutes, None if no glucose reading in the past 24 hours |
-| get_latest_glucose_reading  |                                                         | `GlucoseReading`/<br />`None`   | Gets latest available glucose reading, None if no glucose reading in the past 24 hours |
-| get_current_glucose_reading |                                                         | `GlucoseReading`/`None`         | Gets current available glucose reading, None if no glucose reading in the past 6 minutes |
+2. **Use your Dexcom Share credentials, not the follower's credentials.**
 
-##### GlucoseReading class
+Use the same credentials used to login to the Dexcom mobile application publishing the glucose readings.
 
-| Attribute         | Definition                                                   | Example                                     |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------------- |
-| value             | Blood glucose value in mg/dL.                                | `85`                                        |
-| mg_dl             | Blood glucose value in mg/dL.                                | `85`                                        |
-| mmol_l            | Blood glucose value in mmol/L.                               | `4.7`                                       |
-| trend             | Blood glucose trend information as number 0 - 9 (see constants). | `4`                                     |
-| trend_description | Blood glucose trend information description (see constants). | `'steady'`                                  |
-| trend_arrow       | Blood glucose trend information as unicode arrow (see constants). | `'→'`                                  |
-| time              | Blood glucose recorded time as `datetime`.                   | `datetime.datetime(2020, 5, 6, 18, 18, 42)` |
-| json              | Raw blood glucose record from Dexcom API as a dict, for JSON text file output. | `{"WT": "Date(1588803522000)", "Value": 85, "Trend": "Flat"}`
+3. **Ensure you have at least one follower on Dexcom Share.**
 
-##### Constants
+The Dexcom Share service requires setup of at least one follower to enable the service, as does this package.
 
-| Trend | Trend description             | Trend arrow |
-| ----- | ----------------------------- | ----------- |
-| 0     | `''`                          | `''`        |
-| 1     | `'rising quickly'`            | `'↑↑'`      |
-| 2     | `'rising'`                    | `'↑'`       |
-| 3     | `'rising slightly'`           | `'↗'`       |
-| 4     | `'steady'`                    | `'→'`       |
-| 5     | `'falling slightly'`          | `'↘'`       |
-| 6     | `'falling'`                   | `'↓'`       |
-| 7     | `'falling quickly'`           | `'↓↓'`      |
-| 8     | `'unable to determine trend'` | `'?'`       |
-| 9     | `'trend unavailable'`         | `'-'`       |
+4. **Check whether your account credentials involve usernames or emails.**
+
+There are two account types the Dexcom Share API uses: legacy username-based accounts, and newer email-based accounts. Be sure to use the correct authentication method.
+
+5. **Use alpha-numeric passwords.**
+
+Some individuals have had problems with connecting when their Dexcom Share passwords are entirely numeric. If you have connection issues, try changing your password to something with a mix of numbers and letters.
+
+7. **Report it!**
+
+The Dexcom Share API sometimes changes. If you believe there is an issue with `pydexcom` , feel free to [create an issue](https://github.com/gagebenne/pydexcom/issues/new) if one has not been created yet already.
+
+## Why not use the official Dexcom Developer API?
+
+The official Dexcom API is a great tool to view trends, statistics, and day-by-day data, but is not suitable for real time fetching of glucose readings as it is a retrospective API.
+
+## How can I let you know of suggestions or issues?
+
+By all means submit a pull request if you have a feature you would like to see in the next release. Alternatively, you may [create an issue](https://github.com/gagebenne/pydexcom/issues/new) if you have a suggestion or bug you'd like to report.
+
+## Where is this package being used?
+
+Primarily this package is used in the [Home Assistant Dexcom integration](https://www.home-assistant.io/integrations/dexcom/), but it's fantastic to see community projects involving `pydexcom` :
+
+* [Tracking glucose levels using a Raspberry Pi and e-ink display](https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker)
+
+* [Glucose Readings in a Terminal Prompt](https://harthoover.com/glucose-readings-in-a-terminal-prompt/)
