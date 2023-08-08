@@ -22,7 +22,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Build docs
-        run: pdoc -o docs
+        run: pdoc -o docs pydexcom
       - uses: actions/upload-pages-artifact@v2
         with:
           path: docs
