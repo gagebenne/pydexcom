@@ -1,3 +1,9 @@
+[![PyPI](https://img.shields.io/pypi/v/pydexcom?style=flat-square)](https://pypi.org/project/pydexcom/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pytest.svg?style=flat-square)](https://pypi.org/project/pydexcom/)
+[![Pre-commit](https://img.shields.io/github/actions/workflow/status/gagebenne/pydexcom/pre-commit.yaml?style=flat-square&label=pre-commit)](https://github.com/gagebenne/pydexcom/actions/workflows/pre-commit.yaml)
+[![Tests](https://img.shields.io/github/actions/workflow/status/gagebenne/pydexcom/test.yaml?style=flat-square&label=tests)](https://github.com/gagebenne/pydexcom/actions/workflows/test.yaml)
+[![Docs](https://img.shields.io/github/actions/workflow/status/gagebenne/pydexcom/docs.yaml?style=flat-square&label=docs)](https://gagebenne.github.io/pydexcom/pydexcom.html)
+
 A simple Python API to interact with Dexcom Share service. Used to get *real-time* Dexcom CGM sensor data.
 
 # Quickstart
@@ -45,7 +51,7 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 # Documentation
 
-[https://gagebenne.github.io/pydexcom/pydexcom.html#quickstart](https://gagebenne.github.io/pydexcom/pydexcom.html#quickstart)
+[https://gagebenne.github.io/pydexcom/pydexcom.html](https://gagebenne.github.io/pydexcom/pydexcom.html)
 
 # Frequently Asked Questions
 
