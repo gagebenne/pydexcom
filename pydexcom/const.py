@@ -20,9 +20,6 @@ DEXCOM_AUTHENTICATE_ENDPOINT: str = "General/AuthenticatePublisherAccount"
 DEXCOM_GLUCOSE_READINGS_ENDPOINT: str = "Publisher/ReadPublisherLatestGlucoseValues"
 """Dexcom Share API endpoint used to retrieve glucose values."""
 
-REQUEST_TIMEOUT: int = 10  # seconds
-"""Standard request timeout to use when communicating with Dexcom Share API."""
-
 DEFAULT_UUID: str = "00000000-0000-0000-0000-000000000000"
 """UUID consisting of all zeros, likely error if returned by Dexcom Share API."""
 
