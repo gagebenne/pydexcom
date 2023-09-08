@@ -20,7 +20,6 @@ from .const import (
     MAX_MAX_COUNT,
     MAX_MINUTES,
     MMOL_L_CONVERSION_FACTOR,
-    REQUEST_TIMEOUT,
     TREND_ARROWS,
     TREND_DESCRIPTIONS,
 )
@@ -146,7 +145,6 @@ class Dexcom:
             headers={"Accept-Encoding": "application/json"},
             params=params,
             json={} if json is None else json,
-            timeout=REQUEST_TIMEOUT,
         )
 
         try:
