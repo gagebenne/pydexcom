@@ -170,6 +170,8 @@ class Dexcom:
             message = response.json().get("Message", None)
             if code == "SessionIdNotFound":
                 error = SessionError(SessionErrorEnum.NOT_FOUND)
+            elif code == "SessionNotValid":
+                error = SessionError(SessionErrorEnum.INVALID)
             elif code == "AccountPasswordInvalid":
                 error = AccountError(AccountErrorEnum.PASSWORD_INVALID)
             elif code == "SSO_AuthenticateMaxAttemptsExceeed":
@@ -182,7 +184,7 @@ class Dexcom:
                 elif message and "UUID" in message:
                     error = ArgumentError(ArgumentErrorEnum.ACCOUNT_ID_INVALID)
             elif code and message:
-                _LOGGER.error("%s: %s", code, message)
+                _LOGGER.debug("%s: %s", code, message)
         return error
 
     def _validate_session_id(self) -> None:
@@ -209,6 +211,7 @@ class Dexcom:
     def _get_account_id(self) -> str:
         """Retrieve account ID from the authentication endpoint
         (`pydexcom.const.DEXCOM_AUTHENTICATE_ENDPOINT`)."""
+        _LOGGER.debug("Retrieve account ID from the authentication endpoint")
         return self._post(
             DEXCOM_AUTHENTICATE_ENDPOINT,
             json={
@@ -221,6 +224,7 @@ class Dexcom:
     def _get_session_id(self) -> str:
         """Retrieve session ID from the login endpoint
         (`pydexcom.const.DEXCOM_LOGIN_ID_ENDPOINT`)."""
+        _LOGGER.debug("Retrieve session ID from the login endpoint")
         return self._post(
             DEXCOM_LOGIN_ID_ENDPOINT,
             json={
@@ -253,6 +257,7 @@ class Dexcom:
         ):
             raise ArgumentError(ArgumentErrorEnum.MAX_COUNT_INVALID)
 
+        _LOGGER.debug("Retrieve glucose readings from the glucose readings endpoint")
         return self._post(
             DEXCOM_GLUCOSE_READINGS_ENDPOINT,
             params={

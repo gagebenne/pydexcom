@@ -22,6 +22,7 @@ class SessionErrorEnum(DexcomErrorEnum):
     """`SessionError` strings."""
 
     NOT_FOUND = "Session ID not found"
+    INVALID = "Session not active or timed out"
 
 
 class ArgumentErrorEnum(DexcomErrorEnum):
