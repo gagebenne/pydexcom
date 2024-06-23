@@ -112,18 +112,19 @@ class GlucoseReading:
 class Dexcom:
     """Class for communicating with Dexcom Share API."""
 
-    def __init__(self, username: str, password: str, ous: bool = False):
+    def __init__(self, username: str, password: str, ous: bool = False, account_id Optional[str] = None):
         """
         Initialize `Dexcom` with Dexcom Share credentials.
 
         :param username: username for the Dexcom Share user, *not follower*.
         :param password: password for the Dexcom Share user.
         :param ous: whether the Dexcom Share user is outside of the US.
+        :param account_id: accountId of the Dexcom Share user.
         """
         self._base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
         self._username = username
         self._password = password
-        self._account_id: Optional[str] = None
+        self._account_id: Optional[str] = account_id
         self._session_id: Optional[str] = None
         self.__session = requests.Session()
         self._session()
