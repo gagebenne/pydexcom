@@ -1,10 +1,12 @@
 """
 .. include:: ../README.md
 """
+
 import logging
 import re
 from datetime import datetime
 from typing import Any, Dict, List, Optional
+from uuid import UUID
 
 import requests
 
@@ -109,21 +111,44 @@ class GlucoseReading:
         return str(self._value)
 
 
+def valid_uuid(uuid: Optional[str]) -> bool:
+    try:
+        UUID((str(uuid)))
+        return True
+    except ValueError:
+        return False
+
+
 class Dexcom:
     """Class for communicating with Dexcom Share API."""
 
-    def __init__(self, username: str, password: str, ous: bool = False):
+    def __init__(
+        self,
+        password: str,
+        account_id: Optional[str] = None,
+        username: Optional[str] = None,
+        ous: bool = False,
+    ):
         """
         Initialize `Dexcom` with Dexcom Share credentials.
 
         :param username: username for the Dexcom Share user, *not follower*.
+        :param account_id: account ID for the Dexcom Share user, *not follower*.
         :param password: password for the Dexcom Share user.
         :param ous: whether the Dexcom Share user is outside of the US.
         """
+        user_ids = len(
+            [user_id for user_id in [account_id, username] if user_id is not None]
+        )
+        if user_ids == 0:
+            raise ArgumentError(ArgumentErrorEnum.NONE_USER_ID_PROVIDED)
+        if user_ids != 1:
+            raise ArgumentError(ArgumentErrorEnum.TOO_MANY_USER_ID_PROVIDED)
+
         self._base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
-        self._username = username
         self._password = password
-        self._account_id: Optional[str] = None
+        self._username: Optional[str] = username
+        self._account_id: Optional[str] = account_id
         self._session_id: Optional[str] = None
         self.__session = requests.Session()
         self._session()
@@ -172,10 +197,15 @@ class Dexcom:
                 error = SessionError(SessionErrorEnum.NOT_FOUND)
             elif code == "SessionNotValid":
                 error = SessionError(SessionErrorEnum.INVALID)
-            elif code == "AccountPasswordInvalid":
-                error = AccountError(AccountErrorEnum.PASSWORD_INVALID)
+            elif code == "AccountPasswordInvalid":  # defunct
+                error = AccountError(AccountErrorEnum.FAILED_AUTHENTICATION)
             elif code == "SSO_AuthenticateMaxAttemptsExceeed":
                 error = AccountError(AccountErrorEnum.MAX_ATTEMPTS)
+            elif code == "SSO_InternalError":
+                if message and "Cannot Authenticate by AccountName" in message:
+                    error = AccountError(AccountErrorEnum.FAILED_AUTHENTICATION)
+                elif message and "Cannot Authenticate by AccountId" in message:
+                    error = AccountError(AccountErrorEnum.FAILED_AUTHENTICATION)
             elif code == "InvalidArgument":
                 if message and "accountName" in message:
                     error = ArgumentError(ArgumentErrorEnum.USERNAME_INVALID)
@@ -189,21 +219,36 @@ class Dexcom:
 
     def _validate_session_id(self) -> None:
         """Validate session ID."""
-        if any([not isinstance(self._session_id, str), not self._session_id]):
+        if any(
+            [
+                not isinstance(self._session_id, str),
+                not self._session_id,
+                not valid_uuid(self._session_id),
+            ]
+        ):
             raise ArgumentError(ArgumentErrorEnum.SESSION_ID_INVALID)
         if self._session_id == DEFAULT_UUID:
             raise ArgumentError(ArgumentErrorEnum.SESSION_ID_DEFAULT)
 
-    def _validate_credentials(self) -> None:
-        """Validate credentials."""
+    def _validate_username(self) -> None:
+        """Validate username."""
         if any([not isinstance(self._username, str), not self._username]):
             raise ArgumentError(ArgumentErrorEnum.USERNAME_INVALID)
+
+    def _validate_password(self) -> None:
+        """Validate password."""
         if any([not isinstance(self._password, str), not self._password]):
             raise ArgumentError(ArgumentErrorEnum.PASSWORD_INVALID)
 
     def _validate_account_id(self) -> None:
         """Validate account ID."""
-        if any([not isinstance(self._account_id, str), not self._account_id]):
+        if any(
+            [
+                not isinstance(self._account_id, str),
+                not self._account_id,
+                not valid_uuid(self._account_id),
+            ],
+        ):
             raise ArgumentError(ArgumentErrorEnum.ACCOUNT_ID_INVALID)
         if self._account_id == DEFAULT_UUID:
             raise ArgumentError(ArgumentErrorEnum.ACCOUNT_ID_DEFAULT)
@@ -236,12 +281,13 @@ class Dexcom:
 
     def _session(self) -> None:
         """Create Dexcom Share API session."""
-        self._validate_credentials()
+        self._validate_password()
 
         if self._account_id is None:
+            self._validate_username()
             self._account_id = self._get_account_id()
-            self._validate_account_id()
 
+        self._validate_account_id()
         self._session_id = self._get_session_id()
         self._validate_session_id()
 

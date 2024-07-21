@@ -14,13 +14,13 @@ from pydexcom import (
     Dexcom,
 )
 
-from .conftest import PASSWORD, TEST_SESSION_ID_EXPIRED, USERNAME, vcr_cassette_path
+from .conftest import ACCOUNT_ID, PASSWORD, TEST_SESSION_ID_EXPIRED, vcr_cassette_path
 
 
 @pytest.fixture(scope="class")
 def dexcom(request: pytest.FixtureRequest, vcr: VCR) -> Dexcom:  # type:ignore
     with vcr.use_cassette(path=vcr_cassette_path(request, fixture=True)):
-        return Dexcom(USERNAME, PASSWORD)
+        return Dexcom(account_id=ACCOUNT_ID, password=PASSWORD)
 
 
 @pytest.mark.vcr()

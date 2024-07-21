@@ -1,6 +1,5 @@
 """Errors used in `pydexcom`."""
 
-
 from enum import Enum
 
 
@@ -13,8 +12,7 @@ class DexcomErrorEnum(Enum):
 class AccountErrorEnum(DexcomErrorEnum):
     """`AccountError` strings."""
 
-    ACCOUNT_NOT_FOUND = "Account not found"
-    PASSWORD_INVALID = "Password not valid"
+    FAILED_AUTHENTICATION = "Failed to authenticate"
     MAX_ATTEMPTS = "Maximum authentication attempts exceeded"
 
 
@@ -31,6 +29,8 @@ class ArgumentErrorEnum(DexcomErrorEnum):
     MINUTES_INVALID = "Minutes must be and integer between 1 and 1440"
     MAX_COUNT_INVALID = "Max count must be and integer between 1 and 288"
     USERNAME_INVALID = "Username must be non-empty string"
+    TOO_MANY_USER_ID_PROVIDED = "Only one of account_id, username should be provided"
+    NONE_USER_ID_PROVIDED = "At least one of account_id, username should be provided"
     PASSWORD_INVALID = "Password must be non-empty string"
     ACCOUNT_ID_INVALID = "Account ID must be UUID"
     ACCOUNT_ID_DEFAULT = "Account ID default"
