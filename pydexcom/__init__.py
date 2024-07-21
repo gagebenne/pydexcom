@@ -124,6 +124,7 @@ class Dexcom:
 
     def __init__(
         self,
+        *,
         password: str,
         account_id: Optional[str] = None,
         username: Optional[str] = None,
