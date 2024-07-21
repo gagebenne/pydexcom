@@ -19,8 +19,10 @@ dynamic = ["version"]
 
 [tool.setuptools_scm]
 
-[tool.isort]
-profile = "black"
+[tool.ruff]
+
+[tool.ruff.lint]
+extend-select = ["I"]
 
 [tool.mypy]
 ignore_missing_imports = true
