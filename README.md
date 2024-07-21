@@ -6,10 +6,15 @@
 
 A simple Python API to interact with Dexcom Share service. Used to get *real-time* Dexcom CGM sensor data.
 
-# Quickstart
-1. Download the [Dexcom G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
+# Quick-start
+1. Download the [Dexcom G7 / G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
 
 The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's
+
+> [! CAUTION]
+> With the release of the Dexcom G7, users are now able to authenticate with a mobile phone or email address. `pydexcom` currently does not support this, only legacy username-based authentication.
+>
+> While this is [being resolved](https://github.com/gagebenne/pydexcom/issues/55), please authenticate using your account ID. You can find your account ID by logging in to [uam1.dexcom.com](https://uam1.dexcom.com) for US users or [uam2.dexcom.com](https://uam2.dexcom.com) for users outside of the US. After logging in, note the UUID in the URL -- this is your account ID.
 
 2. Install the `pydexcom` package.
 
@@ -19,7 +24,8 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom("username", "password") # `ous=True` if outside of US
+>>> dexcom = Dexcom(account_id="account_id", password="password") # `ous=True` if outside of US
+>>> dexcom = Dexcom(username="username", password="password") # legacy username accounts only
 >>> glucose_reading = dexcom.get_current_glucose_reading()
 >>> print(glucose_reading)
 85
@@ -57,11 +63,11 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 ## Why is my password not working?
 
-The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password (`pydexcom.errors.AccountErrorEnum`). However, there could be many reasons you are getting this error:
+The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password ( `pydexcom.errors.AccountErrorEnum` ). However, there could be many reasons you are getting this error:
 
 1. Use the correct Dexcom Share API instance.
 
-If you are located outside of the United States, be sure to set `ous=True` when intializing `Dexcom`.
+If you are located outside of the United States, be sure to set `ous=True` when initializing `Dexcom` .
 
 2. Use your Dexcom Share credentials, not the follower's credentials.
 
@@ -93,7 +99,7 @@ By all means submit a pull request if you have a feature you would like to see i
 
 ## Where is this package being used?
 
-Primarily this package is used in the [Home Assistant Dexcom integration](https://www.home-assistant.io/integrations/dexcom/), but it's fantastic to see community projects involving `pydexcom`:
+Primarily this package is used in the [Home Assistant Dexcom integration](https://www.home-assistant.io/integrations/dexcom/), but it's fantastic to see community projects involving `pydexcom` :
 
 * [Tracking glucose levels using a Raspberry Pi and e-ink display](https://www.tomshardware.com/news/raspberry-project-diy-dexcom-glucose-tracker)
 
