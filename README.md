@@ -11,7 +11,7 @@ A simple Python API to interact with Dexcom Share service. Used to get *real-tim
 
 The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's
 
-> [! CAUTION]
+> [!CAUTION]
 > With the release of the Dexcom G7, users are now able to authenticate with a mobile phone or email address. `pydexcom` currently does not support this, only legacy username-based authentication.
 >
 > While this is [being resolved](https://github.com/gagebenne/pydexcom/issues/55), please authenticate using your account ID. You can find your account ID by logging in to [uam1.dexcom.com](https://uam1.dexcom.com) for US users or [uam2.dexcom.com](https://uam2.dexcom.com) for users outside of the US. After logging in, note the UUID in the URL -- this is your account ID.
