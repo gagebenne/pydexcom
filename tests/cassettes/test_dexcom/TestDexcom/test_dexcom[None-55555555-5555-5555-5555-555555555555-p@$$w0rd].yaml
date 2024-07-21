@@ -1,0 +1,146 @@
+interactions:
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "55555555-5555-5555-5555-555555555555", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '{"Code":"SSO_InternalError","Message":"Synchronization of SSO account
+        during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''","SubCode":"<OnlineException
+        DateThrownLocal=\"2024-07-21T02:05:28.051516952\" DateThrown=\"2024-07-21T02:05:28.051516952Z\"
+        ErrorCode=\"SSO_InternalError\" Type=\"15\" Category=\"1\" Severity=\"2\"
+        TypeString=\"SingleSignOn\" CategoryString=\"System\" SeverityString=\"Severe\"
+        HostName=\"\" HostIP=\"\" Id=\"{55555555-5555-5555-5555-555555555555}\" Message=\"Synchronization
+        of SSO account during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''\"
+        FullText=\"com.dexcom.udp.common.data.exception.OnlineException: Synchronization
+        of SSO account during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 8a67a048bbe132cc-PHL
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1389'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 21 Jul 2024 02:05:28 GMT
+      Expires:
+      - '0'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin, Accept-Encoding
+      pragma:
+      - no-cache
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - b4822e47-6764-41db-99fb-b52bdaa46511
+      x-xss-protection:
+      - '0'
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "55555555-5555-5555-5555-555555555555", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '{"Code":"SSO_InternalError","Message":"Synchronization of SSO account
+        during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''","SubCode":"<OnlineException
+        DateThrownLocal=\"2024-07-21T02:23:31.992496225\" DateThrown=\"2024-07-21T02:23:31.992496225Z\"
+        ErrorCode=\"SSO_InternalError\" Type=\"15\" Category=\"1\" Severity=\"2\"
+        TypeString=\"SingleSignOn\" CategoryString=\"System\" SeverityString=\"Severe\"
+        HostName=\"\" HostIP=\"\" Id=\"{55555555-5555-5555-5555-555555555555}\" Message=\"Synchronization
+        of SSO account during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''\"
+        FullText=\"com.dexcom.udp.common.data.exception.OnlineException: Synchronization
+        of SSO account during authenticate call failed Time out issue.  AccountId=55555555-5555-5555-5555-555555555555
+        Error encountered accessing Keycloak endpoint: UAM_ERROR: HttpStatus=''401
+        UNAUTHORIZED(401)'' Msg=Cannot Authenticate by AccountId=''55555555-5555-5555-5555-555555555555''\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 8a67babeeb0932c6-PHL
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '1389'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 21 Jul 2024 02:23:32 GMT
+      Expires:
+      - '0'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin, Accept-Encoding
+      pragma:
+      - no-cache
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - cb669f78-a250-403c-8a5e-cf88ef861e0d
+      x-xss-protection:
+      - '0'
+    status:
+      code: 500
+      message: Internal Server Error
+version: 1
