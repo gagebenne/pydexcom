@@ -1,0 +1,60 @@
+interactions:
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '105'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.31.0
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"00000000-0000-0000-0000-000000000000"'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-Ray:
+      - 8a673fdc9d684cb4-PHL
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 21 Jul 2024 00:59:38 GMT
+      Expires:
+      - '0'
+      Server:
+      - cloudflare
+      Strict-Transport-Security:
+      - max-age=0
+      Vary:
+      - Origin, Access-Control-Request-Method, Access-Control-Request-Headers, Origin,
+        Access-Control-Request-Method, Access-Control-Request-Headers, Accept-Encoding
+      pragma:
+      - no-cache
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - 11e1aca6-ce38-4317-aa23-cc507101fbfd
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1
