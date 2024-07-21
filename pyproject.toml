@@ -21,9 +21,6 @@ dynamic = ["version"]
 
 [tool.ruff]
 
-[tool.ruff.lint]
-extend-select = ["I"]
-
 [tool.mypy]
 ignore_missing_imports = true
 disallow_untyped_calls = true
