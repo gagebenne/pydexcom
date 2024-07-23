@@ -9,12 +9,14 @@ A simple Python API to interact with Dexcom Share service. Used to get *real-tim
 # Quick-start
 1. Download the [Dexcom G7 / G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
 
-The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your credentials, not the follower's
+The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your (or the dependent's) credentials, not the follower's or manager's.
 
 > [!CAUTION]
-> With the release of the Dexcom G7, users are now able to authenticate with a mobile phone or email address. `pydexcom` currently does not support this, only legacy username-based authentication.
+> With the release of the Dexcom G7, users are now able to sign up with a phone number or email address.
 >
-> While this is [being resolved](https://github.com/gagebenne/pydexcom/issues/55), please authenticate using your account ID. You can find your account ID by logging in to [uam1.dexcom.com](https://uam1.dexcom.com) for US users or [uam2.dexcom.com](https://uam2.dexcom.com) for users outside of the US. After logging in, note the UUID in the URL -- this is your account ID.
+> `pydexcom` originally supported authentication with usernames only. However, in the recent days (July 22, 2024) some users have had success authenticating with their phone number and email address.
+>
+> While this is [being investigated](https://github.com/gagebenne/pydexcom/issues/55), try first authenticating with whatever user ID you signed up with (username, email address, phone number). If that doesn't work, authenticate using your account ID. You can find your account ID by logging in to [uam1.dexcom.com](https://uam1.dexcom.com) for US users or [uam2.dexcom.com](https://uam2.dexcom.com) for users outside of the US. After logging in, note the UUID in the URL -- this is your account ID.
 
 2. Install the `pydexcom` package.
 
@@ -22,10 +24,19 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 3. Profit.
 
+> [!IMPORTANT]
+> See the caution above.
+> 
+> Format phone numbers with a `+`, your country code, then your phone number, e.g. a US phone number of `(123)-456-7890` would be `"+11234567890"`.
+> 
+> Format account IDs with hyphens, e.g. an account ID of `1234567890abcdef1234567890abcdef` found in the URL after logging in would be supplied as `12345678-90ab-cdef-1234-567890abcdef`.
+
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom(account_id="account_id", password="password") # `ous=True` if outside of US
->>> dexcom = Dexcom(username="username", password="password") # legacy username accounts only
+>>> dexcom = Dexcom(username="username", password="password") # `ous=True` if outside of US
+>>> dexcom = Dexcom(username="+11234567890", password="password") # phone number
+>>> dexcom = Dexcom(username="user@email.com", password="password") # email address
+>>> dexcom = Dexcom(account_id="12345678-90ab-cdef-1234-567890abcdef", password="password")
 >>> glucose_reading = dexcom.get_current_glucose_reading()
 >>> print(glucose_reading)
 85
