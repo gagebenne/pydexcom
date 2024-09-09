@@ -12,10 +12,10 @@ DEXCOM_BASE_URL_OUS: str = "https://shareous1.dexcom.com/ShareWebServices/Servic
 """Dexcom Share API base url for outside of the US."""
 
 DEXCOM_LOGIN_ID_ENDPOINT: str = "General/LoginPublisherAccountById"
-"""Dexcom Share API endpoint used to retrieve account ID."""
+"""Dexcom Share API endpoint used to retrieve session ID."""
 
 DEXCOM_AUTHENTICATE_ENDPOINT: str = "General/AuthenticatePublisherAccount"
-"""Dexcom Share API endpoint used to retrieve session ID."""
+"""Dexcom Share API endpoint used to retrieve account ID."""
 
 DEXCOM_GLUCOSE_READINGS_ENDPOINT: str = "Publisher/ReadPublisherLatestGlucoseValues"
 """Dexcom Share API endpoint used to retrieve glucose values."""
