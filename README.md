@@ -26,9 +26,9 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 > [!IMPORTANT]
 > See the caution above.
-> 
+>
 > Format phone numbers with a `+`, your country code, then your phone number, e.g. a US phone number of `(123)-456-7890` would be `"+11234567890"`.
-> 
+>
 > Format account IDs with hyphens, e.g. an account ID of `1234567890abcdef1234567890abcdef` found in the URL after logging in would be supplied as `12345678-90ab-cdef-1234-567890abcdef`.
 
 ```python
