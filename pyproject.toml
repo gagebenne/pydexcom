@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pydexcom"
@@ -15,9 +15,9 @@ license = {text = "MIT"}
 dependencies = [
     "requests>=2.0",
 ]
-dynamic = ["version"]
 
-[tool.setuptools_scm]
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
 
