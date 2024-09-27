@@ -20,6 +20,13 @@ dependencies = [
 source = "vcs"
 
 [tool.ruff]
+fix = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
 
 [tool.mypy]
 ignore_missing_imports = true

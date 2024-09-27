@@ -1,7 +1,5 @@
 """Constants used in `pydexcom`."""
 
-from typing import Dict, List
-
 DEXCOM_APPLICATION_ID: str = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 """Dexcom application ID."""
 
@@ -23,7 +21,7 @@ DEXCOM_GLUCOSE_READINGS_ENDPOINT: str = "Publisher/ReadPublisherLatestGlucoseVal
 DEFAULT_UUID: str = "00000000-0000-0000-0000-000000000000"
 """UUID consisting of all zeros, likely error if returned by Dexcom Share API."""
 
-DEXCOM_TREND_DIRECTIONS: Dict[str, int] = {
+DEXCOM_TREND_DIRECTIONS: dict[str, int] = {
     "None": 0,  # unconfirmed
     "DoubleUp": 1,
     "SingleUp": 2,
@@ -37,7 +35,7 @@ DEXCOM_TREND_DIRECTIONS: Dict[str, int] = {
 }
 """Trend directions returned by the Dexcom Share API mapped to `int`."""
 
-TREND_DESCRIPTIONS: List[str] = [
+TREND_DESCRIPTIONS: list[str] = [
     "",
     "rising quickly",
     "rising",
@@ -51,7 +49,7 @@ TREND_DESCRIPTIONS: List[str] = [
 ]
 """Trend descriptions ordered identically to `DEXCOM_TREND_DIRECTIONS`."""
 
-TREND_ARROWS: List[str] = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
+TREND_ARROWS: list[str] = ["", "↑↑", "↑", "↗", "→", "↘", "↓", "↓↓", "?", "-"]
 """Trend arrows ordered identically to `DEXCOM_TREND_DIRECTIONS`."""
 
 MAX_MINUTES: int = 1440

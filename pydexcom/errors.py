@@ -6,8 +6,6 @@ from enum import Enum
 class DexcomErrorEnum(Enum):
     """Base class for all `pydexcom` error strings."""
 
-    pass
-
 
 class AccountErrorEnum(DexcomErrorEnum):
     """`AccountError` strings."""
@@ -31,7 +29,7 @@ class ArgumentErrorEnum(DexcomErrorEnum):
     USERNAME_INVALID = "Username must be non-empty string"
     TOO_MANY_USER_ID_PROVIDED = "Only one of account_id, username should be provided"
     NONE_USER_ID_PROVIDED = "At least one of account_id, username should be provided"
-    PASSWORD_INVALID = "Password must be non-empty string"
+    PASSWORD_INVALID = "Password must be non-empty string"  # noqa: S105
     ACCOUNT_ID_INVALID = "Account ID must be UUID"
     ACCOUNT_ID_DEFAULT = "Account ID default"
     SESSION_ID_INVALID = "Session ID must be UUID"
@@ -42,7 +40,7 @@ class ArgumentErrorEnum(DexcomErrorEnum):
 class DexcomError(Exception):
     """Base class for all `pydexcom` errors."""
 
-    def __init__(self, enum: DexcomErrorEnum):
+    def __init__(self, enum: DexcomErrorEnum) -> None:
         """Create `DexcomError` from `DexcomErrorEnum`.
 
         :param enum: associated `DexcomErrorEnum`
@@ -54,24 +52,18 @@ class DexcomError(Exception):
     def enum(self) -> DexcomErrorEnum:
         """Get `DexcomErrorEnum` associated with error.
 
-        :return: `DexcomErrorEnum`"""
+        :return: `DexcomErrorEnum`
+        """
         return self._enum
 
 
 class AccountError(DexcomError):
     """Errors involving Dexcom Share API credentials."""
 
-    pass
-
 
 class SessionError(DexcomError):
     """Errors involving Dexcom Share API session."""
 
-    pass
-
 
 class ArgumentError(DexcomError):
     """Errors involving `pydexcom` arguments."""
-
-    pass
-    pass
