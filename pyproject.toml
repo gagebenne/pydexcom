@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
-build-backend = "setuptools.build_meta"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
 
 [project]
 name = "pydexcom"
@@ -9,17 +9,25 @@ authors = [
 ]
 description = "Python API to interact with Dexcom Share API"
 readme = "README.md"
-requires-python = ">=3.6"
+requires-python = ">=3.9"
 keywords = ["dexcom"]
 license = {text = "MIT"}
 dependencies = [
     "requests>=2.0",
 ]
-dynamic = ["version"]
 
-[tool.setuptools_scm]
+[tool.hatch.version]
+source = "vcs"
 
 [tool.ruff]
+fix = true
+extend-exclude = ["tests"]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint]
+select = ["ALL"]
 
 [tool.mypy]
 ignore_missing_imports = true

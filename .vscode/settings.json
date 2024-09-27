@@ -1,0 +1,19 @@
+{
+    "mypy.dmypyExecutable": "${workspaceFolder}/.venv/bin/dmypy",
+    "python.testing.pytestArgs": [
+        "tests",
+        "--record-mode=none"
+    ],
+    "python.testing.pytestEnabled": true,
+    "editor.formatOnSave": true,
+    "mypy.configFile": "pyproject.toml",
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "charliermarsh.ruff"
+    },
+    "cSpell.words": [
+        "pydexcom"
+    ],
+}
