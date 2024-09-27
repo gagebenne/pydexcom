@@ -21,6 +21,7 @@ source = "vcs"
 
 [tool.ruff]
 fix = true
+extend-exclude = ["tests"]
 
 [tool.ruff.format]
 docstring-code-format = true
