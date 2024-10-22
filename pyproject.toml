@@ -15,6 +15,7 @@ license = {text = "MIT"}
 dependencies = [
     "requests>=2.0",
 ]
+dynamic = ["version"]
 
 [tool.hatch.version]
 source = "vcs"
