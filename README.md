@@ -11,32 +11,18 @@ A simple Python API to interact with Dexcom Share service. Used to get *real-tim
 
 The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your (or the dependent's) credentials, not the follower's or manager's.
 
-> [!CAUTION]
-> With the release of the Dexcom G7, users are now able to sign up with a phone number or email address.
->
-> `pydexcom` originally supported authentication with usernames only. However, in the recent days (July 22, 2024) some users have had success authenticating with their phone number and email address.
->
-> While this is [being investigated](https://github.com/gagebenne/pydexcom/issues/55), try first authenticating with whatever user ID you signed up with (username, email address, phone number). If that doesn't work, authenticate using your account ID. You can find your account ID by logging in to [uam1.dexcom.com](https://uam1.dexcom.com) for US users or [uam2.dexcom.com](https://uam2.dexcom.com) for users outside of the US. After logging in, note the UUID in the URL -- this is your account ID.
-
 2. Install the `pydexcom` package.
 
- `pip3 install pydexcom`
+`pip install pydexcom`
 
 3. Profit.
 
-> [!IMPORTANT]
-> See the caution above.
->
-> Format phone numbers with a `+`, your country code, then your phone number, e.g. a US phone number of `(123)-456-7890` would be `"+11234567890"`.
->
-> Format account IDs with hyphens, e.g. an account ID of `1234567890abcdef1234567890abcdef` found in the URL after logging in would be supplied as `12345678-90ab-cdef-1234-567890abcdef`.
-
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom(username="username", password="password") # `ous=True` if outside of US
+>>> dexcom = Dexcom(username="username", password="password") # `region="ous"` if outside of US, `region="apac"` if APAC
 >>> dexcom = Dexcom(username="+11234567890", password="password") # phone number
 >>> dexcom = Dexcom(username="user@email.com", password="password") # email address
->>> dexcom = Dexcom(account_id="12345678-90ab-cdef-1234-567890abcdef", password="password")
+>>> dexcom = Dexcom(account_id="12345678-90ab-cdef-1234-567890abcdef", password="password") # account ID (advanced)
 >>> glucose_reading = dexcom.get_current_glucose_reading()
 >>> print(glucose_reading)
 85
@@ -76,33 +62,49 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 The Dexcom Share API understandably reports limited information during account validation. If anything is incorrect, the API simply reports back invalid password ( `pydexcom.errors.AccountErrorEnum` ). However, there could be many reasons you are getting this error:
 
-1. Use the correct Dexcom Share API instance.
+**1. Ensure your credentials are valid.**
 
-If you are located outside of the United States, be sure to set `ous=True` when initializing `Dexcom` .
+Validate your Dexcom account credentials by logging on to the Dexcom Account Management website for your region:
 
-2. Use your Dexcom Share credentials, not the follower's credentials.
+For users in the United States: [uam1.dexcom.com](https://uam1.dexcom.com).
+For users outside of the United States: [uam2.dexcom.com](https://uam2.dexcom.com).
+For users in the Asia-Pacific: [uam.dexcom.jp](https://uam.dexcom.jp).
+
+**2. Use the correct Dexcom Share API endpoint.**
+
+For users in the United States: use the default, or set `region="us"` when initializing `Dexcom`.
+For users outside of the United States: be sure to set `region="ous"` when initializing `Dexcom` .
+For users in the Asia-Pacific: be sure to set `region="apac"` when initializing `Dexcom`.
+
+**3. Ensure your username is correctly formatted.**
+
+Format phone numbers with a `+`, your country code, then your phone number. For example, a US phone number of `(123)-456-7890` would be supplied as a `username="+11234567890"`.
+
+**4. Use _your_ Dexcom Share credentials, not the _follower's_ credentials.**
 
 Use the same credentials used to login to the Dexcom mobile application publishing the glucose readings.
 
-3. Ensure you have at least one follower on Dexcom Share.
+**5. Ensure you have at least one follower on Dexcom Share.**
 
 The Dexcom Share service requires setup of at least one follower to enable the service, as does this package.
 
-4. Check whether your account credentials involve usernames or emails.
+**6. Try using your account ID.**
 
-There are two account types the Dexcom Share API uses: legacy username-based accounts, and newer email-based accounts. Be sure to use the correct authentication method.
+You can find your account ID by logging in to Dexcom Account Management website for your region. After logging in, note the UUID in the URL -- this is your account ID.
 
-5. Use alpha-numeric passwords.
+Format account IDs (UUIDs) with hyphens. For example, an account ID of `1234567890abcdef1234567890abcdef` found in the URL after logging in would be supplied as `account_id="12345678-90ab-cdef-1234-567890abcdef"`.
 
-Some individuals have had problems with connecting when their Dexcom Share passwords are entirely numeric. If you have connection issues, try changing your password to something with a mix of numbers and letters.
-
-7. Report it!
+**7. Report it!**
 
 The Dexcom Share API sometimes changes. If you believe there is an issue with `pydexcom` , feel free to [create an issue](https://github.com/gagebenne/pydexcom/issues/new) if one has not been created yet already.
 
 ## Why not use the official Dexcom Developer API?
 
 The official Dexcom API is a great tool to view trends, statistics, and day-by-day data, but is not suitable for real time fetching of glucose readings as it is a retrospective API.
+
+## Can I use the Dexcom Stelo with this package?
+
+No, the Dexcom Stelo isn't compatible with the Dexcom Share service, so this package can't retrieve its readings.
 
 ## How can I let you know of suggestions or issues?
 
