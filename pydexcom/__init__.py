@@ -14,10 +14,9 @@ import requests
 
 from .const import (
     DEFAULT_UUID,
-    DEXCOM_APPLICATION_ID,
+    DEXCOM_APPLICATION_IDS,
     DEXCOM_AUTHENTICATE_ENDPOINT,
-    DEXCOM_BASE_URL,
-    DEXCOM_BASE_URL_OUS,
+    DEXCOM_BASE_URLS,
     DEXCOM_GLUCOSE_READINGS_ENDPOINT,
     DEXCOM_LOGIN_ID_ENDPOINT,
     DEXCOM_TREND_DIRECTIONS,
@@ -26,6 +25,7 @@ from .const import (
     MMOL_L_CONVERSION_FACTOR,
     TREND_ARROWS,
     TREND_DESCRIPTIONS,
+    Region,
 )
 from .errors import (
     AccountError,
@@ -145,14 +145,14 @@ class Dexcom:
         password: str,
         account_id: str | None = None,
         username: str | None = None,
-        ous: bool = False,
+        region: Region = Region.US,
     ) -> None:
         """Initialize `Dexcom` with Dexcom Share credentials.
 
         :param username: username for the Dexcom Share user, *not follower*.
         :param account_id: account ID for the Dexcom Share user, *not follower*.
         :param password: password for the Dexcom Share user.
-        :param ous: whether the Dexcom Share user is outside of the US.
+        :param region: the region to use, one of `"us"`, `"ous"`, `"apac"`.
         """
         user_ids = sum(user_id is not None for user_id in [account_id, username])
         if user_ids == 0:
@@ -160,7 +160,8 @@ class Dexcom:
         if user_ids != 1:
             raise ArgumentError(ArgumentErrorEnum.TOO_MANY_USER_ID_PROVIDED)
 
-        self._base_url = DEXCOM_BASE_URL_OUS if ous else DEXCOM_BASE_URL
+        self._base_url = DEXCOM_BASE_URLS[region]
+        self._application_id = DEXCOM_APPLICATION_IDS[region]
         self._password = password
         self._username: str | None = username
         self._account_id: str | None = account_id
@@ -280,7 +281,7 @@ class Dexcom:
             json={
                 "accountName": self._username,
                 "password": self._password,
-                "applicationId": DEXCOM_APPLICATION_ID,
+                "applicationId": self._application_id,
             },
         )
 
@@ -295,7 +296,7 @@ class Dexcom:
             json={
                 "accountId": self._account_id,
                 "password": self._password,
-                "applicationId": DEXCOM_APPLICATION_ID,
+                "applicationId": self._application_id,
             },
         )
 
