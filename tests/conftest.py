@@ -8,7 +8,7 @@ import pytest
 from vcr import VCR
 from vcr.record_mode import RecordMode
 
-from pydexcom import DEFAULT_UUID, DEXCOM_APPLICATION_ID
+from pydexcom import DEFAULT_UUID, DEXCOM_APPLICATION_IDS
 
 r_UUID = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
 
@@ -44,7 +44,7 @@ def scrub_sub(match: re.Match) -> str:
         print("Scrubbed account ID")
         return TEST_ACCOUNT_ID
     if match.group() in [
-        DEXCOM_APPLICATION_ID,
+        *DEXCOM_APPLICATION_IDS.values(),
         TEST_ACCOUNT_ID,
         TEST_SESSION_ID_EXPIRED,
         DEFAULT_UUID,
