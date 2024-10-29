@@ -5,13 +5,16 @@ from typing import Any
 import pytest
 from vcr import VCR
 
-from pydexcom import (
+from pydexcom.dexcom import Dexcom
+from pydexcom.const import (
     DEXCOM_TREND_DIRECTIONS,
     MAX_MAX_COUNT,
     MAX_MINUTES,
+)
+
+from pydexcom.errors import (
     ArgumentError,
     ArgumentErrorEnum,
-    Dexcom,
 )
 
 from .conftest import ACCOUNT_ID, PASSWORD, TEST_SESSION_ID_EXPIRED, vcr_cassette_path

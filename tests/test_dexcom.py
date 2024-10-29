@@ -4,15 +4,15 @@ from uuid import UUID
 
 import pytest
 
-from pydexcom import (
-    DEFAULT_UUID,
+from pydexcom import Dexcom
+from pydexcom.const import DEFAULT_UUID
+from pydexcom.errors import (
     AccountError,
     AccountErrorEnum,
     ArgumentError,
     ArgumentErrorEnum,
-    Dexcom,
-    valid_uuid,
 )
+from pydexcom.util import valid_uuid
 
 from .conftest import ACCOUNT_ID, PASSWORD, USERNAME
 
