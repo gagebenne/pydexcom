@@ -19,7 +19,7 @@ The Dexcom Share service requires setup of at least one follower to enable the s
 
 ```python
 >>> from pydexcom import Dexcom
->>> dexcom = Dexcom(username="username", password="password") # `region="ous"` if outside of US, `region="apac"` if APAC
+>>> dexcom = Dexcom(username="username", password="password") # `region="ous"` if outside of US, `region="jp"` if Japan
 >>> dexcom = Dexcom(username="+11234567890", password="password") # phone number
 >>> dexcom = Dexcom(username="user@email.com", password="password") # email address
 >>> dexcom = Dexcom(account_id="12345678-90ab-cdef-1234-567890abcdef", password="password") # account ID (advanced)
@@ -74,7 +74,7 @@ For users in the Asia-Pacific: [uam.dexcom.jp](https://uam.dexcom.jp).
 
 For users in the United States: use the default, or set `region="us"` when initializing `Dexcom`.
 For users outside of the United States: be sure to set `region="ous"` when initializing `Dexcom` .
-For users in the Asia-Pacific: be sure to set `region="apac"` when initializing `Dexcom`.
+For users in Japan: be sure to set `region="jp"` when initializing `Dexcom`.
 
 **3. Ensure your username is correctly formatted.**
 

@@ -152,7 +152,7 @@ class Dexcom:
         :param username: username for the Dexcom Share user, *not follower*.
         :param account_id: account ID for the Dexcom Share user, *not follower*.
         :param password: password for the Dexcom Share user.
-        :param region: the region to use, one of `"us"`, `"ous"`, `"apac"`.
+        :param region: the region to use, one of `"us"`, `"ous"`, `"jp"`.
         """
         user_ids = sum(user_id is not None for user_id in [account_id, username])
         if user_ids == 0:

@@ -8,7 +8,7 @@ class Region(str, Enum):
 
     US = "us"
     OUS = "ous"
-    APAC = "apac"
+    JP = "jp"
 
 
 DEXCOM_APPLICATION_ID_US: str = "d89443d2-327c-4a6f-89e5-496bbb0317db"
@@ -17,13 +17,13 @@ DEXCOM_APPLICATION_ID_US: str = "d89443d2-327c-4a6f-89e5-496bbb0317db"
 DEXCOM_APPLICATION_ID_OUS: str = DEXCOM_APPLICATION_ID_US
 """Dexcom application ID for outside of the US."""
 
-DEXCOM_APPLICATION_ID_APAC: str = "d8665ade-9673-4e27-9ff6-92db4ce13d13"
-"""Dexcom application ID for APAC."""
+DEXCOM_APPLICATION_ID_JP: str = "d8665ade-9673-4e27-9ff6-92db4ce13d13"
+"""Dexcom application ID for Japan."""
 
 DEXCOM_APPLICATION_IDS: dict[Region, str] = {
     Region.US: DEXCOM_APPLICATION_ID_US,
     Region.OUS: DEXCOM_APPLICATION_ID_OUS,
-    Region.APAC: DEXCOM_APPLICATION_ID_APAC,
+    Region.JP: DEXCOM_APPLICATION_ID_JP,
 }
 """Dexcom application ID lookup based on `Region`."""
 
@@ -33,13 +33,13 @@ DEXCOM_BASE_URL: str = "https://share2.dexcom.com/ShareWebServices/Services"
 DEXCOM_BASE_URL_OUS: str = "https://shareous1.dexcom.com/ShareWebServices/Services"
 """Dexcom Share API base url for outside of the US."""
 
-DEXCOM_BASE_URL_APAC: str = "https://share.dexcom.jp/ShareWebServices/Services"
-"""Dexcom Share API base url for Asia-Pacific."""
+DEXCOM_BASE_URL_JP: str = "https://share.dexcom.jp/ShareWebServices/Services"
+"""Dexcom Share API base url for Japan."""
 
 DEXCOM_BASE_URLS: dict[Region, str] = {
     Region.US: DEXCOM_BASE_URL,
     Region.OUS: DEXCOM_BASE_URL_OUS,
-    Region.APAC: DEXCOM_BASE_URL_APAC,
+    Region.JP: DEXCOM_BASE_URL_JP,
 }
 """Dexcom Share API base url lookup based on `Region`."""
 
