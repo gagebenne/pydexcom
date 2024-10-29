@@ -8,7 +8,7 @@ import pytest
 from vcr import VCR
 from vcr.record_mode import RecordMode
 
-from pydexcom import DEFAULT_UUID, DEXCOM_APPLICATION_IDS
+from pydexcom.const import DEFAULT_UUID, DEXCOM_APPLICATION_IDS
 
 r_UUID = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
 
@@ -23,14 +23,6 @@ ACCOUNT_ID = os.environ.get("DEXCOM_ACCOUNT_ID", TEST_ACCOUNT_ID)
 SESSION_ID = os.environ.get("DEXCOM_SESSION_ID", TEST_SESSION_ID)
 
 TEST_SESSION_ID_EXPIRED = "33333333-3333-3333-3333-333333333333"
-
-
-def is_uuid(uuid: Any) -> bool:
-    try:
-        UUID(uuid)
-        return True
-    except (ValueError, AttributeError):
-        return False
 
 
 def scrub_sub(match: re.Match) -> str:
