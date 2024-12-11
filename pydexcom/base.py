@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any
-
-import requests
+from abc import ABC, abstractmethod
+from typing import Any, final
 
 from .const import (
     DEFAULT_UUID,
@@ -13,7 +12,6 @@ from .const import (
     DEXCOM_BASE_URLS,
     DEXCOM_GLUCOSE_READINGS_ENDPOINT,
     DEXCOM_LOGIN_ID_ENDPOINT,
-    HEADERS,
     MAX_MAX_COUNT,
     MAX_MINUTES,
     Region,
@@ -31,9 +29,10 @@ from .glucose_reading import GlucoseReading
 from .util import _LOGGER, valid_uuid
 
 
-class Dexcom:
+class DexcomBase(ABC):
     """Class for communicating with Dexcom Share API."""
 
+    @abstractmethod
     def __init__(
         self,
         *,
@@ -57,37 +56,36 @@ class Dexcom:
         self._username: str | None = username
         self._account_id: str | None = account_id
         self._session_id: str | None = None
-        self._session = requests.Session()
-        self._get_session()
 
-    def _post(
-        self,
-        endpoint: str,
-        params: dict[str, Any] | None = None,
-        json: dict[str, Any] | None = None,
-    ) -> Any:  # noqa: ANN401
+        # @abstractmethod
+        # def _post(
+        #     self,
+        #     endpoint: str,
+        #     params: dict[str, Any] | None = None,
+        #     json: dict[str, Any] | None = None,
+        # ) -> Any:  # noqa: ANN401
         """Send post request to Dexcom Share API.
 
         :param endpoint: URL of the post request
         :param params: `dict` to send in the query string of the post request
         :param json: JSON to send in the body of the post request
         """
-        response = self._session.post(
-            f"{self._base_url}{endpoint}",
-            headers=HEADERS,
-            params=params,
-            json={} if json is None else json,
-        )
+        # response = self._session.post(
+        #     f"{self._base_url}{endpoint}",
+        #     headers=HEADERS,
+        #     params=params,
+        #     json={} if json is None else json,
+        # )
 
-        try:
-            response.raise_for_status()
-            return response.json()
-        except requests.HTTPError as http_error:
-            error = self._handle_response(response)
-            if error:
-                raise error from http_error
-            _LOGGER.exception("%s", response.text)
-            raise
+        # try:
+        #     response.raise_for_status()
+        #     return response.json()
+        # except requests.HTTPError as http_error:
+        #     error = self._handle_response(response)
+        #     if error:
+        #         raise error from http_error
+        #     _LOGGER.exception("%s", response.text)
+        #     raise
 
     def _handle_response(self, response: requests.Response) -> DexcomError | None:  # noqa: C901
         error: DexcomError | None = None
@@ -212,22 +210,18 @@ class Dexcom:
             },
         }
 
-    def _get_account_id(self) -> str:
-        """Retrieve account ID from the authentication endpoint.
 
-        See `pydexcom.const.DEXCOM_AUTHENTICATE_ENDPOINT`.
-        """
-        _LOGGER.debug("Retrieve account ID from the authentication endpoint")
-        return self._post(**self._authenticate_endpoint_arguments)
+class DexcomSync(DexcomBase):
+    @abstractmethod
+    def _post(
+        self,
+        endpoint: str,
+        params: dict[str, Any] | None = None,
+        json: dict[str, Any] | None = None,
+    ) -> Any:
+        """asdf"""
 
-    def _get_session_id(self) -> str:
-        """Retrieve session ID from the login endpoint.
-
-        See `pydexcom.const.DEXCOM_LOGIN_ID_ENDPOINT`.
-        """
-        _LOGGER.debug("Retrieve session ID from the login endpoint")
-        return self._post(**self._login_id_endpoint_arguments)
-
+    @final
     def _get_session(self) -> None:
         """Create Dexcom Share API session."""
         self._validate_password()
@@ -240,35 +234,34 @@ class Dexcom:
         self._session_id = self._get_session_id()
         self._validate_session_id()
 
+    @final
+    def _get_account_id(self) -> str:
+        _LOGGER.debug("Retrieve account ID from the authentication endpoint")
+        return self._post(**self._authenticate_endpoint_arguments)
+
+    @final
+    def _get_session_id(self) -> str:
+        _LOGGER.debug("Retrieve session ID from the login ID endpoint")
+        return self._post(**self._login_id_endpoint_arguments)
+
+    @final
     def _get_glucose_readings(
         self,
         minutes: int = MAX_MINUTES,
         max_count: int = MAX_MAX_COUNT,
     ) -> list[dict[str, Any]]:
-        """Retrieve glucose readings from the glucose readings endpoint.
-
-        See `pydexcom.const.DEXCOM_GLUCOSE_READINGS_ENDPOINT`.
-        """
         _LOGGER.debug("Retrieve glucose readings from the glucose readings endpoint")
         self._validate_minutes_max_count(minutes, max_count)
-
         return self._post(
             **self._glucose_readings_endpoint_arguments(minutes, max_count),
         )
 
+    @final
     def get_glucose_readings(
         self,
         minutes: int = MAX_MINUTES,
         max_count: int = MAX_MAX_COUNT,
     ) -> list[GlucoseReading]:
-        """Get `max_count` glucose readings within specified number of `minutes`.
-
-        Catches one instance of a thrown `pydexcom.errors.SessionError` if session ID
-        expired, attempts to get a new session ID and retries.
-
-        :param minutes: Number of minutes to retrieve glucose readings from (1-1440)
-        :param max_count: Maximum number of glucose readings to retrieve (1-288)
-        """
         json_glucose_readings: list[dict[str, Any]] = []
 
         try:
@@ -282,10 +275,83 @@ class Dexcom:
 
         return [GlucoseReading(json_reading) for json_reading in json_glucose_readings]
 
+    @final
     def get_latest_glucose_reading(self) -> GlucoseReading | None:
-        """Get latest available glucose reading, within the last 24 hours."""
         return next(iter(self.get_glucose_readings(max_count=1)), None)
 
+    @final
     def get_current_glucose_reading(self) -> GlucoseReading | None:
-        """Get current available glucose reading, within the last 10 minutes."""
         return next(iter(self.get_glucose_readings(minutes=10, max_count=1)), None)
+
+
+class DexcomAsync(DexcomBase):
+    @abstractmethod
+    async def __aenter__(self) -> DexcomAsync:
+        """asdf."""
+
+    @abstractmethod
+    async def _post(
+        self,
+        endpoint: str,
+        params: dict[str, Any] | None = None,
+        json: dict[str, Any] | None = None,
+    ) -> Any:
+        """asdf"""
+
+    async def _get_session(self) -> None:
+        """Create Dexcom Share API session."""
+        self._validate_password()
+
+        if self._account_id is None:
+            self._validate_username()
+            self._account_id = await self._get_account_id()
+
+        self._validate_account_id()
+        self._session_id = await self._get_session_id()
+        self._validate_session_id()
+
+    async def _get_account_id(self) -> str:
+        _LOGGER.debug("Retrieve account ID from the authentication endpoint")
+        return await self._post(**self._authenticate_endpoint_arguments)
+
+    async def _get_session_id(self) -> str:
+        _LOGGER.debug("Retrieve session ID from the login ID endpoint")
+        return await self._post(**self._login_id_endpoint_arguments)
+
+    async def _get_glucose_readings(
+        self,
+        minutes: int = MAX_MINUTES,
+        max_count: int = MAX_MAX_COUNT,
+    ) -> list[dict[str, Any]]:
+        _LOGGER.debug("Retrieve glucose readings from the glucose readings endpoint")
+        self._validate_minutes_max_count(minutes, max_count)
+        return await self._post(
+            **self._glucose_readings_endpoint_arguments(minutes, max_count),
+        )
+
+    async def get_glucose_readings(
+        self,
+        minutes: int = MAX_MINUTES,
+        max_count: int = MAX_MAX_COUNT,
+    ) -> list[GlucoseReading]:
+        json_glucose_readings: list[dict[str, Any]] = []
+
+        try:
+            # Requesting glucose reading with DEFAULT_UUID returns non-JSON empty string
+            self._validate_session_id()
+            json_glucose_readings = await self._get_glucose_readings(minutes, max_count)
+        except SessionError:
+            # Attempt to update expired session ID
+            await self._get_session()
+            json_glucose_readings = await self._get_glucose_readings(minutes, max_count)
+
+        return [GlucoseReading(json_reading) for json_reading in json_glucose_readings]
+
+    async def get_latest_glucose_reading(self) -> GlucoseReading | None:
+        return next(iter(await self.get_glucose_readings(max_count=1)), None)
+
+    async def get_current_glucose_reading(self) -> GlucoseReading | None:
+        return next(
+            iter(await self.get_glucose_readings(minutes=10, max_count=1)),
+            None,
+        )
