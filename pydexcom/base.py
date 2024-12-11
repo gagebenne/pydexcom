@@ -63,7 +63,7 @@ class DexcomBase(ABC):
         #     endpoint: str,
         #     params: dict[str, Any] | None = None,
         #     json: dict[str, Any] | None = None,
-        # ) -> Any:  # noqa: ANN401
+        # ) -> Any:
         """Send post request to Dexcom Share API.
 
         :param endpoint: URL of the post request
@@ -219,7 +219,7 @@ class DexcomSync(DexcomBase):
         params: dict[str, Any] | None = None,
         json: dict[str, Any] | None = None,
     ) -> Any:
-        """asdf"""
+        """Asdf"""
 
     @final
     def _get_session(self) -> None:
@@ -287,7 +287,7 @@ class DexcomSync(DexcomBase):
 class DexcomAsync(DexcomBase):
     @abstractmethod
     async def __aenter__(self) -> DexcomAsync:
-        """asdf."""
+        """Asdf."""
 
     @abstractmethod
     async def _post(
@@ -296,7 +296,7 @@ class DexcomAsync(DexcomBase):
         params: dict[str, Any] | None = None,
         json: dict[str, Any] | None = None,
     ) -> Any:
-        """asdf"""
+        """Asdf"""
 
     async def _get_session(self) -> None:
         """Create Dexcom Share API session."""
