@@ -49,6 +49,7 @@ class Dexcom:
         :param password: password for the Dexcom Share user.
         :param region: the region to use, one of `"us"`, `"ous"`, `"jp"`.
         """
+        self._validate_region(region)
         self._validate_user_ids(username, account_id)
 
         self._base_url = DEXCOM_BASE_URLS[region]
@@ -124,6 +125,10 @@ class Dexcom:
             elif code and message:
                 _LOGGER.debug("%s: %s", code, message)
         return error
+
+    def _validate_region(self, region: Region) -> None:
+        if region not in Region:
+            raise ArgumentError(ArgumentErrorEnum.REGION_INVALID)
 
     def _validate_user_ids(self, account_id: str | None, username: str | None) -> None:
         user_ids = sum(user_id is not None for user_id in [account_id, username])

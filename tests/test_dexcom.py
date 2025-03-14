@@ -4,7 +4,7 @@ from uuid import UUID
 
 import pytest
 
-from pydexcom import Dexcom
+from pydexcom import Dexcom, Region
 from pydexcom.const import DEFAULT_UUID
 from pydexcom.errors import (
     AccountError,
@@ -14,7 +14,7 @@ from pydexcom.errors import (
 )
 from pydexcom.util import valid_uuid
 
-from .conftest import ACCOUNT_ID, PASSWORD, USERNAME
+from .conftest import ACCOUNT_ID, PASSWORD, USERNAME, REGION
 
 
 @pytest.mark.vcr()
@@ -31,11 +31,18 @@ class TestDexcom:
         "username",
         [None, "", 1, "username", USERNAME],
     )
-    def test_dexcom(self, password: Any, account_id: Any, username: Any) -> None:
+    @pytest.mark.parametrize(
+        "region",
+        [None, "", "region", Region.OUS, Region.US],
+    )
+    def test_dexcom(self, password: Any, account_id: Any, username: Any, region: Any) -> None:
         raises: Any = does_not_raise()
         expected: Optional[Union[ArgumentErrorEnum, AccountErrorEnum]] = None
 
-        if username is None and account_id is None:
+        if not region or region not in Region:
+            raises = pytest.raises(ArgumentError)
+            expected = ArgumentErrorEnum.REGION_INVALID
+        elif username is None and account_id is None:
             raises = pytest.raises(ArgumentError)
             expected = ArgumentErrorEnum.NONE_USER_ID_PROVIDED
         elif username is not None and account_id is not None:
@@ -59,6 +66,7 @@ class TestDexcom:
             or (username is None and account_id != ACCOUNT_ID)
             or (account_id is None and username == USERNAME and password != PASSWORD)
             or (account_id == ACCOUNT_ID and username is None and password != PASSWORD)
+            or (region != REGION)
         ):
             raises = pytest.raises(AccountError)
             expected = AccountErrorEnum.FAILED_AUTHENTICATION
@@ -72,7 +80,7 @@ class TestDexcom:
         print(expected)
 
         with raises as error:
-            dexcom = Dexcom(password=password, account_id=account_id, username=username)
+            dexcom = Dexcom(password=password, account_id=account_id, username=username, region=region)
 
             assert dexcom._username == username
             assert dexcom._password == password

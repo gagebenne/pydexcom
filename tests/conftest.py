@@ -8,7 +8,7 @@ import pytest
 from vcr import VCR
 from vcr.record_mode import RecordMode
 
-from pydexcom.const import DEFAULT_UUID, DEXCOM_APPLICATION_IDS
+from pydexcom.const import DEFAULT_UUID, DEXCOM_APPLICATION_IDS, Region
 
 r_UUID = r"[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}"
 
@@ -19,6 +19,7 @@ TEST_SESSION_ID = "55555555-5555-5555-5555-555555555555"
 
 USERNAME = os.environ.get("DEXCOM_USERNAME", TEST_USERNAME)
 PASSWORD = os.environ.get("DEXCOM_PASSWORD", TEST_PASSWORD)
+REGION = os.environ.get("DEXCOM_REGION", Region.US)
 ACCOUNT_ID = os.environ.get("DEXCOM_ACCOUNT_ID", TEST_ACCOUNT_ID)
 SESSION_ID = os.environ.get("DEXCOM_SESSION_ID", TEST_SESSION_ID)
 

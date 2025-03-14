@@ -30,6 +30,7 @@ class ArgumentErrorEnum(DexcomErrorEnum):
     TOO_MANY_USER_ID_PROVIDED = "Only one of account_id, username should be provided"
     NONE_USER_ID_PROVIDED = "At least one of account_id, username should be provided"
     PASSWORD_INVALID = "Password must be non-empty string"  # noqa: S105
+    REGION_INVALID = "Region must be 'us', 'ous, or 'jp'"
     ACCOUNT_ID_INVALID = "Account ID must be UUID"
     ACCOUNT_ID_DEFAULT = "Account ID default"
     SESSION_ID_INVALID = "Session ID must be UUID"
