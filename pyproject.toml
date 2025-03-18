@@ -20,6 +20,17 @@ dynamic = ["version"]
 [tool.hatch.version]
 source = "vcs"
 
+[tool.hatch.envs.default]
+installer = "uv"
+
+[tool.hatch.envs.hatch-test]
+extra-dependencies = [
+  "vcrpy",
+]
+
+[[tool.hatch.envs.hatch-test.matrix]]
+python = ["3.13", "3.12", "3.11", "3.10", "3.9"]
+
 [tool.ruff]
 fix = true
 extend-exclude = ["tests"]
