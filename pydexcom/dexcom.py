@@ -127,7 +127,7 @@ class Dexcom:
         return error
 
     def _validate_region(self, region: Region) -> None:
-        if region not in Region:
+        if region not in list(Region):
             raise ArgumentError(ArgumentErrorEnum.REGION_INVALID)
 
     def _validate_user_ids(self, account_id: str | None, username: str | None) -> None:

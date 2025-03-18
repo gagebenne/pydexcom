@@ -39,7 +39,7 @@ class TestDexcom:
         raises: Any = does_not_raise()
         expected: Optional[Union[ArgumentErrorEnum, AccountErrorEnum]] = None
 
-        if not region or region not in Region:
+        if not region or region not in list(Region):
             raises = pytest.raises(ArgumentError)
             expected = ArgumentErrorEnum.REGION_INVALID
         elif username is None and account_id is None:
