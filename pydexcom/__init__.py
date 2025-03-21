@@ -8,8 +8,8 @@ from .glucose_reading import GlucoseReading
 
 __all__ = [
     "Dexcom",
-    "Region",
     "GlucoseReading",
-    "errors",
+    "Region",
     "const",
+    "errors",
 ]
