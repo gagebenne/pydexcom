@@ -15,14 +15,15 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v4
     - name: Install uv
       uses: astral-sh/setup-uv@v5
       with:
         python-version: ${{ matrix.python-version }}
         enable-cache: true
-    - name: Install dependencies
-      run: |
+    - name: Install hatch
+      run:
         uv pip install hatch
     - name: Run tests
       run: hatch test --python ${{ matrix.python-version }} --parallel

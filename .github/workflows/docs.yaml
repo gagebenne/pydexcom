@@ -13,13 +13,14 @@ jobs:
     name: Build package documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           python-version: 3.11
           enable-cache: true
-      - name: Install dependencies
+      - name: Install hatch
         run: |
           uv pip install hatch
       - name: Build docs
