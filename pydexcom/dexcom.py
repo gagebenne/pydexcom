@@ -50,7 +50,7 @@ class Dexcom:
         :param region: the region to use, one of `"us"`, `"ous"`, `"jp"`.
         """
         self._validate_region(region)
-        self._validate_user_ids(username, account_id)
+        self._validate_user_ids(account_id, username)
 
         self._base_url = DEXCOM_BASE_URLS[region]
         self._application_id = DEXCOM_APPLICATION_IDS[region]
@@ -133,9 +133,9 @@ class Dexcom:
     def _validate_user_ids(self, account_id: str | None, username: str | None) -> None:
         user_ids = sum(user_id is not None for user_id in [account_id, username])
         if user_ids == 0:
-            raise ArgumentError(ArgumentErrorEnum.NONE_USER_ID_PROVIDED)
+            raise ArgumentError(ArgumentErrorEnum.USER_ID_REQUIRED)
         if user_ids != 1:
-            raise ArgumentError(ArgumentErrorEnum.TOO_MANY_USER_ID_PROVIDED)
+            raise ArgumentError(ArgumentErrorEnum.USER_ID_MULTIPLE)
 
     def _validate_session_id(self) -> None:
         """Validate session ID."""
