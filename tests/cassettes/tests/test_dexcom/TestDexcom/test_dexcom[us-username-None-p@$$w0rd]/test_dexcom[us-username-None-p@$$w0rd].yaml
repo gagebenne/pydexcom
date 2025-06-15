@@ -1,0 +1,135 @@
+interactions:
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountName":
+      "username", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/AuthenticatePublisherAccount
+  response:
+    body:
+      string: '{"Code":"AccountPasswordInvalid","Message":"Publisher account password
+        failed","SubCode":"<OnlineException DateThrownLocal=\"2025-04-19T16:47:55.512025771\"
+        DateThrown=\"2025-04-19T16:47:55.512025771Z\" ErrorCode=\"AccountPasswordInvalid\"
+        Type=\"13\" Category=\"4\" Severity=\"1\" TypeString=\"InvalidPassword\" CategoryString=\"Validation\"
+        SeverityString=\"Minor\" HostName=\"\" HostIP=\"\" Id=\"{5a2e48a8-89e3-4684-9a76-4139d6513ebb}\"
+        Message=\"Publisher account password failed\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Publisher account password failed\" />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932de2f2df354cb1-PHL
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '619'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:47:55 GMT
+      Server:
+      - cloudflare
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - cee3aa55-83e3-4fb3-8051-846c650c3d5e
+      x-xss-protection:
+      - '0'
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountName":
+      "username", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '115'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/AuthenticatePublisherAccount
+  response:
+    body:
+      string: '{"Code":"AccountPasswordInvalid","Message":"Publisher account password
+        failed","SubCode":"<OnlineException DateThrownLocal=\"2025-06-15T21:34:34.203186582\"
+        DateThrown=\"2025-06-15T21:34:34.203186582Z\" ErrorCode=\"AccountPasswordInvalid\"
+        Type=\"13\" Category=\"4\" Severity=\"1\" TypeString=\"InvalidPassword\" CategoryString=\"Validation\"
+        SeverityString=\"Minor\" HostName=\"\" HostIP=\"\" Id=\"{1a9348af-4314-4f2d-9cc9-56d2fdfaa851}\"
+        Message=\"Publisher account password failed\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Publisher account password failed\" />","TypeName":"FaultException"}'
+    headers:
+      CF-RAY:
+      - 950531367b92c407-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '619'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:34 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - _cfuvid=_s9hWQaO6ADHy6bfYgRmCKYfv9WcYExbvqBW6IhGAqE-1750023274233-0.0.1.1-604800000;
+        path=/; domain=.share2.dexcom.com; HttpOnly; Secure; SameSite=None
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - 52612fad-411a-48a1-b4a2-d260ae95d954
+      x-xss-protection:
+      - '0'
+    status:
+      code: 500
+      message: Internal Server Error
+version: 1

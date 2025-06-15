@@ -1,0 +1,148 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081013817)","ST":"Date(1745081013817)","DT":"Date(1745081013817-0400)","Value":224,"Trend":"Flat"}]'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932de046cf7e4cb6-PHL
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:05 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 05958b16-3cb1-444e-b3ea-6ab2b450b437
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081913085)","ST":"Date(1745081913085)","DT":"Date(1745081913085-0400)","Value":216,"Trend":"Flat"}]'
+    headers:
+      CF-RAY:
+      - 932df5653f5f4216-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:30 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 7db00d7d-b09f-4b4b-a61c-07ae45bacf36
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1750022969925)","ST":"Date(1750022969925)","DT":"Date(1750022969925-0400)","Value":175,"Trend":"Flat"}]'
+    headers:
+      CF-RAY:
+      - 95053149b9d4f797-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:37 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 08740cdf-bef1-4013-8f09-d3c2a57e6424
+    status:
+      code: 200
+      message: OK
+version: 1

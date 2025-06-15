@@ -27,9 +27,10 @@ class ArgumentErrorEnum(DexcomErrorEnum):
     MINUTES_INVALID = "Minutes must be and integer between 1 and 1440"
     MAX_COUNT_INVALID = "Max count must be and integer between 1 and 288"
     USERNAME_INVALID = "Username must be non-empty string"
-    TOO_MANY_USER_ID_PROVIDED = "Only one of account_id, username should be provided"
-    NONE_USER_ID_PROVIDED = "At least one of account_id, username should be provided"
+    USER_ID_MULTIPLE = "Only one of account_id, username should be provided"
+    USER_ID_REQUIRED = "At least one of account_id, username should be provided"
     PASSWORD_INVALID = "Password must be non-empty string"  # noqa: S105
+    REGION_INVALID = "Region must be 'us', 'ous, or 'jp'"
     ACCOUNT_ID_INVALID = "Account ID must be UUID"
     ACCOUNT_ID_DEFAULT = "Account ID default"
     SESSION_ID_INVALID = "Session ID must be UUID"
@@ -41,7 +42,8 @@ class DexcomError(Exception):
     """Base class for all `pydexcom` errors."""
 
     def __init__(self, enum: DexcomErrorEnum) -> None:
-        """Create `DexcomError` from `DexcomErrorEnum`.
+        """
+        Create `DexcomError` from `DexcomErrorEnum`.
 
         :param enum: associated `DexcomErrorEnum`
         """
@@ -50,7 +52,8 @@ class DexcomError(Exception):
 
     @property
     def enum(self) -> DexcomErrorEnum:
-        """Get `DexcomErrorEnum` associated with error.
+        """
+        Get `DexcomErrorEnum` associated with error.
 
         :return: `DexcomErrorEnum`
         """

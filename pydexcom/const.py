@@ -27,13 +27,13 @@ DEXCOM_APPLICATION_IDS: dict[Region, str] = {
 }
 """Dexcom application ID lookup based on `Region`."""
 
-DEXCOM_BASE_URL: str = "https://share2.dexcom.com/ShareWebServices/Services"
+DEXCOM_BASE_URL: str = "https://share2.dexcom.com/ShareWebServices/Services/"
 """Dexcom Share API base url for US."""
 
-DEXCOM_BASE_URL_OUS: str = "https://shareous1.dexcom.com/ShareWebServices/Services"
+DEXCOM_BASE_URL_OUS: str = "https://shareous1.dexcom.com/ShareWebServices/Services/"
 """Dexcom Share API base url for outside of the US."""
 
-DEXCOM_BASE_URL_JP: str = "https://share.dexcom.jp/ShareWebServices/Services"
+DEXCOM_BASE_URL_JP: str = "https://share.dexcom.jp/ShareWebServices/Services/"
 """Dexcom Share API base url for Japan."""
 
 DEXCOM_BASE_URLS: dict[Region, str] = {
@@ -51,6 +51,9 @@ DEXCOM_AUTHENTICATE_ENDPOINT: str = "General/AuthenticatePublisherAccount"
 
 DEXCOM_GLUCOSE_READINGS_ENDPOINT: str = "Publisher/ReadPublisherLatestGlucoseValues"
 """Dexcom Share API endpoint used to retrieve glucose values."""
+
+HEADERS = {"Accept-Encoding": "application/json"}
+"""Dexcom headers for all endpoints."""
 
 DEFAULT_UUID: str = "00000000-0000-0000-0000-000000000000"
 """UUID consisting of all zeros, likely error if returned by Dexcom Share API."""

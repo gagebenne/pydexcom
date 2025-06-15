@@ -7,3 +7,5 @@ build/
 .pytest_cache/
 .DS_Store
 .ruff_cache
+uv.lock
+docs/

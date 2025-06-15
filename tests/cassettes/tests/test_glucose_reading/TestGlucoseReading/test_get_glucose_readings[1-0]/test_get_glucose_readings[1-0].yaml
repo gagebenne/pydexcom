@@ -1,0 +1,148 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=0&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[]'
+    headers:
+      CF-RAY:
+      - 932de042cce142d2-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:05 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 39e00e7d-a715-4f71-abe9-20b35961bc6f
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=0&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[]'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932df561ffb032c8-PHL
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:30 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 913ab905-8a27-44dd-b815-23bc6ac3777d
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=0&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[]'
+    headers:
+      CF-RAY:
+      - 95053146cc7dde97-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:36 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 547ff6a4-29ca-46df-9df0-a0d1d6b53f63
+    status:
+      code: 200
+      message: OK
+version: 1

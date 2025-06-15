@@ -1,0 +1,148 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=1440&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081013817)","ST":"Date(1745081013817)","DT":"Date(1745081013817-0400)","Value":224,"Trend":"Flat"}]'
+    headers:
+      CF-RAY:
+      - 932de045cad741b4-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:05 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - fe175def-d93e-4f98-ac46-b99162e6589e
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=1440&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081913085)","ST":"Date(1745081913085)","DT":"Date(1745081913085-0400)","Value":216,"Trend":"Flat"}]'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932df56409294cb6-PHL
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:30 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 84350fcb-363e-4ec5-8cd8-5ee9284149f3
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=1440&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1750022969925)","ST":"Date(1750022969925)","DT":"Date(1750022969925-0400)","Value":175,"Trend":"Flat"}]'
+    headers:
+      CF-RAY:
+      - 95053148cff2de9b-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:36 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - eca1e7f9-1e45-471e-bec0-3e92b83c084d
+    status:
+      code: 200
+      message: OK
+version: 1
