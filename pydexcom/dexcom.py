@@ -42,7 +42,8 @@ class Dexcom:
         username: str | None = None,
         region: Region = Region.US,
     ) -> None:
-        """Initialize `Dexcom` with Dexcom Share credentials.
+        """
+        Initialize `Dexcom` with Dexcom Share credentials.
 
         :param username: username for the Dexcom Share user, *not follower*.
         :param account_id: account ID for the Dexcom Share user, *not follower*.
@@ -67,7 +68,8 @@ class Dexcom:
         params: dict[str, Any] | None = None,
         json: dict[str, Any] | None = None,
     ) -> Any:  # noqa: ANN401
-        """Send post request to Dexcom Share API.
+        """
+        Send post request to Dexcom Share API.
 
         :param endpoint: URL of the post request
         :param params: `dict` to send in the query string of the post request
@@ -218,7 +220,8 @@ class Dexcom:
         }
 
     def _get_account_id(self) -> str:
-        """Retrieve account ID from the authentication endpoint.
+        """
+        Retrieve account ID from the authentication endpoint.
 
         See `pydexcom.const.DEXCOM_AUTHENTICATE_ENDPOINT`.
         """
@@ -226,7 +229,8 @@ class Dexcom:
         return self._post(**self._authenticate_endpoint_arguments)
 
     def _get_session_id(self) -> str:
-        """Retrieve session ID from the login endpoint.
+        """
+        Retrieve session ID from the login endpoint.
 
         See `pydexcom.const.DEXCOM_LOGIN_ID_ENDPOINT`.
         """
@@ -250,7 +254,8 @@ class Dexcom:
         minutes: int = MAX_MINUTES,
         max_count: int = MAX_MAX_COUNT,
     ) -> list[dict[str, Any]]:
-        """Retrieve glucose readings from the glucose readings endpoint.
+        """
+        Retrieve glucose readings from the glucose readings endpoint.
 
         See `pydexcom.const.DEXCOM_GLUCOSE_READINGS_ENDPOINT`.
         """
@@ -266,7 +271,8 @@ class Dexcom:
         minutes: int = MAX_MINUTES,
         max_count: int = MAX_MAX_COUNT,
     ) -> list[GlucoseReading]:
-        """Get `max_count` glucose readings within specified number of `minutes`.
+        """
+        Get `max_count` glucose readings within specified number of `minutes`.
 
         Catches one instance of a thrown `pydexcom.errors.SessionError` if session ID
         expired, attempts to get a new session ID and retries.

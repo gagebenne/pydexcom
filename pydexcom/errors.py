@@ -42,7 +42,8 @@ class DexcomError(Exception):
     """Base class for all `pydexcom` errors."""
 
     def __init__(self, enum: DexcomErrorEnum) -> None:
-        """Create `DexcomError` from `DexcomErrorEnum`.
+        """
+        Create `DexcomError` from `DexcomErrorEnum`.
 
         :param enum: associated `DexcomErrorEnum`
         """
@@ -51,7 +52,8 @@ class DexcomError(Exception):
 
     @property
     def enum(self) -> DexcomErrorEnum:
-        """Get `DexcomErrorEnum` associated with error.
+        """
+        Get `DexcomErrorEnum` associated with error.
 
         :return: `DexcomErrorEnum`
         """

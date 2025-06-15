@@ -22,7 +22,8 @@ class GlucoseReading:
     """Class for parsing glucose reading from Dexcom Share API."""
 
     def __init__(self, json_glucose_reading: dict[str, Any]) -> None:
-        """Initialize `GlucoseReading` with JSON glucose reading from Dexcom Share API.
+        """
+        Initialize `GlucoseReading` with JSON glucose reading from Dexcom Share API.
 
         :param json_glucose_reading: JSON glucose reading from Dexcom Share API
         """
@@ -62,7 +63,8 @@ class GlucoseReading:
 
     @property
     def trend(self) -> int:
-        """Blood glucose trend information.
+        """
+        Blood glucose trend information.
 
         Value of `pydexcom.const.DEXCOM_TREND_DIRECTIONS`.
         """
@@ -70,7 +72,8 @@ class GlucoseReading:
 
     @property
     def trend_direction(self) -> str:
-        """Blood glucose trend direction.
+        """
+        Blood glucose trend direction.
 
         Key of `pydexcom.const.DEXCOM_TREND_DIRECTIONS`.
         """
@@ -78,7 +81,8 @@ class GlucoseReading:
 
     @property
     def trend_description(self) -> str | None:
-        """Blood glucose trend information description.
+        """
+        Blood glucose trend information description.
 
         See `pydexcom.const.TREND_DESCRIPTIONS`.
         """
