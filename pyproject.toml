@@ -58,7 +58,7 @@ ignore = ["FA100", "D212", "D203", "COM812"]
 select = ["ALL"]
 
 [tool.mypy]
-mypy_path = "typings"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 ignore_missing_imports = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
