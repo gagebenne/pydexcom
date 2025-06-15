@@ -1,0 +1,182 @@
+interactions:
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 932de03b8ccf41ac-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:04 GMT
+      Server:
+      - cloudflare
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - ddc6e01a-d10a-43f5-92f9-106e88ecbfa9
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 932df55c4b6f42ec-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:29 GMT
+      Server:
+      - cloudflare
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - 9c7b8449-c712-47b5-a94a-30622b21f505
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 950531418f61185d-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:36 GMT
+      Server:
+      - cloudflare
+      Set-Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000;
+        path=/; domain=.share2.dexcom.com; HttpOnly; Secure; SameSite=None
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - 02327dda-a0f6-4740-b6ff-e1c115091dda
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+version: 1

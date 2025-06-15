@@ -1,0 +1,497 @@
+interactions:
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10
+  response:
+    body:
+      string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
+        [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
+        DateThrownLocal=\"2025-04-19T16:46:06.060899548\" DateThrown=\"2025-04-19T16:46:06.060899548Z\"
+        ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
+        CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
+        Id=\"{0d90b4de-f876-4155-9e6d-7886c2d9ebf5}\" Message=\"Failed to find session
+        object. [SessionId = 33333333-3333-3333-3333-333333333333]\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Failed to find session object. [SessionId = 33333333-3333-3333-3333-333333333333]\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932de047af6632c8-PHL
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '750'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:06 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 68ab35ad-5529-4928-b40c-9fc909f70c3f
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 932de0489dc441b4-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:06 GMT
+      Server:
+      - cloudflare
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - e22f780e-bbfa-4a12-8bec-14d056952580
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081013817)","ST":"Date(1745081013817)","DT":"Date(1745081013817-0400)","Value":224,"Trend":"Flat"}]'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932de04bcb4732b2-PHL
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 16:46:06 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 7214b599-0268-4d89-9455-cfd948edcda7
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10
+  response:
+    body:
+      string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
+        [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
+        DateThrownLocal=\"2025-04-19T17:00:31.112925771\" DateThrown=\"2025-04-19T17:00:31.112925771Z\"
+        ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
+        CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
+        Id=\"{fc4d1285-a19d-4bca-82cd-d6fbc4ad3ce2}\" Message=\"Failed to find session
+        object. [SessionId = 33333333-3333-3333-3333-333333333333]\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Failed to find session object. [SessionId = 33333333-3333-3333-3333-333333333333]\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-RAY:
+      - 932df5664f2e5e76-EWR
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '750'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:31 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - c164319d-35f1-4e75-83b8-a31861dcda42
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 932df567481f42ef-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:31 GMT
+      Server:
+      - cloudflare
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - 078f51ec-e6ab-4a4d-b47d-0ef43871bb7d
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1745081913085)","ST":"Date(1745081913085)","DT":"Date(1745081913085-0400)","Value":216,"Trend":"Flat"}]'
+    headers:
+      CF-Cache-Status:
+      - DYNAMIC
+      CF-RAY:
+      - 932df56adb7032c8-PHL
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 19 Apr 2025 17:00:31 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 7d20ce35-20e1-43bc-8426-e42b47b48670
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10
+  response:
+    body:
+      string: '{"Code":"SessionIdNotFound","Message":"Failed to find session object.
+        [SessionId = 33333333-3333-3333-3333-333333333333]","SubCode":"<OnlineException
+        DateThrownLocal=\"2025-06-15T21:34:37.265230297\" DateThrown=\"2025-06-15T21:34:37.265230297Z\"
+        ErrorCode=\"SessionIdNotFound\" Type=\"5\" Category=\"2\" Severity=\"2\" TypeString=\"ObjectNotFound\"
+        CategoryString=\"Database\" SeverityString=\"Severe\" HostName=\"\" HostIP=\"\"
+        Id=\"{9b9a5a9e-a649-4a37-9308-2cac7cb3717e}\" Message=\"Failed to find session
+        object. [SessionId = 33333333-3333-3333-3333-333333333333]\" FullText=\"com.dexcom.udp.common.data.exception.OnlineException:
+        Failed to find session object. [SessionId = 33333333-3333-3333-3333-333333333333]\"
+        />","TypeName":"FaultException"}'
+    headers:
+      CF-RAY:
+      - 9505314ab8290f39-EWR
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '750'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:37 GMT
+      Server:
+      - cloudflare
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - b65401ed-12c3-4f78-aedb-c9f73301901b
+    status:
+      code: 500
+      message: Internal Server Error
+- request:
+    body: '{"applicationId": "d89443d2-327c-4a6f-89e5-496bbb0317db", "accountId":
+      "99999999-9999-9999-9999-999999999999", "password": "p@$$w0rd"}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '141'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/General/LoginPublisherAccountById
+  response:
+    body:
+      string: '"55555555-5555-5555-5555-555555555555"'
+    headers:
+      CF-RAY:
+      - 9505314b9cfdde93-EWR
+      Cache-Control:
+      - no-cache, no-store, max-age=0, must-revalidate
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '38'
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:37 GMT
+      Server:
+      - cloudflare
+      cf-cache-status:
+      - DYNAMIC
+      expires:
+      - '0'
+      pragma:
+      - no-cache
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-content-type-options:
+      - nosniff
+      x-frame-options:
+      - DENY
+      x-trace-id:
+      - b2cf9079-383f-44d0-bd0c-afa536f7f876
+      x-xss-protection:
+      - '0'
+    status:
+      code: 200
+      message: OK
+- request:
+    body: '{}'
+    headers:
+      Accept:
+      - '*/*'
+      Accept-Encoding:
+      - application/json
+      Connection:
+      - keep-alive
+      Content-Length:
+      - '2'
+      Content-Type:
+      - application/json
+      Cookie:
+      - _cfuvid=KORRTCDGxX3tRuupxAKH3wgnDzJYW7dr6zoPlD6waH0-1750023276110-0.0.1.1-604800000
+      User-Agent:
+      - python-requests/2.32.3
+    method: POST
+    uri: https://share2.dexcom.com/ShareWebServices/Services/Publisher/ReadPublisherLatestGlucoseValues?maxCount=1&minutes=10&sessionId=55555555-5555-5555-5555-555555555555
+  response:
+    body:
+      string: '[{"WT":"Date(1750022969925)","ST":"Date(1750022969925)","DT":"Date(1750022969925-0400)","Value":175,"Trend":"Flat"}]'
+    headers:
+      CF-RAY:
+      - 9505314ebc150f87-EWR
+      Connection:
+      - keep-alive
+      Content-Type:
+      - application/json
+      Date:
+      - Sun, 15 Jun 2025 21:34:37 GMT
+      Server:
+      - cloudflare
+      Transfer-Encoding:
+      - chunked
+      X-Content-Type-Options:
+      - nosniff
+      cf-cache-status:
+      - DYNAMIC
+      strict-transport-security:
+      - max-age=15780000; includeSubDomains; preload
+      vary:
+      - Origin
+      - Access-Control-Request-Method
+      - Access-Control-Request-Headers
+      x-trace-id:
+      - 9c90e3c4-ea44-4d76-ba58-679e29e8fb94
+    status:
+      code: 200
+      message: OK
+version: 1
