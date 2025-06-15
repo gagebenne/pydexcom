@@ -62,6 +62,16 @@ class Dexcom:
         self._session = requests.Session()
         self._get_session()
 
+    @property
+    def username(self) -> str | None:
+        """Get username."""
+        return self._username
+
+    @property
+    def account_id(self) -> str | None:
+        """Get account ID."""
+        return self._account_id
+
     def _post(
         self,
         endpoint: str,
