@@ -103,12 +103,12 @@ class TestDexcom:
             )
 
             if username is not None:
-                assert dexcom._username == USERNAME
+                assert dexcom.username == USERNAME
             if account_id is not None:
-                assert dexcom._account_id == ACCOUNT_ID
-            assert dexcom._account_id in {ACCOUNT_ID, TEST_ACCOUNT_ID}
+                assert dexcom.account_id == ACCOUNT_ID
+            assert dexcom.account_id in {ACCOUNT_ID, TEST_ACCOUNT_ID}
             assert dexcom._password == PASSWORD
-            assert dexcom._account_id != DEFAULT_UUID
+            assert dexcom.account_id != DEFAULT_UUID
             assert UUID(dexcom._session_id)
             assert dexcom._session_id != DEFAULT_UUID
             return
