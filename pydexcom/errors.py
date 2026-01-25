@@ -1,5 +1,7 @@
 """Errors used in `pydexcom`."""
 
+from __future__ import annotations
+
 from enum import Enum
 
 
@@ -49,17 +51,20 @@ class ServerErrorEnum(DexcomErrorEnum):
 class DexcomError(Exception):
     """Base class for all `pydexcom` errors."""
 
-    def __init__(self, enum: DexcomErrorEnum) -> None:
+    def __init__(self, enum: DexcomErrorEnum | None = None) -> None:
         """
         Create `DexcomError` from `DexcomErrorEnum`.
 
         :param enum: associated `DexcomErrorEnum`
         """
-        super().__init__(enum.value)
+        if enum is not None:
+            super().__init__(enum.value)
+        else:
+            super().__init__()
         self._enum = enum
 
     @property
-    def enum(self) -> DexcomErrorEnum:
+    def enum(self) -> DexcomErrorEnum | None:
         """
         Get `DexcomErrorEnum` associated with error.
 
