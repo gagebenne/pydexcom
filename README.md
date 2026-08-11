@@ -7,7 +7,7 @@
 A simple Python API to interact with Dexcom Share service. Used to get *real-time* Dexcom CGM sensor data.
 
 # Quick-start
-1. Download the [Dexcom G7 / G6 / G5 / G4](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
+1. Download the [Dexcom G7 / G6 / G5 / G4 / ONE+](https://www.dexcom.com/apps) mobile app and [enable the Share service](https://provider.dexcom.com/education-research/cgm-education-use/videos/setting-dexcom-share-and-follow).
 
 The Dexcom Share service requires setup of at least one follower to enable the share service, but `pydexcom` will use your (or the dependent's) credentials, not the follower's or manager's.
 
